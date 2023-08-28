@@ -1,0 +1,3 @@
+<items gfxroot="gfx/items/" version="1">
+    <passive id="1" name="Champion Crown" gfx="champion_crown.png" description="A new you" quality="0" cache="all" tags="noeden quest" hidden="true"/>
+</items>
