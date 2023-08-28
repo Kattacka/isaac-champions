@@ -1,5 +1,16 @@
 mod = RegisterMod("isaac-champions", 1)
 
+local saveManager = include("mod.scripts.utility.save_manager") -- the path to the save manager, with different directories/folders separated by dots
+saveManager.Init(mod)
+
+-- In this example, the library file would be located at `...\The Binding of Isaac Rebirth\mods\<Your Mod's Folder>\myMod\lib\hidden_item_manager.lua`
+-- But replace "myMod" with a different folder name, unique to your mod, to avoid collisions with other mods!
+local hiddenItemManager = require("mod.scripts.utility.hidden_item_manager")
+
+-- Make sure to call the Init function ONCE, before using any of the library's functions, and pass your mod reference to it.
+hiddenItemManager:Init(mod)
+
+
 include("scripts.isaac")
 include("scripts.maggy")
 include("scripts.judas")
