@@ -19,10 +19,8 @@ function bluebaby:onCache(player, cacheFlag)
     }
 
     for i = 1, #trinkets do
-        if not player:HasTrinket(trinkets[i]) then
-            player:AddTrinket(trinkets[i])
-            player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false)
-        end
+        player:AddTrinket(trinkets[i])
+        player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false)
     end
 
     if player:HasCollectible(CollectibleType.COLLECTIBLE_POOP) then

@@ -9,7 +9,7 @@ function bethany:onCache(player, cacheFlag)
     if player:GetPlayerType() ~= PlayerType.PLAYER_BETHANY then return end
 
     player.Damage = player.Damage / 2 + 0.7
-    player.MaxFireDelay = player.MaxFireDelay * 1.25
+    player.MaxFireDelay = player.MaxFireDelay * 1.20
 
     local save = mod.SaveManager.GetRunSave(player)
     if save.ItemObtained == true then return end
@@ -18,15 +18,12 @@ function bethany:onCache(player, cacheFlag)
     player:AddMaxHearts(-2)
 
     local trinkets = {
-        TrinketType.TRINKET_BETHS_ESSENCE,
         TrinketType.TRINKET_DEVILS_CROWN
     }
 
     for i = 1, #trinkets do
-        if not player:HasTrinket(trinkets[i]) then
             player:AddTrinket(trinkets[i])
             player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false)
-        end
     end
 
     if player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_VIRTUES) then

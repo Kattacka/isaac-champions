@@ -19,10 +19,8 @@ function isaac:onCache(player, cacheFlag)
     }
 
     for i = 1, #trinkets do
-        if not player:HasTrinket(trinkets[i]) then
-            player:AddTrinket(trinkets[i])
-            player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false)
-        end
+        player:AddTrinket(trinkets[i])
+        player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false)
     end
 
     player:RemoveCollectible(CollectibleType.COLLECTIBLE_D6)

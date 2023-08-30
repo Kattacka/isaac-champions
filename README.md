@@ -10,9 +10,11 @@ samson,
 azazel, 
 eden,
 lilith, 
-forgotten, (poorly)
+forgotten (poorly),
 bethany
 
 tainted blue baby
 tainted apollyon, 
 tainted jacob
+
+Incompatible with smelter unlocks marbles too mod
