@@ -8,20 +8,14 @@ function jacob_b:onCache(player, cacheFlag)
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= PlayerType.PLAYER_JACOB_B then return end
 
+    local save = mod.SaveManager.GetRunSave(player)
+    if save.ItemObtained == true then return end
+    save.ItemObtained = true
+
     local challenge = Isaac.GetChallenge()
     Game().Challenge = Challenge.CHALLENGE_SOLAR_SYSTEM
     player:UpdateCanShoot()
     Game().Challenge = challenge
-    -- local trinkets = {
-
-    -- }
-
-    -- for i = 1, #trinkets do
-    --     if not player:HasTrinket(trinkets[i]) then
-    --         player:AddTrinket(trinkets[i])
-    --         player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false)
-    --     end
-    -- end
 
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_BATTERY) then
         player:AddCollectible(CollectibleType.COLLECTIBLE_BATTERY)
@@ -35,6 +29,7 @@ function jacob_b:onCache(player, cacheFlag)
         player:AddCollectible(CollectibleType.COLLECTIBLE_SPIRIT_OF_THE_NIGHT)
     end
     
+    player:UseActiveItem(CollectibleType.COLLECTIBLE_ANIMA_SOLA, true)
 end
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, jacob_b.onCache)
 

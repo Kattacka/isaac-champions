@@ -8,6 +8,11 @@ function eve:onCache(player, cacheFlag)
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= PlayerType.PLAYER_EVE then return end
 
+
+    local save = mod.SaveManager.GetRunSave(player)
+    if save.ItemObtained == true then return end
+    save.ItemObtained = true
+    
     local trinkets = {
         TrinketType.TRINKET_CROW_HEART,
         TrinketType.TRINKET_PANIC_BUTTON,

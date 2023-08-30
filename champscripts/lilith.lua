@@ -10,6 +10,10 @@ function lilith:onCache(player, cacheFlag)
 
     player.Damage = player.Damage *0.66 - 1.4
 
+    local save = mod.SaveManager.GetRunSave(player)
+    if save.ItemObtained == true then return end
+    save.ItemObtained = true
+
     local trinkets = {
         TrinketType.TRINKET_FRIENDSHIP_NECKLACE,
         TrinketType.TRINKET_ADOPTION_PAPERS,

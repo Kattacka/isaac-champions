@@ -9,6 +9,14 @@ function maggy:onCache(player, cacheFlag)
     if player:GetPlayerType() ~= PlayerType.PLAYER_MAGDALENE then return end
 
     player.MaxFireDelay = player.MaxFireDelay * 2
+
+    local save = mod.SaveManager.GetRunSave(player)
+    if save.ItemObtained == true then return end
+    save.ItemObtained = true
+
+    player:AddMaxHearts(2)
+    player:AddRottenHearts(2)
+
     local trinkets = {
         TrinketType.TRINKET_CROW_HEART,
         TrinketType.TRINKET_APPLE_OF_SODOM,
@@ -34,13 +42,5 @@ function maggy:onCache(player, cacheFlag)
         player:AddCollectible(CollectibleType.COLLECTIBLE_MULLIGAN)
     end
 
-  --  if not player:HasCollectible(CollectibleType.COLLECTIBLE_HIVE_MIND) then
-  --      player:AddCollectible(CollectibleType.COLLECTIBLE_HIVE_MIND)
-  --  end
-
-    if not player:HasCollectible(CollectibleType.COLLECTIBLE_DINNER) then
-        player:AddCollectible(CollectibleType.COLLECTIBLE_DINNER)
-    end
-    
 end
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, maggy.onCache)

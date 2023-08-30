@@ -4,9 +4,14 @@ local CHAMPION_CROWN = Isaac.GetItemIdByName("Champion Crown")
 
 function isaac:onCache(player, cacheFlag)
     if player == nil then return end
-    if cacheFlag ~= CacheFlag.CACHE_DAMAGE then return end
+    if cacheFlag ~= CacheFlag.CACHE_DAMAGE then return end --Arbitrary cache just so it doesnt run 50 times with every cache
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= PlayerType.PLAYER_ISAAC then return end
+
+    local save = mod.SaveManager.GetRunSave(player)
+    if save.ItemObtained == true then return end
+    save.ItemObtained = true
+    
 
     local trinkets = {
         TrinketType.TRINKET_DICE_BAG,
@@ -20,13 +25,10 @@ function isaac:onCache(player, cacheFlag)
         end
     end
 
-    if player:HasCollectible(CollectibleType.COLLECTIBLE_D6) then
-        player:RemoveCollectible(CollectibleType.COLLECTIBLE_D6)
-    end
+    player:RemoveCollectible(CollectibleType.COLLECTIBLE_D6)
+    
+    player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_MOVING_BOX)
 
-    if not player:HasCollectible(CollectibleType.COLLECTIBLE_MOVING_BOX) then
-        player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_MOVING_BOX)
-    end
 end
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, isaac.onCache)
 

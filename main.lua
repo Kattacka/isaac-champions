@@ -1,28 +1,27 @@
 mod = RegisterMod("isaac-champions", 1)
 
-local saveManager = include("scripts.utility.save_manager") -- the path to the save manager, with different directories/folders separated by dots
-saveManager.Init(mod)
+mod.SaveManager = include("champscripts.utility.save_manager")
+mod.HiddenItemManager = require("champscripts.utility.hidden_item_manager")
 
--- -- In this example, the library file would be located at `...\The Binding of Isaac Rebirth\mods\<Your Mod's Folder>\myMod\lib\hidden_item_manager.lua`
--- -- But replace "myMod" with a different folder name, unique to your mod, to avoid collisions with other mods!
--- local hiddenItemManager = require("mod.scripts.utility.hidden_item_manager")
-
--- -- Make sure to call the Init function ONCE, before using any of the library's functions, and pass your mod reference to it.
--- hiddenItemManager:Init(mod)
+mod.SaveManager.Init(mod)
+mod.HiddenItemManager:Init(mod)
 
 
-include("scripts.isaac")
-include("scripts.maggy")
-include("scripts.judas")
-include("scripts.bluebaby")
-include("scripts.eve")
-include("scripts.samson")
-include("scripts.azazel")
-include("scripts.eden")
-include("scripts.lilith")
-include("scripts.forgotten")
-include("scripts.apollyon_b")
-include("scripts.jacob_b")
+include("champscripts.isaac")
+include("champscripts.maggy")
+include("champscripts.judas")
+include("champscripts.bluebaby")
+include("champscripts.eve")
+include("champscripts.samson")
+include("champscripts.azazel")
+include("champscripts.eden")
+include("champscripts.lilith")
+include("champscripts.forgotten")
+include("champscripts.bethany")
+include("champscripts.apollyon_b")
+include("champscripts.bluebaby_b")
+include("champscripts.jacob_b")
+
 
 local CHAMPION_CROWN = Isaac.GetItemIdByName("Champion Crown")
 local offsetFromRight = 180
@@ -109,8 +108,31 @@ end
 mod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, mod.enterRoom)
 
 
---    if (player:GetPlayerType() == PlayerType.PLAYER_JUDAS or player:GetPlayerType() == PlayerType.PLAYER_BLACKJUDAS) and
---not player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT) then
---    player:RemoveCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL)
---    player:AddCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)
---end
+function mod:PreSave(data)
+    -- notice how this callback is provided the entire save file
+    local hiddenItemData = mod.HiddenItemManager:GetSaveData()
+-- Include` hiddenItemData` in your SaveData table!
+
+    local save = mod.SaveManager.GetRunSave(nil)
+    save.HIDDEN_ITEM_DATA = hiddenItemData
+end
+
+-- also notice that custom callbacks use a special function in the save manager!!!
+mod.SaveManager.AddCallback(mod.SaveManager.Utility.CustomCallback.PRE_DATA_SAVE, mod.PreSave)
+
+-- this primarily handles luamod
+function mod:PostLoad(data)
+    local save = mod.SaveManager.GetRunSave(nil)
+    mod.HiddenItemManager:LoadData(save.HIDDEN_ITEM_DATA)
+end
+
+-- also notice that custom callbacks use a special function in the save manager!!!
+mod.SaveManager.AddCallback(mod.SaveManager.Utility.CustomCallback.POST_DATA_LOAD, mod.PostLoad)
+
+-- UnlockAPI wipes data on game start, which is later than the initial load, so load it again in that case.
+function mod:PostLoadGameStart()
+    local save = mod.SaveManager.GetRunSave(nil)
+    mod.HiddenItemManager:LoadData(save.HIDDEN_ITEM_DATA)
+end
+
+mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, mod.PostLoadGameStart)

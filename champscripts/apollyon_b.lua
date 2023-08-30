@@ -8,6 +8,10 @@ function apollyon_b:onCache(player, cacheFlag)
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= PlayerType.PLAYER_APOLLYON_B then return end
 
+    local save = mod.SaveManager.GetRunSave(player)
+    if save.ItemObtained == true then return end
+    save.ItemObtained = true
+    
     local challenge = Isaac.GetChallenge()
     Game().Challenge = Challenge.CHALLENGE_SOLAR_SYSTEM
     player:UpdateCanShoot()

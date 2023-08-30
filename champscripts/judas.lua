@@ -8,13 +8,19 @@ function judas:onCache(player, cacheFlag)
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= PlayerType.PLAYER_JUDAS and player:GetPlayerType() ~= PlayerType.PLAYER_BLACKJUDAS then return end
 
-    if player:GetPlayerType() == PlayerType.PLAYER_BLACKJUDAS then
-        player.Damage = player.Damage * 0.6 - 1
-    end
+
+    player.Damage = player.Damage * 0.6 - 1
+
+    local save = mod.SaveManager.GetRunSave(player)
+    if save.ItemObtained == true then return end
+    save.ItemObtained = true
 
     if player:GetPlayerType() ~= PlayerType.PLAYER_BLACKJUDAS then
-        player:ChangePlayerType(PlayerType.PLAYER_BLACKJUDAS)
+      player:ChangePlayerType(PlayerType.PLAYER_BLACKJUDAS)
     end
+
+    player:AddBlackHearts(1)
+
     local challenge = Isaac.GetChallenge()
     Game().Challenge = Challenge.CHALLENGE_SOLAR_SYSTEM
     player:UpdateCanShoot()
