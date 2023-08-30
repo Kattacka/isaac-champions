@@ -13,18 +13,16 @@ function eve:onCache(player, cacheFlag)
     if save.ItemObtained == true then return end
     save.ItemObtained = true
 
-    local trinkets = {
-        TrinketType.TRINKET_CROW_HEART,
-        TrinketType.TRINKET_PANIC_BUTTON,
-        TrinketType.TRINKET_BIBLE_TRACT,
-    }
 
-    for i = 1, #trinkets do
+    player:AddTrinket(TrinketType.TRINKET_CROW_HEART)
+    player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false)
 
-            player:AddTrinket(trinkets[i])
-            player:UsePill(PillEffect.PILLEFFECT_GULP, PillColor.PILL_NULL, 1|0000|0011)
-            print("gulp " .. i)
-    end
+    player:AddTrinket(TrinketType.TRINKET_PANIC_BUTTON)
+    player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false)
+
+    player:AddTrinket(TrinketType.TRINKET_BIBLE_TRACT)
+    player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false)
+
 
     if player:GetActiveItem(0) == CollectibleType.COLLECTIBLE_RAZOR_BLADE or player:GetActiveItem(1) == CollectibleType.COLLECTIBLE_RAZOR_BLADE then
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_RAZOR_BLADE)
