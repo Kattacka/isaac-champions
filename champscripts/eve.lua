@@ -12,7 +12,7 @@ function eve:onCache(player, cacheFlag)
     local save = mod.SaveManager.GetRunSave(player)
     if save.ItemObtained == true then return end
     save.ItemObtained = true
-    
+
     local trinkets = {
         TrinketType.TRINKET_CROW_HEART,
         TrinketType.TRINKET_PANIC_BUTTON,
@@ -20,10 +20,10 @@ function eve:onCache(player, cacheFlag)
     }
 
     for i = 1, #trinkets do
-        if not player:HasTrinket(trinkets[i]) then
+
             player:AddTrinket(trinkets[i])
             player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false)
-        end
+            print("gulp " .. i)
     end
 
     if player:GetActiveItem(0) == CollectibleType.COLLECTIBLE_RAZOR_BLADE or player:GetActiveItem(1) == CollectibleType.COLLECTIBLE_RAZOR_BLADE then
