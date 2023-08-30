@@ -22,7 +22,7 @@ function eve:onCache(player, cacheFlag)
     for i = 1, #trinkets do
 
             player:AddTrinket(trinkets[i])
-            player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false)
+            player:UsePill(PillEffect.PILLEFFECT_GULP, PillColor.PILL_NULL, 1|0000|0011)
             print("gulp " .. i)
     end
 
