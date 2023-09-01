@@ -1,9 +1,9 @@
-local eden_b = {}
-local CHARACTER = PlayerType.PLAYER_EDEN_B
+local isaac_b = {}
+local CHARACTER = PlayerType.PLAYER_ISAAC_B
 local CHAMPION_CROWN = Isaac.GetItemIdByName("Champion Crown")
 
 
-function eden_b:onCache(player, cacheFlag)
+function isaac_b:onCache(player, cacheFlag)
     if player == nil then return end
 
     if (cacheFlag ~= CacheFlag.CACHE_FIREDELAY) then return end
@@ -21,8 +21,9 @@ function eden_b:onCache(player, cacheFlag)
     end
 
     local trinkets = {
-        TrinketType.TRINKET_M,
-        TrinketType.TRINKET_EXPANSION_PACK,
+        TrinketType.TRINKET_WICKED_CROWN,
+        TrinketType.TRINKET_HOLY_CROWN,
+        TrinketType.TRINKET_BLOODY_CROWN,
     }
 
     for i = 1, #trinkets do
@@ -30,18 +31,28 @@ function eden_b:onCache(player, cacheFlag)
         player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false)
     end
 
-
-    player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_SMELTER)
+    player:AddCollectible(CollectibleType.COLLECTIBLE_BINGE_EATER)
 
     
 end
-mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, eden_b.onCache)
+mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, isaac_b.onCache)
 
-mod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, player)
-
+function isaac_b:onPickupInit(pickup)
+    if pickup.Variant ~= PickupVariant.PICKUP_COLLECTIBLE then return end
+    local player = Isaac.GetPlayer()
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
 
-    mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_BELLY_BUTTON, 1)
-    mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_LIL_CHEST, 1)
-  end)
+
+    -- for i=0, 5, 1 do
+    --     local delay = 50* math.log(i)
+    -- mod.Schedule(delay, function ()
+        print(GetPtrHash(pickup))
+        player:UseCard(Card.CARD_SOUL_ISAAC, UseFlag.USE_NOANIM | UseFlag.USE_NOANNOUNCER)
+        print(GetPtrHash(pickup))
+    -- end,{})
+    -- end
+
+
+    end
+mod:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, isaac_b.onPickupInit)
