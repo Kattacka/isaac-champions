@@ -28,9 +28,9 @@ function eve:onCache(player, cacheFlag)
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_RAZOR_BLADE)
     end
 
-    if not player:HasCollectible(CollectibleType.COLLECTIBLE_RAZOR_BLADE) then
-        player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_RAZOR_BLADE)
-    end
+
+    player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_RAZOR_BLADE)
+
 
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_DARK_PRINCES_CROWN) then
         player:AddCollectible(CollectibleType.COLLECTIBLE_DARK_PRINCES_CROWN)

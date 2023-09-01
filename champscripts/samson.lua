@@ -8,7 +8,7 @@ function samson:onCache(player, cacheFlag)
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= PlayerType.PLAYER_SAMSON then return end
 
-    player.MaxFireDelay = player.MaxFireDelay * 3
+    if cacheFlag == CacheFlag.CACHE_FIREDELAY then player.MaxFireDelay = player.MaxFireDelay * 3 end
 
     if player:HasCollectible(CollectibleType.COLLECTIBLE_BLOODY_LUST) then
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_BLOODY_LUST)

@@ -9,7 +9,7 @@ function judas:onCache(player, cacheFlag)
     if player:GetPlayerType() ~= PlayerType.PLAYER_JUDAS and player:GetPlayerType() ~= PlayerType.PLAYER_BLACKJUDAS then return end
 
 
-    player.Damage = player.Damage * 0.6 - 1
+    if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = player.Damage * 0.6 - 1 end
 
     local save = mod.SaveManager.GetRunSave(player)
     if save.ItemObtained == true then return end

@@ -8,7 +8,7 @@ function maggy:onCache(player, cacheFlag)
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= PlayerType.PLAYER_MAGDALENE then return end
 
-    player.MaxFireDelay = player.MaxFireDelay * 2
+    if cacheFlag == CacheFlag.CACHE_FIREDELAY then player.MaxFireDelay = player.MaxFireDelay * 2 end
 
     local save = mod.SaveManager.GetRunSave(player)
     if save.ItemObtained == true then return end

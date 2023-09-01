@@ -8,8 +8,8 @@ function bethany:onCache(player, cacheFlag)
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= PlayerType.PLAYER_BETHANY then return end
 
-    player.Damage = player.Damage / 2 + 0.7
-    player.MaxFireDelay = player.MaxFireDelay * 1.20
+    if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = player.Damage / 2 + 0.7 end
+    if cacheFlag == CacheFlag.CACHE_FIREDELAY then player.MaxFireDelay = player.MaxFireDelay * 1.20 end
 
     local save = mod.SaveManager.GetRunSave(player)
     if save.ItemObtained == true then return end

@@ -8,7 +8,7 @@ function lilith:onCache(player, cacheFlag)
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= PlayerType.PLAYER_LILITH then return end
 
-    player.Damage = player.Damage *0.66 - 1.4
+    if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = player.Damage *0.66 - 1.4 end
 
     local save = mod.SaveManager.GetRunSave(player)
     if save.ItemObtained == true then return end

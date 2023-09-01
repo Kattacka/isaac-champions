@@ -10,9 +10,9 @@ function eden:onCache(player, cacheFlag)
     if player:GetPlayerType() ~= PlayerType.PLAYER_EDEN then return end
 
 
-    player.MaxFireDelay = (player.MaxFireDelay * 1.4)
+    if cacheFlag == CacheFlag.CACHE_FIREDELAY then player.MaxFireDelay = (player.MaxFireDelay * 1.4) end
 
-    player.Damage = (player.Damage * 0.75) - 1.0
+    if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = (player.Damage * 0.75) - 1.0 end
 
 
     local save = mod.SaveManager.GetRunSave(player)
