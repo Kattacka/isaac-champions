@@ -30,6 +30,10 @@ function lilith:onCache(player, cacheFlag)
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_BOX_OF_FRIENDS)
     end
 
+    if player:HasCollectible(CollectibleType.COLLECTIBLE_CAMBION_CONCEPTION) then
+        player:RemoveCollectible(CollectibleType.COLLECTIBLE_CAMBION_CONCEPTION)
+    end
+
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT) then
         player:AddCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)
     end

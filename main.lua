@@ -23,6 +23,9 @@ include("champscripts.isaac_b")
 include("champscripts.cain_b")
 include("champscripts.apollyon_b")
 include("champscripts.bluebaby_b")
+include("champscripts.samson_b")
+
+
 include("champscripts.eden_b")
 include("champscripts.jacob_b")
 

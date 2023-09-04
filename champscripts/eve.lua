@@ -57,7 +57,7 @@ function eve:onHit(entity, amount, flags)
     if player:GetPlayerType() ~= PlayerType.PLAYER_EVE then return end
 
     local fakeDamageFlags = DamageFlag.DAMAGE_NO_PENALTIES | DamageFlag.DAMAGE_RED_HEARTS | DamageFlag.DAMAGE_FAKE
-    print(flags)
+
     if flags & fakeDamageFlags > 0 then return end
 
     player:UseActiveItem(CollectibleType.COLLECTIBLE_RAZOR_BLADE, true)

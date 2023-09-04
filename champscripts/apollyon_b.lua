@@ -17,6 +17,18 @@ function apollyon_b:onCache(player, cacheFlag)
     player:UpdateCanShoot()
     Game().Challenge = challenge
 
+    local trinkets = {
+        TrinketType.TRINKET_CRICKET_LEG,
+        TrinketType.TRINKET_CRICKET_LEG,
+        TrinketType.TRINKET_CRICKET_LEG,
+    }
+
+    for i = 1, #trinkets do
+
+        player:AddTrinket(trinkets[i])
+        player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false)
+
+    end
 
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_HIVE_MIND) then
         player:AddCollectible(CollectibleType.COLLECTIBLE_HIVE_MIND)
