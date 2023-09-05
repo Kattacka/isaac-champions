@@ -9,7 +9,7 @@ function samson_b:onCache(player, cacheFlag)
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
 
-    player.Damage = player.Damage *0.9 - 1.18
+    player.Damage = player.Damage - 1.0
 
     local save = mod.SaveManager.GetRunSave(player)
     if save.ItemObtained == true then return end
@@ -39,8 +39,11 @@ function samson_b:onCache(player, cacheFlag)
     end
 
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_ASTRAL_PROJECTION) then
-        player:AddCollectible(CollectibleType.COLLECTIBLE_ASTRAL_PROJECTION
-    )
+        player:AddCollectible(CollectibleType.COLLECTIBLE_ASTRAL_PROJECTION)
+    end
+
+    if not player:HasCollectible(CollectibleType.COLLECTIBLE_WAFER) then
+        player:AddCollectible(CollectibleType.COLLECTIBLE_WAFER)
     end
 
 end
