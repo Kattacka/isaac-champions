@@ -13,6 +13,7 @@ lilith,
 forgotten (poorly),
 bethany
 
+tainted samson
 tainted blue baby
 tainted apollyon, 
 tainted jacob
