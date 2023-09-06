@@ -1,7 +1,6 @@
 local samson_b = {}
-local CHARACTER = PlayerType.PLAYER_SAMSON_B
 local CHAMPION_CROWN = Isaac.GetItemIdByName("Champion Crown")
-
+local CHARACTER = PlayerType.PLAYER_SAMSON_B
 
 function samson_b:onCache(player, cacheFlag)
     if player == nil then return end
@@ -14,14 +13,6 @@ function samson_b:onCache(player, cacheFlag)
     local save = mod.SaveManager.GetRunSave(player)
     if save.ItemObtained == true then return end
     save.ItemObtained = true
-
-    -- local trinkets = {
-    -- }
-
-    -- for i = 1, #trinkets do
-    --     player:AddTrinket(trinkets[i])
-    --     player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false)
-    -- end
 
     player:AddBrokenHearts(11)
  
@@ -44,6 +35,10 @@ function samson_b:onCache(player, cacheFlag)
 
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_WAFER) then
         player:AddCollectible(CollectibleType.COLLECTIBLE_WAFER)
+    end
+
+    if not player:HasCollectible(CollectibleType.COLLECTIBLE_GOAT_HEAD) then
+        player:AddCollectible(CollectibleType.COLLECTIBLE_GOAT_HEAD)
     end
 
 end

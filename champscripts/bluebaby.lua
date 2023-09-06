@@ -1,12 +1,12 @@
 local bluebaby = {}
 local CHAMPION_CROWN = Isaac.GetItemIdByName("Champion Crown")
-
+local CHARACTER = PlayerType.PLAYER_BLUEBABY
 
 function bluebaby:onCache(player, cacheFlag)
     if player == nil then return end
     if cacheFlag ~= CacheFlag.CACHE_FIREDELAY then return end
     if not player:HasCollectible(CHAMPION_CROWN) then return end
-    if player:GetPlayerType() ~= PlayerType.PLAYER_BLUEBABY then return end
+    if player:GetPlayerType() ~= CHARACTER then return end
 
     local save = mod.SaveManager.GetRunSave(player)
     if save.ItemObtained == true then return end
@@ -17,11 +17,7 @@ function bluebaby:onCache(player, cacheFlag)
         TrinketType.TRINKET_MYSTERIOUS_CANDY,
         TrinketType.TRINKET_GIGANTE_BEAN,
     }
-
-    for i = 1, #trinkets do
-        player:AddTrinket(trinkets[i])
-        player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false)
-    end
+    mod:addTrinkets(player, trinkets)
 
     if player:HasCollectible(CollectibleType.COLLECTIBLE_POOP) then
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_POOP)

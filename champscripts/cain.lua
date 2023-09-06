@@ -1,7 +1,6 @@
 local cain = {}
-local CHARACTER = PlayerType.PLAYER_CAIN
 local CHAMPION_CROWN = Isaac.GetItemIdByName("Champion Crown")
-
+local CHARACTER = PlayerType.PLAYER_CAIN
 
 function cain:onCache(player, cacheFlag)
     if player == nil then return end
@@ -22,13 +21,7 @@ function cain:onCache(player, cacheFlag)
         TrinketType.TRINKET_RUSTED_KEY,
         TrinketType.TRINKET_CRYSTAL_KEY,
     }
-
-    for i = 1, #trinkets do
-        if not player:HasTrinket(trinkets[i]) then
-        player:AddTrinket(trinkets[i])
-        player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false)
-        end
-    end
+    mod:addTrinkets(player, trinkets)
 
     player:TryRemoveTrinket(TrinketType.TRINKET_PAPER_CLIP)
 

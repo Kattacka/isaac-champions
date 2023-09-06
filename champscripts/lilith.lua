@@ -1,12 +1,12 @@
 local lilith = {}
 local CHAMPION_CROWN = Isaac.GetItemIdByName("Champion Crown")
-
+local CHARACTER = PlayerType.PLAYER_LILITH
 
 function lilith:onCache(player, cacheFlag)
     if player == nil then return end
     if cacheFlag ~= CacheFlag.CACHE_DAMAGE then return end
     if not player:HasCollectible(CHAMPION_CROWN) then return end
-    if player:GetPlayerType() ~= PlayerType.PLAYER_LILITH then return end
+    if player:GetPlayerType() ~= CHARACTER then return end
 
     if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = player.Damage *0.66 - 1.4 end
 
@@ -18,13 +18,7 @@ function lilith:onCache(player, cacheFlag)
         TrinketType.TRINKET_FRIENDSHIP_NECKLACE,
         TrinketType.TRINKET_ADOPTION_PAPERS,
     }
-
-    for i = 1, #trinkets do
-
-        player:AddTrinket(trinkets[i])
-        player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false)
-
-    end
+    mod:addTrinkets(player, trinkets)
 
     if player:HasCollectible(CollectibleType.COLLECTIBLE_BOX_OF_FRIENDS) then
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_BOX_OF_FRIENDS)

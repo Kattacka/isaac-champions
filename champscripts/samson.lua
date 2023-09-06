@@ -1,12 +1,12 @@
 local samson = {}
 local CHAMPION_CROWN = Isaac.GetItemIdByName("Champion Crown")
-
+local CHARACTER = PlayerType.PLAYER_SAMSON
 
 function samson:onCache(player, cacheFlag)
     if player == nil then return end
     if cacheFlag ~= CacheFlag.CACHE_FIREDELAY then return end
     if not player:HasCollectible(CHAMPION_CROWN) then return end
-    if player:GetPlayerType() ~= PlayerType.PLAYER_SAMSON then return end
+    if player:GetPlayerType() ~= CHARACTER then return end
 
     if cacheFlag == CacheFlag.CACHE_FIREDELAY then player.MaxFireDelay = player.MaxFireDelay * 3 end
 

@@ -1,7 +1,6 @@
 local cain_b = {}
-local CHARACTER = PlayerType.PLAYER_CAIN_B
 local CHAMPION_CROWN = Isaac.GetItemIdByName("Champion Crown")
-
+local CHARACTER = PlayerType.PLAYER_CAIN_B
 
 function cain_b:onCache(player, cacheFlag)
     if player == nil then return end
@@ -20,11 +19,7 @@ function cain_b:onCache(player, cacheFlag)
         TrinketType.TRINKET_LUCKY_ROCK,
         TrinketType.TRINKET_MYOSOTIS,
     }
-
-    for i = 1, #trinkets do
-        player:AddTrinket(trinkets[i])
-        player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false)
-    end
+    mod:addTrinkets(player, trinkets)
 
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_SCHOOLBAG) then
         player:AddCollectible(CollectibleType.COLLECTIBLE_SCHOOLBAG)

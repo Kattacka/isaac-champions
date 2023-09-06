@@ -1,12 +1,12 @@
 local bethany = {}
 local CHAMPION_CROWN = Isaac.GetItemIdByName("Champion Crown")
-
+local CHARACTER = PlayerType.PLAYER_BETHANY
 
 function bethany:onCache(player, cacheFlag)
     if player == nil then return end
     if (cacheFlag ~= CacheFlag.CACHE_DAMAGE and cacheFlag ~= CacheFlag.CACHE_FIREDELAY) then return end
     if not player:HasCollectible(CHAMPION_CROWN) then return end
-    if player:GetPlayerType() ~= PlayerType.PLAYER_BETHANY then return end
+    if player:GetPlayerType() ~= CHARACTER then return end
 
     if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = player.Damage / 2 + 0.7 end
     if cacheFlag == CacheFlag.CACHE_FIREDELAY then player.MaxFireDelay = player.MaxFireDelay * 1.20 end
@@ -21,10 +21,7 @@ function bethany:onCache(player, cacheFlag)
         TrinketType.TRINKET_DEVILS_CROWN
     }
 
-    for i = 1, #trinkets do
-            player:AddTrinket(trinkets[i])
-            player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false)
-    end
+    mod:addTrinkets(player, trinkets)
 
     if player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_VIRTUES) then
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_VIRTUES)

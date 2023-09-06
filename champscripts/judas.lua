@@ -1,12 +1,13 @@
 local judas = {}
 local CHAMPION_CROWN = Isaac.GetItemIdByName("Champion Crown")
-
+local CHARACTER = PlayerType.PLAYER_JUDAS
+local CHARACTER2 = PlayerType.PLAYER_BLACKJUDAS
 
 function judas:onCache(player, cacheFlag)
     if player == nil then return end
     if cacheFlag ~= CacheFlag.CACHE_DAMAGE then return end
     if not player:HasCollectible(CHAMPION_CROWN) then return end
-    if player:GetPlayerType() ~= PlayerType.PLAYER_JUDAS and player:GetPlayerType() ~= PlayerType.PLAYER_BLACKJUDAS then return end
+    if player:GetPlayerType() ~= CHARACTER and player:GetPlayerType() ~= CHARACTER2 then return end
 
 
     if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = player.Damage * 0.6 - 1 end
@@ -15,45 +16,28 @@ function judas:onCache(player, cacheFlag)
     if save.ItemObtained == true then return end
     save.ItemObtained = true
 
-    if player:GetPlayerType() ~= PlayerType.PLAYER_BLACKJUDAS then
-      player:ChangePlayerType(PlayerType.PLAYER_BLACKJUDAS)
+    if player:GetPlayerType() ~= CHARACTER2 then
+      player:ChangePlayerType(CHARACTER2)
     end
 
     player:AddBlackHearts(1)
 
-    local challenge = Isaac.GetChallenge()
-    Game().Challenge = Challenge.CHALLENGE_SOLAR_SYSTEM
-    player:UpdateCanShoot()
-    Game().Challenge = challenge
-
-
+    mod:setBlindfold(player, true, true)
 
     local trinkets = {
         TrinketType.TRINKET_DAEMONS_TAIL
     }
+    mod:addTrinkets(player, trinkets)
 
-    for i = 1, #trinkets do
-        if not player:HasTrinket(trinkets[i]) then
-            player:AddTrinket(trinkets[i])
-            player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false)
-        end
-    end
+    local collectibles = {
+      CollectibleType.COLLECTIBLE_MY_SHADOW,
+      CollectibleType.COLLECTIBLE_BIRTHRIGHT,
+    }
+    mod:addCollectibles(player, collectibles)
 
-    if player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL) then
-        player:RemoveCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL)
-    end
+    player:RemoveCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL)
+    player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_URN_OF_SOULS)
 
-    if not player:HasCollectible(CollectibleType.COLLECTIBLE_URN_OF_SOULS) then
-        player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_URN_OF_SOULS)
-    end
-
-    if not player:HasCollectible(CollectibleType.COLLECTIBLE_MY_SHADOW) then
-        player:AddCollectible(CollectibleType.COLLECTIBLE_MY_SHADOW)
-    end
-
-    if not player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT) then
-        player:AddCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)
-    end
 end
 
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, judas.onCache)
@@ -104,21 +88,14 @@ mod:AddCallback(ModCallbacks.MC_POST_RENDER, judas.SoulPostRender)
 
 
 function judas:onWormDie(entity)
-    local finalPlayer = nil
-    for i = 0, Game():GetNumPlayers() - 1 do
-        local player = Isaac.GetPlayer(i)
-        if player:GetPlayerType() == PlayerType.PLAYER_BLACKJUDAS then
-            finalPlayer = player
-        end
-      end
+  if not (entity.Type == 23 and entity.Variant == 0 and entity.SubType == 1) then return end
 
-    if finalPlayer == nil then return end
-    if finalPlayer:GetPlayerType() ~= PlayerType.PLAYER_BLACKJUDAS then return end
-    if not finalPlayer:HasCollectible(CHAMPION_CROWN) then return end
-    if entity.Type == 23 and entity.Variant == 0 and entity.SubType == 1 then
-        judas:spawnSoul(finalPlayer:ToPlayer(), entity.Position, true)
-    end
-
+  local champions = mod:getAllChampChars(CHARACTER2)
+  if champions == nil or champions == {} then return end
+  for i = 1, #champions do
+      local player = champions[i]
+      judas:spawnSoul(player:ToPlayer(), entity.Position, true)
+  end
 end
 
 mod:AddCallback(ModCallbacks.MC_POST_NPC_DEATH, judas.onWormDie)

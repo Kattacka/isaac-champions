@@ -1,12 +1,12 @@
 local eve = {}
 local CHAMPION_CROWN = Isaac.GetItemIdByName("Champion Crown")
-
+local CHARACTER = PlayerType.PLAYER_EVE
 
 function eve:onCache(player, cacheFlag)
     if player == nil then return end
-    if cacheFlag ~= CacheFlag.CACHE_DAMAGE then return end
+    if cacheFlag ~= CacheFlag.CACHE_LUCK then return end
     if not player:HasCollectible(CHAMPION_CROWN) then return end
-    if player:GetPlayerType() ~= PlayerType.PLAYER_EVE then return end
+    if player:GetPlayerType() ~= CHARACTER then return end
 
 
     local save = mod.SaveManager.GetRunSave(player)
@@ -18,11 +18,7 @@ function eve:onCache(player, cacheFlag)
         TrinketType.TRINKET_PANIC_BUTTON,
         TrinketType.TRINKET_BIBLE_TRACT,
     }
-
-    for i = 1, #trinkets do
-        player:AddTrinket(trinkets[i])
-        player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false)
-    end
+    mod:addTrinkets(player, trinkets)
 
     if player:GetActiveItem(0) == CollectibleType.COLLECTIBLE_RAZOR_BLADE or player:GetActiveItem(1) == CollectibleType.COLLECTIBLE_RAZOR_BLADE then
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_RAZOR_BLADE)
@@ -54,7 +50,7 @@ mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, eve.onCache)
 function eve:onHit(entity, amount, flags)
     local player = entity:ToPlayer() 
     if not player:HasCollectible(CHAMPION_CROWN) then return end
-    if player:GetPlayerType() ~= PlayerType.PLAYER_EVE then return end
+    if player:GetPlayerType() ~= CHARACTER then return end
 
     local fakeDamageFlags = DamageFlag.DAMAGE_NO_PENALTIES | DamageFlag.DAMAGE_RED_HEARTS | DamageFlag.DAMAGE_FAKE
 

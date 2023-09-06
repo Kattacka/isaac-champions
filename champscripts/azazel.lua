@@ -1,6 +1,6 @@
 local azazel = {}
-local CHARACTER = PlayerType.PLAYER_AZAZEL
 local CHAMPION_CROWN = Isaac.GetItemIdByName("Champion Crown")
+local CHARACTER = PlayerType.PLAYER_AZAZEL
 
 
 function azazel:onCache(player, cacheFlag)

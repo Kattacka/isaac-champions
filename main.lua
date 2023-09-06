@@ -143,3 +143,57 @@ function mod:PostLoadGameStart()
 end
 
 mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, mod.PostLoadGameStart)
+
+function mod:addTrinkets(player, trinkets)
+    for i = 1, #trinkets do
+        player:AddTrinket(trinkets[i])
+        player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false)
+    end
+end
+
+function mod:addCollectibles(player, collectibles)
+  for i = 1, #collectibles do
+    if not player:HasCollectible(collectibles[i]) then
+      player:AddCollectible(collectibles[i])
+    end
+end
+
+end
+
+function mod:getAllChampChars(character)
+    local championChars = {}
+    for i = 0, Game():GetNumPlayers() - 1 do
+        local player = Isaac.GetPlayer(i)
+        if player:GetPlayerType() == character and player:HasCollectible(CHAMPION_CROWN) then
+            table.insert(championChars, player)
+        end
+    end
+    return championChars
+end
+
+function mod:setBlindfold(player, enabled, addCostume)
+  local game = Game()
+  local character = player:GetPlayerType()
+  local challenge = Isaac.GetChallenge()
+
+  if enabled then
+    game.Challenge = Challenge.CHALLENGE_SOLAR_SYSTEM -- This challenge has a blindfold
+    player:ChangePlayerType(character)
+    game.Challenge = challenge
+
+    -- The costume is applied automatically
+    if addCostume then
+      player:AddNullCostume(NullItemID.ID_BLINDFOLD)
+    else
+      player:TryRemoveNullCostume(NullItemID.ID_BLINDFOLD)
+    end
+  else
+    game.Challenge = Challenge.CHALLENGE_NULL
+    player:ChangePlayerType(character)
+    game.Challenge = challenge
+
+    if modifyCostume then
+      player:TryRemoveNullCostume(NullItemID.ID_BLINDFOLD)
+    end
+  end
+end

@@ -1,12 +1,12 @@
 local maggy = {}
 local CHAMPION_CROWN = Isaac.GetItemIdByName("Champion Crown")
-
+local CHARACTER = PlayerType.PLAYER_MAGDALENE
 
 function maggy:onCache(player, cacheFlag)
     if player == nil then return end
     if cacheFlag ~= CacheFlag.CACHE_FIREDELAY then return end
     if not player:HasCollectible(CHAMPION_CROWN) then return end
-    if player:GetPlayerType() ~= PlayerType.PLAYER_MAGDALENE then return end
+    if player:GetPlayerType() ~= CHARACTER then return end
 
     if cacheFlag == CacheFlag.CACHE_FIREDELAY then player.MaxFireDelay = player.MaxFireDelay * 2 end
 
@@ -22,11 +22,7 @@ function maggy:onCache(player, cacheFlag)
         TrinketType.TRINKET_APPLE_OF_SODOM,
         TrinketType.TRINKET_FISH_TAIL,
     }
-
-    for i = 1, #trinkets do
-        player:AddTrinket(trinkets[i])
-        player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false)
-    end
+    mod:addTrinkets(player, trinkets)
 
     if player:HasCollectible(CollectibleType.COLLECTIBLE_YUM_HEART) then
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_YUM_HEART)
