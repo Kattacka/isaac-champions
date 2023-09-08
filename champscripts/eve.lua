@@ -8,6 +8,7 @@ function eve:onCache(player, cacheFlag)
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
 
+    player.Luck = player.Luck - 3.0
 
     local save = mod.SaveManager.GetRunSave(player)
     if save.ItemObtained == true then return end

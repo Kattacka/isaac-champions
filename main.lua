@@ -164,6 +164,7 @@ function mod:getAllChampChars(character)
     local championChars = {}
     for i = 0, Game():GetNumPlayers() - 1 do
         local player = Isaac.GetPlayer(i)
+        
         if player:GetPlayerType() == character and player:HasCollectible(CHAMPION_CROWN) then
             table.insert(championChars, player)
         end
@@ -181,7 +182,6 @@ function mod:setBlindfold(player, enabled, addCostume)
     player:ChangePlayerType(character)
     game.Challenge = challenge
 
-    -- The costume is applied automatically
     if addCostume then
       player:AddNullCostume(NullItemID.ID_BLINDFOLD)
     else
@@ -192,8 +192,13 @@ function mod:setBlindfold(player, enabled, addCostume)
     player:ChangePlayerType(character)
     game.Challenge = challenge
 
-    if modifyCostume then
+    if addCostume then
       player:TryRemoveNullCostume(NullItemID.ID_BLINDFOLD)
     end
   end
+end
+
+function mod:SetNoTreasureRooms()
+
+
 end

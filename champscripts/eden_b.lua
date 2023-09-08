@@ -25,10 +25,11 @@ function eden_b:onCache(player, cacheFlag)
     }
     mod:addTrinkets(player, trinkets)
 
+    player:AddTrinket(TrinketType.TRINKET_TICK)
 
     player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_SMELTER)
 
-    
+    player:UseActiveItem(CollectibleType.COLLECTIBLE_FORGET_ME_NOW, false)
 end
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, eden_b.onCache)
 
@@ -39,4 +40,30 @@ mod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, player)
 
     mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_BELLY_BUTTON, 1)
     mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_LIL_CHEST, 1)
+    mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_CHAOS, 1)
   end)
+
+  --disable treasure rooms
+function eden_b:preFloorTransition()
+    local championChars = mod:getAllChampChars(CHARACTER)
+    if (next(championChars) == nil) then return end
+    
+    local save = mod.SaveManager.GetRunSave(nil)
+    if save then
+        save.challenge = Isaac.GetChallenge()
+    end
+
+    Game().Challenge = Challenge.CHALLENGE_PURIST
+  end
+
+mod:AddCallback(ModCallbacks.MC_POST_CURSE_EVAL, eden_b.preFloorTransition)
+
+
+function eden_b:postFloorTransition()
+    local save = mod.SaveManager.GetRunSave(nil)
+    if save and save.challenge then
+        Game().Challenge = save.challenge
+    end
+end
+
+mod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, eden_b.postFloorTransition)

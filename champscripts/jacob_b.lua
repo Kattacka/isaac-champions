@@ -34,7 +34,7 @@ mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, jacob_b.onCache)
 
 function jacob_b:onNewFloor()
     local champions = mod:getAllChampChars(CHARACTER)
-    if champions == nil or champions == {} then return end
+    if (next(champions) == nil) then return end
     for i = 1, #champions do
         local player = champions[i]
         player:UseActiveItem(CollectibleType.COLLECTIBLE_ANIMA_SOLA, true)

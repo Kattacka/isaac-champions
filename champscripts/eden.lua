@@ -60,7 +60,7 @@ mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, eden.onCache)
 function eden:onUse(_, rng, player)
     if not player then return end
     local championEdens = mod:getAllChampChars(CHARACTER)
-    if championEdens == {} then return end
+    if (next(championEdens) == nil) then return end
 
     for i = 1, #championEdens do
         local player = championEdens[i]

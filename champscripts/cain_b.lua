@@ -29,7 +29,32 @@ function cain_b:onCache(player, cacheFlag)
         player:AddCollectible(CollectibleType.COLLECTIBLE_NOTCHED_AXE)
     end
     player:SetActiveCharge(100)
+
+    player:UseActiveItem(CollectibleType.COLLECTIBLE_FORGET_ME_NOW, false)
 end
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, cain_b.onCache)
 
+--disable treasure rooms
+function cain_b:preFloorTransition()
+    local championChars = mod:getAllChampChars(CHARACTER)
+    if (next(championChars) == nil) then return end
+    
+    local save = mod.SaveManager.GetRunSave(nil)
+    if save then
+        save.challenge = Isaac.GetChallenge()
+    end
 
+    Game().Challenge = Challenge.CHALLENGE_PURIST
+  end
+
+mod:AddCallback(ModCallbacks.MC_POST_CURSE_EVAL, cain_b.preFloorTransition)
+
+
+function cain_b:postFloorTransition()
+    local save = mod.SaveManager.GetRunSave(nil)
+    if save and save.challenge then
+        Game().Challenge = save.challenge
+    end
+end
+
+mod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, cain_b.postFloorTransition)

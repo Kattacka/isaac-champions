@@ -16,6 +16,11 @@ function samson_b:onCache(player, cacheFlag)
 
     player:AddBrokenHearts(11)
  
+    local trinkets = {
+        TrinketType.TRINKET_CHILDS_HEART,
+        TrinketType.TRINKET_PURPLE_HEART,
+    }
+    mod:addTrinkets(player, trinkets)
 
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_GLYPH_OF_BALANCE) then
         player:AddCollectible(CollectibleType.COLLECTIBLE_GLYPH_OF_BALANCE)
