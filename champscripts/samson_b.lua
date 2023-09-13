@@ -19,6 +19,8 @@ function samson_b:onCache(player, cacheFlag)
     local trinkets = {
         TrinketType.TRINKET_CHILDS_HEART,
         TrinketType.TRINKET_PURPLE_HEART,
+        TrinketType.TRINKET_DOOR_STOP,
+        TrinketType.TRINKET_KEEPERS_BARGAIN,
     }
     mod:addTrinkets(player, trinkets)
 
@@ -46,6 +48,7 @@ function samson_b:onCache(player, cacheFlag)
         player:AddCollectible(CollectibleType.COLLECTIBLE_GOAT_HEAD)
     end
 
+    player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_CONVERTER)
 end
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, samson_b.onCache)
 
