@@ -4,11 +4,12 @@ local CHARACTER = PlayerType.PLAYER_MAGDALENE_B
 
 function maggy_b:onCache(player, cacheFlag)
     if player == nil then return end
-    if cacheFlag ~= CacheFlag.CACHE_LUCK then return end
+    if not (cacheFlag == CacheFlag.CACHE_LUCK or cacheFlag == CacheFlag.CACHE_DAMAGE) then return end
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
 
     if cacheFlag == CacheFlag.CACHE_LUCK then player.Luck = player.Luck + 8.01 end
+    if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = (player.Damage * 0.6) end
 
     local save = mod.SaveManager.GetRunSave(player)
     if save.ItemObtained == true then return end

@@ -43,7 +43,6 @@ mod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, player)
     mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_FALSE_PHD, 1)
     mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_LITTLE_BAGGY, 1)
     mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_CRACKED_ORB, 1)
-    mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_9_VOLT, 1)
 
 end)
 
