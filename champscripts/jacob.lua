@@ -22,7 +22,9 @@ function jacob:onCache(player, cacheFlag)
 
     local twinSave = mod.SaveManager.GetRunSave(player:GetOtherTwin())
     if twinSave.ItemObtained == true then return end
+    player:AddPill(Game():GetItemPool():ForceAddPillEffect(PillEffect.PILLEFFECT_PRETTY_FLY));
     player:GetOtherTwin():AddCollectible(CHAMPION_CROWN)
+    player:GetOtherTwin():AddCard(Card.CARD_HOLY)
 
 end
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, jacob.onCache)

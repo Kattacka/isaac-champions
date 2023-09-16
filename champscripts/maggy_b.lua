@@ -9,7 +9,7 @@ function maggy_b:onCache(player, cacheFlag)
     if player:GetPlayerType() ~= CHARACTER then return end
 
     if cacheFlag == CacheFlag.CACHE_LUCK then player.Luck = player.Luck + 8.01 end
-    if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = (player.Damage * 0.6) end
+    if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = (player.Damage * 0.5) end
 
     local save = mod.SaveManager.GetRunSave(player)
     if save.ItemObtained == true then return end
