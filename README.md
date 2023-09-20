@@ -42,6 +42,11 @@ Removed random starting items.
 0.6x tear rate, 0.75x damage.
 Starts with pocket genesis, TMTrainer, libra, magic mush, and mini mush.
 
+Lost+:
+No Holy Mantle
+Starts with clear rune, rune bag, and heartbreak.
+Starts with agiz rune.
+
 Lilith+:
 Removed box of friends and cambion conception.
 0.66x Damage
@@ -73,7 +78,7 @@ Starts with pocket converter, champion belt, glyph of balance, astral projection
 Tainted Eden+:
 Treasure rooms don't spawn.
 Removed random starting items.
-Starts with pocket smelter (doesn't reroll), a gulp pill, and lil chest (also doesn't get rerolled)
+Starts with pocket undefined, holy mantle, chaos + gulped panic button and hairpin (items and trinkets don't reroll)
 
 Tainted Apollyon+: 
 Blindfolded
