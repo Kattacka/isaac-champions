@@ -26,9 +26,11 @@ function eden:onCache(player, cacheFlag)
 
     if level:GetCurrentRoomIndex() == GridRooms.ROOM_GENESIS_IDX then return end
 
-    for i = 0, Isaac.GetItemConfig():GetCollectibles().Size -1, 1 do
-        if player:HasCollectible(i) and i ~= CHAMPION_CROWN then
-            player:RemoveCollectible(i)
+    if not tempEffects:HasNullEffect(NullItemID.ID_ESAU_JR) then
+        for i = 0, Isaac.GetItemConfig():GetCollectibles().Size -1, 1 do
+            if player:HasCollectible(i) and i ~= CHAMPION_CROWN then
+                player:RemoveCollectible(i)
+            end
         end
     end
 
@@ -80,7 +82,7 @@ mod:AddCallback(ModCallbacks.MC_USE_ITEM, eden.onUse, CollectibleType.COLLECTIBL
 function eden:onNewRoom()
     local championEdens  = mod:getAllChampChars(CHARACTER)
 
-    if championEdens == {} then return end
+    if (next(championEdens) == nil) then return end
     local game = Game()
     local room = game:GetRoom()
     local level = game:GetLevel()
@@ -88,11 +90,11 @@ function eden:onNewRoom()
     if level:GetCurrentRoomIndex() == GridRooms.ROOM_GENESIS_IDX then
         for i = 1, #championEdens do
             local player = championEdens[i]
-                for j = 0, Isaac.GetItemConfig():GetCollectibles().Size - 1, 1 do
-                    if player:HasCollectible(j) and j ~= CHAMPION_CROWN then
-                        player:RemoveCollectible(j)
-                    end
+            for j = 0, Isaac.GetItemConfig():GetCollectibles().Size - 1, 1 do
+                if player:HasCollectible(j) and j ~= CHAMPION_CROWN then
+                    player:RemoveCollectible(j)
                 end
+            end
         end
     end
 end

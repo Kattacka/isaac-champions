@@ -8,10 +8,11 @@ function cain_b:onCache(player, cacheFlag)
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
 
-
     local save = mod.SaveManager.GetRunSave(player)
     if save.ItemObtained == true then return end
     save.ItemObtained = true
+
+    local tempEffects = player:GetEffects()
 
     local trinkets = {
         TrinketType.TRINKET_NUH_UH,
@@ -30,6 +31,7 @@ function cain_b:onCache(player, cacheFlag)
     end
     player:SetActiveCharge(100)
 
+    if tempEffects:HasNullEffect(NullItemID.ID_ESAU_JR) then return end
     player:UseActiveItem(CollectibleType.COLLECTIBLE_FORGET_ME_NOW, false)
 end
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, cain_b.onCache)

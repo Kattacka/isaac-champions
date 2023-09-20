@@ -14,6 +14,8 @@ function cain:onCache(player, cacheFlag)
     if save.ItemObtained == true then return end
     save.ItemObtained = true
 
+    local tempEffects = player:GetEffects()
+
     player:TryRemoveTrinket(TrinketType.TRINKET_PAPER_CLIP)
 
     local trinkets = {
@@ -30,6 +32,7 @@ function cain:onCache(player, cacheFlag)
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_LUCKY_FOOT)
     end
 
+    if tempEffects:HasNullEffect(NullItemID.ID_ESAU_JR) then return end
     player:UseActiveItem(CollectibleType.COLLECTIBLE_FORGET_ME_NOW, false)
 end
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, cain.onCache)

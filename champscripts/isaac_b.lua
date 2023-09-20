@@ -13,12 +13,6 @@ function isaac_b:onCache(player, cacheFlag)
     if save.ItemObtained == true then return end
     save.ItemObtained = true
 
-    for i = 0, Isaac.GetItemConfig():GetCollectibles().Size -1, 1 do
-        if player:HasCollectible(i) and i ~= CHAMPION_CROWN then
-            player:RemoveCollectible(i)
-        end
-    end
-
     local trinkets = {
         TrinketType.TRINKET_WICKED_CROWN,
         TrinketType.TRINKET_HOLY_CROWN,
