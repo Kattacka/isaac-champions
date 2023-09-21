@@ -26,6 +26,7 @@ function lost:onPerfectUpdate(player)
     if player == nil then return end
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
+    if player:HasCollectible(CollectibleType.COLLECTIBLE_HOLY_MANTLE) then return end
     if player:HasTrinket(TrinketType.TRINKET_WOODEN_CROSS) then
         if Game():GetRoom():GetFrameCount() ~= 1 then return end
     else
@@ -57,6 +58,7 @@ function mod:PostRender()
     local level = Game():GetLevel()
 
     if level:GetCurses() & LevelCurse.CURSE_OF_THE_UNKNOWN > 0 then return end
+    if player:HasCurseMistEffect() then return end
 
     local data = player:GetData()
 

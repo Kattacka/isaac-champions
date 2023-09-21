@@ -84,6 +84,6 @@ function eden_b:onHit(entity, amount, flags)
 
     player:UseActiveItem(CollectibleType.COLLECTIBLE_UNDEFINED, true, 0, ActiveSlot.SLOT_POCKET)
     player:SetActiveCharge(player:GetActiveCharge(ActiveSlot.SLOT_POCKET) + player:GetBatteryCharge(ActiveSlot.SLOT_POCKET) - 6, ActiveSlot.SLOT_POCKET)
-    return false
+    return true
 end
 mod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, eden_b.onHit, EntityType.ENTITY_PLAYER)
