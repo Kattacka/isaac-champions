@@ -88,6 +88,12 @@ Tainted Blue Baby+:
 Blindfolded.
 Starts with pocket mom's bracelet, birthright, mitre, fate, ???'s best friend, and gulped brown cap.
 
+Tainted Lazarus+:
+Item pedestals aren't affected by Flip.
+Flip is now 3 charges and only swaps between Lazarus forms.
+Starts with more options and vanishing twin.
+Laz A starts with eve's mascera and Laz B starts with soy milk.
+
 Tainted Jacob+:
 Blindfolded
 Starts with birthright, spirit of the night, and the battery.

@@ -15,19 +15,6 @@ function lazarus_b:onCache(player, cacheFlag)
 
 
         local save = mod.SaveManager.GetRunSave(player)
-        local printA = nil
-        local printB = nil
-
-        if save.TLazAInit == nil then printA = "nil" else
-            if save.TLazAInit == true then printA = "true" else
-                if save.TLazAInit == false then printA = "false" end end end
-
-        if save.TLazBInit == nil then printB = "nil" else
-            if save.TLazBInit == true then printB = "true" else
-                if save.TLazBInit == false then printB = "false" end end end
-
-        print("Laz A Init: " .. printA)
-        print("Laz B init: " .. printB)
 
         if (save.TLazAInit == true or save.TLazBInit == true) then return end
 
