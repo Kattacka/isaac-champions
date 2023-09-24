@@ -24,7 +24,6 @@ function eden_b:onCache(player, cacheFlag)
 
     player:AddTrinket(TrinketType.TRINKET_HAIRPIN)
     local trinkets = {
-        TrinketType.TRINKET_HAIRPIN,
         TrinketType.TRINKET_PANIC_BUTTON,
     }
     mod:addTrinkets(player, trinkets)
