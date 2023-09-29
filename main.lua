@@ -6,6 +6,7 @@ mod.HiddenItemManager = require("champscripts.utility.hidden_item_manager")
 mod.SaveManager.Init(mod)
 mod.HiddenItemManager:Init(mod)
 
+mod.Utility = include("champscripts.utility.champ_util")
 
 include("champscripts.isaac")
 include("champscripts.maggy")
@@ -86,6 +87,10 @@ function mod:PostPlayerInit(player, playerVariant)
 
 end
 mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, mod.PostPlayerInit, 0)
+
+-- mod.Schedule(1, function ()
+
+-- end,{})
 
 
 function mod:PostGameStart(isContinued)
