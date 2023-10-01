@@ -2,22 +2,24 @@ local maggy_b = {}
 local CHAMPION_CROWN = Isaac.GetItemIdByName("Champion Crown")
 local CHARACTER = PlayerType.PLAYER_MAGDALENE_B
 
+local enemies_killed = {}
+
 function maggy_b:onCache(player, cacheFlag)
     if player == nil then return end
-    if not (cacheFlag == CacheFlag.CACHE_LUCK or cacheFlag == CacheFlag.CACHE_DAMAGE) then return end
+    if not (cacheFlag == CacheFlag.CACHE_DAMAGE or cacheFlag == CacheFlag.CACHE_TEARFLAG) then return end
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
 
-    if cacheFlag == CacheFlag.CACHE_LUCK then player.Luck = player.Luck + 8.01 end
-    if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = (player.Damage * 0.5) end
 
+    if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = (player.Damage * 0.4) end
+    if cacheFlag == CacheFlag.CACHE_TEARFLAG then player.TearFlags = player.TearFlags | TearFlags.TEAR_PUNCH end
     local save = mod.SaveManager.GetRunSave(player)
     if save.ItemObtained == true then return end
     save.ItemObtained = true
 
     mod:setBlindfold(player, true, true)
 
-    player:AddBrokenHearts(6)
+    player:AddBrokenHearts(3)
 
     -- local trinkets = {
 
@@ -32,8 +34,29 @@ mod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, player)
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
 
+    mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_CHARM_VAMPIRE, 1)
     mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_KNOCKOUT_DROPS, 1)
     mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_ISAACS_HEART, 1)
-    mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_HARLEQUIN_BABY, 1)
 
-  end)
+end)
+
+
+function maggy_b:onPickupInit(pickup)
+
+    if not (pickup.Variant == PickupVariant.PICKUP_HEART and pickup.SubType == HeartSubType.HEART_HALF) then return end
+    local championChars = mod:getAllChampChars(CHARACTER)
+    if (next(championChars) == nil) then return end
+    if not pickup.SpawnerEntity then return end
+    if mod.Utility:anyPlayerHasNullEffect(NullItemID.ID_SOUL_MAGDALENE) then return end
+
+    mod.Schedule(1, function ()
+        if pickup.Timeout == 58 then
+            local rng = pickup:GetDropRNG()
+            local roll = rng:RandomFloat()
+            if roll < 0.9 then
+               pickup:Remove()
+            end
+        end
+    end,{})
+  end
+mod:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, maggy_b.onPickupInit)

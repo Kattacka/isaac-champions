@@ -66,4 +66,28 @@ function champ_util:hasRevive(player)
     return hasRevive
 end
 
+function champ_util:getAllChampChars(character)
+    local championChars = {}
+    for i = 0, Game():GetNumPlayers() - 1 do
+        local player = Isaac.GetPlayer(i)
+        
+        if player:GetPlayerType() == character and player:HasCollectible(CHAMPION_CROWN) then
+            table.insert(championChars, player)
+        end
+    end
+    return championChars
+end
+
+function champ_util:anyPlayerHasNullEffect(effect)
+    for i = 0, Game():GetNumPlayers() - 1 do
+        local player = Isaac.GetPlayer(i)
+        
+        local tempEffects = player:GetEffects()
+        if tempEffects:HasNullEffect(effect) then
+            return true
+        end
+    end
+    return false
+end
+
 return champ_util

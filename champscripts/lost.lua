@@ -19,6 +19,8 @@ function lost:onCache(player, cacheFlag)
     player:AddCollectible(CollectibleType.COLLECTIBLE_CLEAR_RUNE, 4, false)
     player:AddCard(Card.RUNE_ALGIZ)
 
+    player:AddBrokenHearts(-2)
+
     local tempEffects = player:GetEffects()
     if tempEffects:HasCollectibleEffect(CollectibleType.COLLECTIBLE_HOLY_MANTLE) then
         tempEffects:RemoveCollectibleEffect(CollectibleType.COLLECTIBLE_HOLY_MANTLE, 1)

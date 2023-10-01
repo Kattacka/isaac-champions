@@ -11,9 +11,9 @@ function eden:onCache(player, cacheFlag)
     if player:GetPlayerType() ~= CHARACTER then return end
 
 
-    if cacheFlag == CacheFlag.CACHE_FIREDELAY then player.MaxFireDelay = (player.MaxFireDelay * 1.4) end
+    if cacheFlag == CacheFlag.CACHE_FIREDELAY then player.MaxFireDelay = (player.MaxFireDelay * 1.5) end
 
-    if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = (player.Damage * 0.75) - 1.0 end
+    if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = (player.Damage * 0.6) - 0.7 end
 
 
     local save = mod.SaveManager.GetRunSave(player)
@@ -26,6 +26,7 @@ function eden:onCache(player, cacheFlag)
 
     if level:GetCurrentRoomIndex() == GridRooms.ROOM_GENESIS_IDX then return end
 
+    local tempEffects = player:GetEffects()
     if not tempEffects:HasNullEffect(NullItemID.ID_ESAU_JR) then
         for i = 0, Isaac.GetItemConfig():GetCollectibles().Size -1, 1 do
             if player:HasCollectible(i) and i ~= CHAMPION_CROWN then
@@ -34,13 +35,8 @@ function eden:onCache(player, cacheFlag)
         end
     end
 
-    
-    if not player:HasCollectible(CollectibleType.COLLECTIBLE_MINI_MUSH) then
-        player:AddCollectible(CollectibleType.COLLECTIBLE_MINI_MUSH)
-    end
-    
-    if not player:HasCollectible(CollectibleType.COLLECTIBLE_MAGIC_MUSHROOM) then
-        player:AddCollectible(CollectibleType.COLLECTIBLE_MAGIC_MUSHROOM)
+    if not player:HasCollectible(CollectibleType.COLLECTIBLE_SAUSAGE) then
+        player:AddCollectible(CollectibleType.COLLECTIBLE_SAUSAGE)
     end
 
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_LIBRA) then
@@ -54,6 +50,10 @@ function eden:onCache(player, cacheFlag)
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_GENESIS) then
         player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_GENESIS)
     end
+
+    local heldTrinket = player:GetTrinket(0)
+    player:TryRemoveTrinket(heldTrinket)
+
     
 end
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, eden.onCache)
@@ -69,8 +69,7 @@ function eden:onUse(_, rng, player)
         local save = mod.SaveManager.GetRunSave(player) 
 
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_TMTRAINER)
-        player:RemoveCollectible(CollectibleType.COLLECTIBLE_MAGIC_MUSHROOM)
-        player:RemoveCollectible(CollectibleType.COLLECTIBLE_MINI_MUSH)
+        player:RemoveCollectible(CollectibleType.COLLECTIBLE_SAUSAGE)
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_LIBRA)
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_GENESIS)
     end
