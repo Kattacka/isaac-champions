@@ -8,7 +8,7 @@ mod.HiddenItemManager:Init(mod)
 
 mod.Utility = include("champscripts.utility.champ_util")
 
-include("champscripts.champion_crown")
+include("champscripts.crown")
 include("champscripts.isaac")
 include("champscripts.maggy")
 include("champscripts.cain")
@@ -34,10 +34,6 @@ include("champscripts.samson_b")
 
 include("champscripts.eden_b")
 include("champscripts.jacob_b")
-
-
-local CHAMPION_CROWN = Isaac.GetItemIdByName("Champion Crown")
-local offsetFromRight = 180
 
 --- Delay a function by an amount of frames
 --- Provided by Xalum
@@ -65,64 +61,7 @@ mod:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
   end
 end)
 
-function mod:PostPlayerInit(player, playerVariant)
-
-    mod.Schedule(1, function ()
-        --code to run in 1 frame
-
-    if player.Parent ~= nil then return end
-    local startingRoom = Game():GetRoom()
-    local level = Game():GetLevel()
-    local x = startingRoom:GetBottomRightPos().X
-    local y = startingRoom:GetTopLeftPos().Y
-
-    local finalVector = Vector(x - offsetFromRight, y)
-
-    if (level:GetCurrentRoomIndex() ~= 84) then return end
-        for i = 0, Game():GetNumPlayers()-2 do
-            offsetFromRight = offsetFromRight - 20
-            finalVector = Vector(x - offsetFromRight, y)
-          end
-        Isaac.Spawn(5, 100, CHAMPION_CROWN, finalVector, Vector.Zero, nil)
-    end,{})
-
-end
-mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, mod.PostPlayerInit, 0)
-
--- mod.Schedule(1, function ()
-
--- end,{})
-
-
-function mod:PostGameStart(isContinued)
-    if isContinued == true then return end
-    offsetFromRight = 180
-end
-
-mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, mod.PostGameStart)
-
-
-
-function mod:enterRoom()
-    local room = Game():GetRoom()
-    local level = Game():GetLevel()
-
-    if (room:IsFirstVisit() == true) then return end
-    if (level:GetCurrentRoomIndex() ~= 84) then return end
-
-    local entities = Isaac.GetRoomEntities()
-
-    for i = 1, #entities do
-    local entity = entities[i]
-
-    if entity.Type == EntityType.ENTITY_PICKUP and entity.Variant == PickupVariant.PICKUP_COLLECTIBLE and entity.SubType == CHAMPION_CROWN then
-        entity:Remove()
-    end
-end
-    
-end
-
-mod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, mod.enterRoom)
+local CHAMPION_CROWN = Isaac.GetItemIdByName("Champion Crown")
 
 function mod:addTrinkets(player, trinkets)
     for i = 1, #trinkets do
@@ -189,23 +128,18 @@ function mod:resetBlindfold()
     PlayerType.PLAYER_MAGDALENE_B,
     PlayerType.PLAYER_JUDAS,
     PlayerType.PLAYER_BLACKJUDAS,
-}
+  }
 
-for i = 0, Game():GetNumPlayers() - 1 do
-  local player = Isaac.GetPlayer(i)
-  
-  for i = 1, #blindChampions do 
-    if player:GetPlayerType() == blindChampions[i] and player:HasCollectible(CHAMPION_CROWN) then
-      mod:setBlindfold(player, true, true)
+  for i = 0, Game():GetNumPlayers() - 1 do
+    local player = Isaac.GetPlayer(i)
+
+    for i = 1, #blindChampions do 
+      if player:GetPlayerType() == blindChampions[i] and player:HasCollectible(CHAMPION_CROWN) then
+        mod:setBlindfold(player, true, true)
+      end
     end
   end
 end
-
-
-
-  
-end
-
 mod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, mod.resetBlindfold)
 
 

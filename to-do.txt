@@ -1,13 +1,3 @@
 Fix treasure room-less character not being able to get knife piece 1
 
 Fix tSamson not being able to go into mausoleum
-
-Fix double crowns spawning on new run
-
-Fix three crowns spawning for J&E
-
-Add vengeful spirit wisp to Judas
-
-Remove edens' starting pocket item/trinket
-
-Fix esau jr fucking everything up (FUCK YOU ESAU JR) (Mostly no treasure room reseeding but maybe more) 
