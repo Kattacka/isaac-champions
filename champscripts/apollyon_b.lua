@@ -15,19 +15,24 @@ function apollyon_b:onCache(player, cacheFlag)
     mod:setBlindfold(player, true, true)
 
     local trinkets = {
-        TrinketType.TRINKET_CRICKET_LEG,
-        TrinketType.TRINKET_CRICKET_LEG,
-        TrinketType.TRINKET_CRICKET_LEG,
+        TrinketType.TRINKET_CRICKET_LEG + 32768,
     }
     mod:addTrinkets(player, trinkets)
 
 
     local collectibles = {
         CollectibleType.COLLECTIBLE_HIVE_MIND,
-        CollectibleType.COLLECTIBLE_HIVE_MIND,
-        CollectibleType.COLLECTIBLE_HIVE_MIND,
+        CollectibleType.COLLECTIBLE_BEST_BUD,
+        CollectibleType.COLLECTIBLE_BEST_BUD,
     }
     mod:addCollectibles(player, collectibles)
+
+    -- mod.Schedule(1, function ()
+
+-- end,{})
+
+    player:RemoveCollectible(CollectibleType.COLLECTIBLE_BEST_BUD, true, nil, false)
+    player:RemoveCollectible(CollectibleType.COLLECTIBLE_BEST_BUD, true, nil, false)
 
 end
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, apollyon_b.onCache)

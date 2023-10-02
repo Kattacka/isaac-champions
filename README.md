@@ -11,7 +11,7 @@ Removed Yum heart
 +1 Extra heart container (filled with rotten heart)
 Starts with pocket yuck heart + gulped fish tail, apple of sodom, and crow's heart.
 
-Cain+: (wip)
+Cain+:
 Treasure rooms won't spawn for the run.
 Removed lucky foot and paper clip
 0.5x Damage
@@ -21,6 +21,7 @@ Starts with luck down pill.
 Judas+:
 Blindfolded
 Starts as dark judas 1 black heart, birthright, my shadow, pocket urn of souls + gulped daemon tail.
+Has 1 vengeful spirit wisp at all times.
 
 Eve+:
 Removed whore of babylon and dead bird.
@@ -78,11 +79,11 @@ Starts with pocket converter, champion belt, glyph of balance, astral projection
 Tainted Eden+:
 Treasure rooms don't spawn.
 Removed random starting items.
-Starts with pocket undefined, holy mantle, chaos + gulped panic button and hairpin (items and trinkets don't reroll)
+Starts with pocket undefined, holy mantle, chaos + gulped panic button (items and trinkets don't reroll)
 
 Tainted Apollyon+: 
 Blindfolded
-Starts with hivemind, and beelzebub transformation.
+Starts with hivemind and beelzebub transformation + gulped golden cricket leg.
 
 Tainted Blue Baby+:
 Blindfolded.

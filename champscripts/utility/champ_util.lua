@@ -1,5 +1,7 @@
 local champ_util = {}
 
+local GOLD_MODIFIER = 32768
+
 function champ_util:HUDOffset(x, y, anchor)
     local notches = math.floor(Options.HUDOffset * 10 + 0.5)
     local xoffset = (notches*2)

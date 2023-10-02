@@ -8,6 +8,7 @@ mod.HiddenItemManager:Init(mod)
 
 mod.Utility = include("champscripts.utility.champ_util")
 
+include("champscripts.champion_crown")
 include("champscripts.isaac")
 include("champscripts.maggy")
 include("champscripts.cain")
@@ -123,36 +124,6 @@ end
 
 mod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, mod.enterRoom)
 
-
-function mod:PreSave(data)
-    -- notice how this callback is provided the entire save file
-    local hiddenItemData = mod.HiddenItemManager:GetSaveData()
--- Include` hiddenItemData` in your SaveData table!
-
-    local save = mod.SaveManager.GetRunSave(nil)
-    save.HIDDEN_ITEM_DATA = hiddenItemData
-end
-
--- also notice that custom callbacks use a special function in the save manager!!!
-mod.SaveManager.AddCallback(mod.SaveManager.Utility.CustomCallback.PRE_DATA_SAVE, mod.PreSave)
-
--- this primarily handles luamod
-function mod:PostLoad(data)
-    local save = mod.SaveManager.GetRunSave(nil)
-    mod.HiddenItemManager:LoadData(save.HIDDEN_ITEM_DATA)
-end
-
--- also notice that custom callbacks use a special function in the save manager!!!
-mod.SaveManager.AddCallback(mod.SaveManager.Utility.CustomCallback.POST_DATA_LOAD, mod.PostLoad)
-
--- UnlockAPI wipes data on game start, which is later than the initial load, so load it again in that case.
-function mod:PostLoadGameStart()
-    local save = mod.SaveManager.GetRunSave(nil)
-    mod.HiddenItemManager:LoadData(save.HIDDEN_ITEM_DATA)
-end
-
-mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, mod.PostLoadGameStart)
-
 function mod:addTrinkets(player, trinkets)
     for i = 1, #trinkets do
         player:AddTrinket(trinkets[i])
@@ -162,9 +133,9 @@ end
 
 function mod:addCollectibles(player, collectibles)
   for i = 1, #collectibles do
-    if not player:HasCollectible(collectibles[i]) then
-      player:AddCollectible(collectibles[i])
-    end
+    print(collectibles[i])
+    player:AddCollectible(collectibles[i])
+    
 end
 
 end
@@ -207,7 +178,67 @@ function mod:setBlindfold(player, enabled, addCostume)
   end
 end
 
+function mod:resetBlindfold()
+  local room = Game():GetRoom()
+  local level = Game():GetLevel()
+
+  local blindChampions = {
+    PlayerType.PLAYER_APOLLYON_B,
+    PlayerType.PLAYER_BLUEBABY_B,
+    PlayerType.PLAYER_JACOB_B,
+    PlayerType.PLAYER_MAGDALENE_B,
+    PlayerType.PLAYER_JUDAS,
+    PlayerType.PLAYER_BLACKJUDAS,
+}
+
+for i = 0, Game():GetNumPlayers() - 1 do
+  local player = Isaac.GetPlayer(i)
+  
+  for i = 1, #blindChampions do 
+    if player:GetPlayerType() == blindChampions[i] and player:HasCollectible(CHAMPION_CROWN) then
+      mod:setBlindfold(player, true, true)
+    end
+  end
+end
+
+
+
+  
+end
+
+mod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, mod.resetBlindfold)
+
+
 function mod:SetNoTreasureRooms()
 
 
 end
+
+
+
+function mod:PreSave(data)
+  -- notice how this callback is provided the entire save file
+  local hiddenItemData = mod.HiddenItemManager:GetSaveData()
+-- Include` hiddenItemData` in your SaveData table!
+
+  local save = mod.SaveManager.GetRunSave(nil)
+  save.HIDDEN_ITEM_DATA = hiddenItemData
+end
+
+-- also notice that custom callbacks use a special function in the save manager!!!
+mod.SaveManager.AddCallback(mod.SaveManager.Utility.CustomCallback.PRE_DATA_SAVE, mod.PreSave)
+
+-- this primarily handles luamod
+function mod:PostLoad(data)
+  local save = mod.SaveManager.GetRunSave(nil)
+  mod.HiddenItemManager:LoadData(save.HIDDEN_ITEM_DATA)
+end
+-- also notice that custom callbacks use a special function in the save manager!!!
+mod.SaveManager.AddCallback(mod.SaveManager.Utility.CustomCallback.POST_DATA_LOAD, mod.PostLoad)
+
+-- UnlockAPI wipes data on game start, which is later than the initial load, so load it again in that case.
+function mod:PostLoadGameStart()
+  local save = mod.SaveManager.GetRunSave(nil)
+  mod.HiddenItemManager:LoadData(save.HIDDEN_ITEM_DATA)
+end
+mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, mod.PostLoadGameStart)

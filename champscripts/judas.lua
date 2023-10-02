@@ -38,10 +38,23 @@ function judas:onCache(player, cacheFlag)
     player:RemoveCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL)
     player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_URN_OF_SOULS)
 
+    player:AddWisp(CollectibleType.COLLECTIBLE_VENGEFUL_SPIRIT, player.Position)
+
 end
 
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, judas.onCache)
 
+function judas:PostNewLevelWisp()
+  -- give the player a Vengeful Spirit wisp. It despawns at the start of each floor, so you also respawn it at the start of each floor.
+  local champions = mod:getAllChampChars(CHARACTER2)
+  if (next(champions) == nil) then return end
+  for i = 1, #champions do
+      local player = champions[i]
+      player:AddWisp(CollectibleType.COLLECTIBLE_VENGEFUL_SPIRIT, player.Position)
+  end
+end
+
+mod:AddCallback( ModCallbacks.MC_POST_NEW_LEVEL, judas.PostNewLevelWisp )
 
 local SOUL_COLLECT_RANGE = 45
 
