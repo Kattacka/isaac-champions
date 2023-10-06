@@ -4,11 +4,12 @@ local CHARACTER = PlayerType.PLAYER_LILITH
 
 function lilith:onCache(player, cacheFlag)
     if player == nil then return end
-    if cacheFlag ~= CacheFlag.CACHE_DAMAGE then return end
+    if not (cacheFlag == CacheFlag.CACHE_DAMAGE or cacheFlag == CacheFlag.CACHE_RANGE)then return end
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
 
-    if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = player.Damage *0.66 - 1.4 end
+    if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = player.Damage *0.66 - 1.42 end
+    if cacheFlag == CacheFlag.CACHE_RANGE then player.TearRange = player.TearRange - 60 end
 
     local save = mod.SaveManager.GetRunSave(player)
     if save.ItemObtained == true then return end

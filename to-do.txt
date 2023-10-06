@@ -1,3 +1,7 @@
 Fix treasure room-less character not being able to get knife piece 1
 
 Fix tSamson not being able to go into mausoleum
+
+Blacklist ludovico as champ lilith
+
+Blacklist starting items as all champs

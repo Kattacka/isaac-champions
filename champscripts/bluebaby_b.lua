@@ -16,8 +16,7 @@ function bluebaby_b:onCache(player, cacheFlag)
 
     local trinkets = {
         TrinketType.TRINKET_BROWN_CAP,
-        TrinketType.TRINKET_PETRIIED_POOP,
-
+        TrinketType.TRINKET_MOMS_PEARL + 32768,
     }
 
     mod:addTrinkets(player, trinkets)
@@ -32,10 +31,6 @@ function bluebaby_b:onCache(player, cacheFlag)
 
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT) then
         player:AddCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)
-    end
-
-    if not player:HasCollectible(CollectibleType.COLLECTIBLE_MITRE) then
-        player:AddCollectible(CollectibleType.COLLECTIBLE_MITRE)
     end
 
     player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_MOMS_BRACELET)

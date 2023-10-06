@@ -50,6 +50,7 @@ Starts with agiz rune.
 
 Lilith+:
 Removed box of friends and cambion conception.
+-1 range
 0.66x Damage
 Starts with birthright, king baby, proptosis + gulped adoption papers and friendship circlet.
 
@@ -87,13 +88,18 @@ Starts with hivemind and beelzebub transformation + gulped golden cricket leg.
 
 Tainted Blue Baby+:
 Blindfolded.
-Starts with pocket mom's bracelet, birthright, mitre, fate, ???'s best friend, and gulped brown cap.
+Starts with pocket mom's bracelet, birthright, fate, ???'s best friend, + gulped brown cap and golden mom's pearl.
 
 Tainted Lazarus+:
 Item pedestals aren't affected by Flip.
 Flip is now 3 charges and only swaps between Lazarus forms.
 Starts with more options and vanishing twin.
 Laz A starts with eve's mascera and Laz B starts with soy milk.
+
+Tainted Bethany+:
+Remove Lemegeton
+0.8x Tears, Shotspeed -0.4
+Starts with pocket telepathy for dummies, eye of the occult, cursed eye + gulped wiggle worm.
 
 Tainted Jacob+:
 Blindfolded
