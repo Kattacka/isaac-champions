@@ -145,10 +145,30 @@ end
 mod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, mod.resetBlindfold)
 
 
-function mod:SetNoTreasureRooms()
-
-
+--disable treasure rooms
+function mod:preFloorTransition()
+  local runData = mod.SaveManager.GetRunSave()
+  print(runData.noTreasureRooms)
+  if runData then
+    if runData.noTreasureRooms == true then
+      runData.challenge = Isaac.GetChallenge()
+      Game().Challenge = Challenge.CHALLENGE_PURIST
+    end
+  end
 end
+mod:AddCallback(ModCallbacks.MC_POST_CURSE_EVAL, mod.preFloorTransition)
+
+
+function mod:postFloorTransition()
+  local runData = mod.SaveManager.GetRunSave()
+  if runData then
+    if runData.noTreasureRooms == true then
+      runData.challenge = Isaac.GetChallenge()
+      Game().Challenge = runData.challenge
+    end
+  end
+end
+mod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, mod.postFloorTransition)
 
 
 

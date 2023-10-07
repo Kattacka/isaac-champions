@@ -13,6 +13,11 @@ function eden_b:onCache(player, cacheFlag)
     if save.ItemObtained == true then return end
     save.ItemObtained = true
 
+    local runData = mod.SaveManager.GetRunSave()
+    if runData then
+        runData.noTreasureRooms = true
+    end
+
     local tempEffects = player:GetEffects()
     if not tempEffects:HasNullEffect(NullItemID.ID_ESAU_JR) then
         for i = 0, Isaac.GetItemConfig():GetCollectibles().Size -1, 1 do
@@ -22,7 +27,10 @@ function eden_b:onCache(player, cacheFlag)
         end
     end
 
-    player:AddTrinket(TrinketType.TRINKET_HAIRPIN)
+    local heldTrinket = player:GetTrinket(0)
+    player:TryRemoveTrinket(heldTrinket)
+
+
     local trinkets = {
         TrinketType.TRINKET_PANIC_BUTTON,
     }
@@ -37,39 +45,16 @@ function eden_b:onCache(player, cacheFlag)
 end
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, eden_b.onCache)
 
+
 mod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, player)
 
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
 
-    mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_HOLY_MANTLE, 1)
+    mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_BLANKET, 1)
     mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_CHAOS, 1)
-  end)
+end)
 
-  --disable treasure rooms
-function eden_b:preFloorTransition()
-    local championChars = mod:getAllChampChars(CHARACTER)
-    if (next(championChars) == nil) then return end
-    
-    local save = mod.SaveManager.GetRunSave(nil)
-    if save then
-        save.challenge = Isaac.GetChallenge()
-    end
-
-    Game().Challenge = Challenge.CHALLENGE_PURIST
-  end
-
-mod:AddCallback(ModCallbacks.MC_POST_CURSE_EVAL, eden_b.preFloorTransition)
-
-
-function eden_b:postFloorTransition()
-    local save = mod.SaveManager.GetRunSave(nil)
-    if save and save.challenge then
-        Game().Challenge = save.challenge
-    end
-end
-
-mod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, eden_b.postFloorTransition)
 
 function eden_b:onHit(entity, amount, flags)
     local player = entity:ToPlayer() 

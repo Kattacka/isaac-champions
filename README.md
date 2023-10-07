@@ -80,7 +80,7 @@ Starts with pocket converter, champion belt, glyph of balance, astral projection
 Tainted Eden+:
 Treasure rooms don't spawn.
 Removed random starting items.
-Starts with pocket undefined, holy mantle, chaos + gulped panic button (items and trinkets don't reroll)
+Starts with pocket undefined, the blanket, chaos + gulped panic button (items and trinkets don't reroll)
 
 Tainted Apollyon+: 
 Blindfolded

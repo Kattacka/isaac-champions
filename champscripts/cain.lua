@@ -14,6 +14,11 @@ function cain:onCache(player, cacheFlag)
     if save.ItemObtained == true then return end
     save.ItemObtained = true
 
+    local runData = mod.SaveManager.GetRunSave()
+    if runData then
+        runData.noTreasureRooms = true
+    end
+
     local tempEffects = player:GetEffects()
 
     player:TryRemoveTrinket(TrinketType.TRINKET_PAPER_CLIP)
@@ -48,28 +53,3 @@ mod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, player)
     mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_CRACKED_ORB, 1)
 
 end)
-
---disable treasure rooms
-function cain:preFloorTransition()
-    local championChars = mod:getAllChampChars(CHARACTER)
-    if (next(championChars) == nil) then return end
-    
-    local save = mod.SaveManager.GetRunSave(nil)
-    if save then
-        save.challenge = Isaac.GetChallenge()
-    end
-
-    Game().Challenge = Challenge.CHALLENGE_PURIST
-  end
-
-mod:AddCallback(ModCallbacks.MC_POST_CURSE_EVAL, cain.preFloorTransition)
-
-
-function cain:postFloorTransition()
-    local save = mod.SaveManager.GetRunSave(nil)
-    if save and save.challenge then
-        Game().Challenge = save.challenge
-    end
-end
-
-mod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, cain.postFloorTransition)
