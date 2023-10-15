@@ -52,7 +52,9 @@ function eden:onCache(player, cacheFlag)
     end
 
     local heldTrinket = player:GetTrinket(0)
-    player:TryRemoveTrinket(heldTrinket)
+    if not (heldTrinket == 0 or heldTrinket == nil) then
+        player:TryRemoveTrinket(heldTrinket)
+    end
 
     
 end

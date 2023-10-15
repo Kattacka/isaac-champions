@@ -147,8 +147,12 @@ mod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, mod.resetBlindfold)
 
 --disable treasure rooms
 function mod:preFloorTransition()
+
+  local level = Game():GetLevel()
+  local stageType = level:GetStageType()
+  if (level:GetStage() == LevelStage.STAGE1_2 and (stageType == StageType.STAGETYPE_REPENTANCE or stageType == StageType.STAGETYPE_REPENTANCE_B)) then return end
+  if (level:GetStage() > LevelStage.STAGE5) then return end
   local runData = mod.SaveManager.GetRunSave()
-  print(runData.noTreasureRooms)
   if runData then
     if runData.noTreasureRooms == true then
       runData.challenge = Isaac.GetChallenge()
@@ -163,7 +167,6 @@ function mod:postFloorTransition()
   local runData = mod.SaveManager.GetRunSave()
   if runData then
     if runData.noTreasureRooms == true then
-      runData.challenge = Isaac.GetChallenge()
       Game().Challenge = runData.challenge
     end
   end

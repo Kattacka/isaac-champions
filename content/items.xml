@@ -1,7 +1,9 @@
 <items gfxroot="gfx/items/" version="1">
     <passive id="1" name="Champion Crown" gfx="champion_crown.png" description="A new you" quality="0" cache="all" tags="noeden quest" hidden="true"/>
 
-    <active id="2" name="Flip1" gfx="Collectibles_711_Flip.png" description="Twist of fate" quality="0" maxcharges="3" tags="noeden quest lazarussharedglobal" hidden="true"/>
+    <active id="2" name="Flip " gfx="collectibles_711_Flip.png" description="Twist of fate" quality="0" maxcharges="3" tags="noeden quest lazarussharedglobal" hidden="true"/>
 
-    <active id="3" name="Flip2" gfx="Collectibles_711_Flip.png" description="Twist of fate" quality="0" maxcharges="3" tags="noeden quest lazarussharedglobal" hidden="true"/>
+    <active id="3" name="Flip  " gfx="flip_reverse.png" description="Twist of fate" quality="0" maxcharges="3" tags="noeden quest lazarussharedglobal" hidden="true"/>
+
+    <active id="4" name="Teleport 3.0" gfx="collectibles_419_teleport20.png" description="Find your way" quality="3" maxcharges="1" tags="noeden quest" hidden="true"/>
 </items>

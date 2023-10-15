@@ -1,7 +1,7 @@
 local lazarus_b = {}
 local CHAMPION_CROWN = Isaac.GetItemIdByName("Champion Crown")
-local NEW_FLIP1 = Isaac.GetItemIdByName("Flip1")
-local NEW_FLIP2 = Isaac.GetItemIdByName("Flip2")
+local NEW_FLIP1 = Isaac.GetItemIdByName("Flip ")
+local NEW_FLIP2 = Isaac.GetItemIdByName("Flip  ")
 local CHARACTER = PlayerType.PLAYER_LAZARUS_B
 local CHARACTER2 = PlayerType.PLAYER_LAZARUS2_B
 

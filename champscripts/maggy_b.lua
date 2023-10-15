@@ -43,7 +43,7 @@ mod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, player)
     if player:GetPlayerType() ~= CHARACTER then return end
 
     mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_GIMPY, 1)
-   -- mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_KNOCKOUT_DROPS, 1)
+   mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_KNOCKOUT_DROPS, 1)
     mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_ISAACS_HEART, 1)
 
 end)
