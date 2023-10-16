@@ -33,7 +33,7 @@ include("champscripts.bluebaby_b")
 include("champscripts.samson_b")
 include("champscripts.bethany_b")
 
-
+include("champscripts.keeper_b")
 include("champscripts.eden_b")
 include("champscripts.jacob_b")
 
