@@ -26,3 +26,20 @@ function isaac:onCache(player, cacheFlag)
 end
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, isaac.onCache)
 
+if EID then
+    local function crownPlayerCondition(descObj)
+        if descObj.ObjType == 5 and descObj.ObjVariant == 100 and descObj.ObjSubType == CHAMPION_CROWN and (Game():GetNearestPlayer(descObj.Entity.Position)):GetPlayerType() == CHARACTER then return true end
+    end
+    local function crownPlayerCallback(descObj)
+        EID:appendToDescription(descObj, 
+        "#{{Player".. CHARACTER .."}} {{ColorGray}}Isaac" ..
+        "#\2  {{Collectible" .. CollectibleType.COLLECTIBLE_D6 .. "}} D6" ..
+        "#\1  {{Collectible" .. CollectibleType.COLLECTIBLE_MOVING_BOX .. "}} Pocket Moving Box" ..
+        "#{{Collectible" .. CollectibleType.COLLECTIBLE_SMELTER .. "}} {{Trinket" .. TrinketType.TRINKET_DICE_BAG .. "}} Dice Bag" ..
+        "#{{Blank}} {{Trinket" .. TrinketType.TRINKET_CRACKED_DICE .. "}} Cracked Dice"
+    )
+        return descObj
+    end
+    
+    EID:addDescriptionModifier("CrownIsaac", crownPlayerCondition, crownPlayerCallback)
+end

@@ -65,6 +65,15 @@ end)
 
 local CHAMPION_CROWN = Isaac.GetItemIdByName("Champion Crown")
 
+
+
+EID:setModIndicatorName("Isaac Champions ")
+EID:setModIndicatorIcon("Collectible"..CHAMPION_CROWN .."")
+
+EID:addCollectible(CHAMPION_CROWN,
+"A new you"
+)
+
 function mod:addTrinkets(player, trinkets)
     for i = 1, #trinkets do
         player:AddTrinket(trinkets[i])
