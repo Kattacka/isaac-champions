@@ -71,8 +71,13 @@ EID:setModIndicatorName("Isaac Champions ")
 EID:setModIndicatorIcon("Collectible"..CHAMPION_CROWN .."")
 
 EID:addCollectible(CHAMPION_CROWN,
-"A new you"
+""
 )
+
+local mySprite = Sprite()
+mySprite:Load("gfx/custom_ui/plus_minus.anm2", true)
+EID:addIcon("Plus", "plus", 1, 4, 4, 5, 5, mySprite)
+EID:addIcon("Minus", "minus", 1, 4, 4, 5, 5, mySprite)
 
 function mod:addTrinkets(player, trinkets)
     for i = 1, #trinkets do

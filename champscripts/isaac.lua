@@ -33,8 +33,8 @@ if EID then
     local function crownPlayerCallback(descObj)
         EID:appendToDescription(descObj, 
         "#{{Player".. CHARACTER .."}} {{ColorGray}}Isaac" ..
-        "#\2  {{Collectible" .. CollectibleType.COLLECTIBLE_D6 .. "}} D6" ..
-        "#\1  {{Collectible" .. CollectibleType.COLLECTIBLE_MOVING_BOX .. "}} Pocket Moving Box" ..
+        "#{{Minus}} {{Collectible" .. CollectibleType.COLLECTIBLE_D6 .. "}} D6" ..
+        "#{{Plus}} {{Collectible" .. CollectibleType.COLLECTIBLE_MOVING_BOX .. "}} Pocket Moving Box" ..
         "#{{Collectible" .. CollectibleType.COLLECTIBLE_SMELTER .. "}} {{Trinket" .. TrinketType.TRINKET_DICE_BAG .. "}} Dice Bag" ..
         "#{{Blank}} {{Trinket" .. TrinketType.TRINKET_CRACKED_DICE .. "}} Cracked Dice"
     )

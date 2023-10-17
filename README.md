@@ -35,7 +35,7 @@ Removed bloody lust
 Starts with pocket dull razor, shard of glass, bloody gust, and curse of the tower.
 
 Azazel+:
-0 range, 0.5x tear rate, 0.6x damage 
+0 range, 0.6x tear rate, 0.5x damage 
 Starts with tiny planet, birthright, and antigrav.
 
 Eden+:
@@ -84,7 +84,7 @@ Starts with pocket undefined, the blanket, chaos + gulped panic button (items an
 
 Tainted Apollyon+: 
 Blindfolded
-Starts with hivemind and beelzebub transformation + gulped golden cricket leg.
+Starts with brown nugget, hivemind, and beelzebub transformation + gulped golden cricket leg.
 
 Tainted Blue Baby+:
 Blindfolded.

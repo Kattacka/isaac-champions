@@ -58,8 +58,8 @@ if EID then
     local function crownPlayerCallback(descObj)
         EID:appendToDescription(descObj, 
         "#{{Player".. CHARACTER .."}} {{ColorGray}}The Savage" ..
-        "#\2  {{BrokenHeart}} 11 Broken Hearts" ..
-        "#\1  {{Collectible" .. CollectibleType.COLLECTIBLE_CONVERTER .. "}} Pocket Converter" ..
+        "#{{BrokenHeart}} Grants 11 Broken Hearts" ..
+        "#{{Plus}} {{Collectible" .. CollectibleType.COLLECTIBLE_CONVERTER .. "}} Pocket Converter" ..
         "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_CHAMPION_BELT .. "}} Champion Belt" ..
         "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_ASTRAL_PROJECTION .. "}} Astral Projection" ..
         "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_BIRTHRIGHT .. "}} Birthright" ..
