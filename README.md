@@ -54,6 +54,10 @@ Removed box of friends and cambion conception.
 0.66x Damage
 Starts with birthright, king baby, proptosis + gulped adoption papers and friendship circlet.
 
+Apollyon+:
+Void moved to pocket slot.
+Starts with voided spindown dice and crooked penny + gulped No!
+
 Forgotten+:
 0.3x damage, 1.4x tears, negative range
 Starts with cursed eye and epic fetus.
@@ -84,7 +88,7 @@ Starts with pocket undefined, the blanket, chaos + gulped panic button (items an
 
 Tainted Apollyon+: 
 Blindfolded
-Starts with brown nugget, hivemind, and beelzebub transformation + gulped golden cricket leg.
+Starts with brown nugget, hivemind, and beelzebub transformation + cricket leg.
 
 Tainted Blue Baby+:
 Blindfolded.

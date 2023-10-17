@@ -59,16 +59,18 @@ if EID then
         EID:appendToDescription(descObj, 
         "#{{Player".. CHARACTER .."}} {{ColorGray}}The Savage" ..
         "#{{BrokenHeart}} Grants 11 Broken Hearts" ..
-        "#{{Plus}} {{Collectible" .. CollectibleType.COLLECTIBLE_CONVERTER .. "}} Pocket Converter" ..
-        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_CHAMPION_BELT .. "}} Champion Belt" ..
-        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_ASTRAL_PROJECTION .. "}} Astral Projection" ..
-        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_BIRTHRIGHT .. "}} Birthright" ..
-        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_GOAT_HEAD .. "}} Goat Head" ..
-        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_WAFER .. "}} Wafer" ..
-        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_GLYPH_OF_BALANCE .. "}} Glyph of Balance" ..
-        "#{{Collectible" .. CollectibleType.COLLECTIBLE_SMELTER .. "}} {{Trinket" .. TrinketType.TRINKET_PURPLE_HEART .. "}} Purple Heart" ..
-        "#{{Blank}} {{Trinket" .. TrinketType.TRINKET_DOOR_STOP .. "}} Door Stop" ..
-        "#{{Blank}} {{Trinket" .. TrinketType.TRINKET_KEEPERS_BARGAIN .. "}} Keeper's Bargain" 
+        "#{{Plus}} Adds Collectibles:" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_CONVERTER .. "}} {{ColorSilver}}Pocket Converter" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_CHAMPION_BELT .. "}} {{ColorSilver}}Champion Belt" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_ASTRAL_PROJECTION .. "}} {{ColorSilver}}Astral Projection" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_BIRTHRIGHT .. "}} {{ColorSilver}}Birthright" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_GOAT_HEAD .. "}} {{ColorSilver}}Goat Head" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_WAFER .. "}} {{ColorSilver}}Wafer" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_GLYPH_OF_BALANCE .. "}} {{ColorSilver}}Glyph of Balance" ..
+        "#{{Collectible" .. CollectibleType.COLLECTIBLE_SMELTER .. "}} Smelts Trinkets:" ..
+        "#{{Blank}} {{Trinket" .. TrinketType.TRINKET_PURPLE_HEART .. "}} {{ColorSilver}}Purple Heart" ..
+        "#{{Blank}} {{Trinket" .. TrinketType.TRINKET_DOOR_STOP .. "}} {{ColorSilver}}Door Stop" ..
+        "#{{Blank}} {{Trinket" .. TrinketType.TRINKET_KEEPERS_BARGAIN .. "}} {{ColorSilver}}Keeper's Bargain" 
     )
         return descObj
     end

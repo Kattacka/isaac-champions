@@ -14,11 +14,12 @@ function apollyon_b:onCache(player, cacheFlag)
     
     mod:setBlindfold(player, true, true)
 
-    local trinkets = {
-        TrinketType.TRINKET_CRICKET_LEG + 32768,
-    }
-    mod:addTrinkets(player, trinkets)
+    -- local trinkets = {
+    --     TrinketType.TRINKET_CRICKET_LEG + 32768,
+    -- }
+    -- mod:addTrinkets(player, trinkets)
 
+    player:AddTrinket(TrinketType.TRINKET_CRICKET_LEG)
 
     local collectibles = {
         CollectibleType.COLLECTIBLE_HIVE_MIND,
@@ -44,10 +45,11 @@ if EID then
         "#{{LordoftheFlies}} {{ColorTransform}} Beelzebub (3/3)" ..
         "#{{Blank}} " ..
         "#{{Player".. CHARACTER .."}} {{ColorGray}}The Empty" ..
-        "#{{Trinket" .. TrinketType.TRINKET_BLIND_RAGE .. "}} {{ColorSilver}}Blindfolded" ..
-        "#{{Plus}} {{Collectible" .. CollectibleType.COLLECTIBLE_BROWN_NUGGET .. "}} Brown Nugget" ..
-        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_HIVE_MIND .. "}} Hive Mind" ..
-        "#{{Collectible" .. CollectibleType.COLLECTIBLE_SMELTER .. "}} {{Trinket" .. TrinketType.TRINKET_CRICKET_LEG + 32768 .. "}}{{ColorOrange}} Golden Cricket's Leg"
+        "#{{Trinket" .. TrinketType.TRINKET_BLIND_RAGE .. "}} {{ColorSilver}}Applies Blindfold" ..
+        "#{{Plus}} Adds Collectibles:" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_BROWN_NUGGET .. "}} {{ColorSilver}}Brown Nugget" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_HIVE_MIND .. "}} {{ColorSilver}}Hive Mind" ..
+        "#{{Blank}} {{Trinket" .. TrinketType.TRINKET_CRICKET_LEG .. "}} {{ColorSilver}}Cricket Leg"
     )
         return descObj
     end

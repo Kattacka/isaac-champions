@@ -39,7 +39,8 @@ if EID then
         "#\2  -50% Damage down" ..
         "#{{Blank}}  -40% Fire Rate down" ..
         "#{{Blank}}  -∞ Range" ..
-        "#{{Plus}} {{Collectible" .. CollectibleType.COLLECTIBLE_BIRTHRIGHT .. "}} Birthright" ..
+        "#{{Plus}} Adds Collectibles: " ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_BIRTHRIGHT .. "}} Birthright" ..
         "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_ANTI_GRAVITY .. "}} Anti-Grav" ..
         "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_TINY_PLANET .. "}} Tiny Planet"
     )
