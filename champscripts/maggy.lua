@@ -36,5 +36,7 @@ function maggy:onCache(player, cacheFlag)
         player:AddCollectible(CollectibleType.COLLECTIBLE_MULLIGAN)
     end
 
+    player:AddBombs(1)
+
 end
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, maggy.onCache)

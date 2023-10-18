@@ -10,12 +10,13 @@ Removed Yum heart
 0.5x tear rate
 +1 Extra heart container (filled with rotten heart)
 Starts with pocket yuck heart + gulped fish tail, apple of sodom, and crow's heart.
++1 Bomb
 
 Cain+:
 Treasure rooms won't spawn for the run.
 Removed lucky foot and paper clip
 0.5x Damage
-Starts with pocket red key, cracked orb, false phd, lil baggy + gulped crystal key and gilded key.
+Starts with pocket red key, cracked orb, false phd + gulped crystal key.
 Starts with luck down pill.
 
 Judas+:
@@ -66,6 +67,7 @@ Bethany+:
 Removed book of virtues.
 0.5x damage, 0.8x tears
 Starts with pocket prayer card, redemption, act of contrition + gulped devil's crown. 
++1 Bomb
 
 Jacob and Esau+:
 Both start with activated damocles.

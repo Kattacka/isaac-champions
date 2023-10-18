@@ -107,3 +107,34 @@ function eden_b:onTeleport3Use(_, rng, player)
 end
 
 mod:AddCallback(ModCallbacks.MC_USE_ITEM, eden_b.onTeleport3Use, TELEPORT3)
+
+if EID then
+    local function crownPlayerCondition(descObj)
+        if descObj.ObjType == 5 and descObj.ObjVariant == 100 and descObj.ObjSubType == CHAMPION_CROWN then
+            if (descObj.Entity ~= nil) then
+                if (Game():GetNearestPlayer(descObj.Entity.Position)):GetPlayerType() == CHARACTER then return true end
+            else
+                if EID.holdTabPlayer and EID.holdTabPlayer:ToPlayer():GetPlayerType() == CHARACTER then return true end
+            end
+        end
+    end
+    local function crownPlayerCallback(descObj)
+        descObj.Description =
+        "#{{Player".. CHARACTER .."}} {{ColorGray}}The Capricious" ..
+        "#{{AchievementLocked}} Stops Treasure Room Generation" ..
+        "#\2 -50% Damage" ..
+        "#{{Minus}} Removes Collectibles:" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_LUCKY_FOOT .. "}} Lucky Foot" ..
+        "#{{Blank}} {{Trinket" .. TrinketType.TRINKET_PAPER_CLIP .. "}} Paper Clip" ..
+        "#{{Plus}} Adds Collectibles: " ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_RED_KEY .. "}} {{ColorSilver}}Pocket Red Key" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_FALSE_PHD .. "}} {{ColorSilver}}False PHD" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_CRACKED_ORB .. "}} {{ColorSilver}}Cracked Orb" ..
+        "#{{Collectible" .. CollectibleType.COLLECTIBLE_SMELTER .. "}} Smelts Trinkets:" ..
+        "#{{Blank}} {{Trinket" .. TrinketType.TRINKET_CRYSTAL_KEY .. "}} {{ColorSilver}}Crystal Key" ..
+        "#{{Blank}} {{Trinket" .. TrinketType.TRINKET_GILDED_KEY .. "}} {{ColorSilver}}Guilded Key" ..
+        "#{{Pill}} Gives a luck down pill"
+        return descObj
+    end
+    EID:addDescriptionModifier("CrownEdenB", crownPlayerCondition, crownPlayerCallback)
+end

@@ -31,19 +31,24 @@ end)
 
 if EID then
     local function crownPlayerCondition(descObj)
-        if descObj.ObjType == 5 and descObj.ObjVariant == 100 and descObj.ObjSubType == CHAMPION_CROWN and (Game():GetNearestPlayer(descObj.Entity.Position)):GetPlayerType() == CHARACTER then return true end
+        if descObj.ObjType == 5 and descObj.ObjVariant == 100 and descObj.ObjSubType == CHAMPION_CROWN then
+            if (descObj.Entity ~= nil) then
+                if (Game():GetNearestPlayer(descObj.Entity.Position)):GetPlayerType() == CHARACTER then return true end
+            else
+                if EID.holdTabPlayer and EID.holdTabPlayer:ToPlayer():GetPlayerType() == CHARACTER then return true end
+            end
+        end
     end
     local function crownPlayerCallback(descObj)
-        EID:appendToDescription(descObj, 
+        descObj.Description =
         "#{{Player".. CHARACTER .."}} {{ColorGray}}Azazel" ..
         "#\2  -50% Damage down" ..
         "#{{Blank}}  -40% Fire Rate down" ..
         "#{{Blank}}  -∞ Range" ..
         "#{{Plus}} Adds Collectibles: " ..
-        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_BIRTHRIGHT .. "}} Birthright" ..
-        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_ANTI_GRAVITY .. "}} Anti-Grav" ..
-        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_TINY_PLANET .. "}} Tiny Planet"
-    )
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_BIRTHRIGHT .. "}} {{ColorSilver}}Birthright" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_ANTI_GRAVITY .. "}} {{ColorSilver}}Anti-Grav" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_TINY_PLANET .. "}} {{ColorSilver}}Tiny Planet"
         return descObj
     end
     

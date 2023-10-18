@@ -36,9 +36,9 @@ function isaac_b:onPickupInit(pickup)
     -- for i=0, 5, 1 do
     --     local delay = 50* math.log(i)
     -- mod.Schedule(delay, function ()
-        print(GetPtrHash(pickup))
+
         player:UseCard(Card.CARD_SOUL_ISAAC, UseFlag.USE_NOANIM | UseFlag.USE_NOANNOUNCER)
-        print(GetPtrHash(pickup))
+
     -- end,{})
     -- end
 

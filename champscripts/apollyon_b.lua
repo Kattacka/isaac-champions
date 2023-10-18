@@ -19,7 +19,7 @@ function apollyon_b:onCache(player, cacheFlag)
     -- }
     -- mod:addTrinkets(player, trinkets)
 
-    player:AddTrinket(TrinketType.TRINKET_CRICKET_LEG)
+    Isaac.Spawn(5, 350, TrinketType.TRINKET_CRICKET_LEG, Isaac.GetFreeNearPosition(player.Position, 20), Vector.Zero, player)
 
     local collectibles = {
         CollectibleType.COLLECTIBLE_HIVE_MIND,
@@ -37,11 +37,17 @@ mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, apollyon_b.onCache)
 
 if EID then
     local function crownPlayerCondition(descObj)
-        if descObj.ObjType == 5 and descObj.ObjVariant == 100 and descObj.ObjSubType == CHAMPION_CROWN and (Game():GetNearestPlayer(descObj.Entity.Position)):GetPlayerType() == CHARACTER then return true end
+        if descObj.ObjType == 5 and descObj.ObjVariant == 100 and descObj.ObjSubType == CHAMPION_CROWN then
+            if (descObj.Entity ~= nil) then
+                if (Game():GetNearestPlayer(descObj.Entity.Position)):GetPlayerType() == CHARACTER then return true end
+            else
+                if EID.holdTabPlayer and EID.holdTabPlayer:ToPlayer():GetPlayerType() == CHARACTER then return true end
+            end
+        end
     end
     local function crownPlayerCallback(descObj)
 
-        EID:appendToDescription(descObj, 
+        descObj.Description =
         "#{{LordoftheFlies}} {{ColorTransform}} Beelzebub (3/3)" ..
         "#{{Blank}} " ..
         "#{{Player".. CHARACTER .."}} {{ColorGray}}The Empty" ..
@@ -50,7 +56,6 @@ if EID then
         "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_BROWN_NUGGET .. "}} {{ColorSilver}}Brown Nugget" ..
         "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_HIVE_MIND .. "}} {{ColorSilver}}Hive Mind" ..
         "#{{Blank}} {{Trinket" .. TrinketType.TRINKET_CRICKET_LEG .. "}} {{ColorSilver}}Cricket Leg"
-    )
         return descObj
     end
     

@@ -71,7 +71,8 @@ EID:setModIndicatorName("Isaac Champions ")
 EID:setModIndicatorIcon("Collectible"..CHAMPION_CROWN .."")
 
 EID:addCollectible(CHAMPION_CROWN,
-""
+"{{TreasureRoomChance}} Has a different effect per character" ..
+  "#{{Warning}} Effect not yet implemented for current character!"
 )
 
 local mySprite = Sprite()
@@ -80,15 +81,32 @@ EID:addIcon("Plus", "plus", 1, 4, 4, 5, 5, mySprite)
 EID:addIcon("Minus", "minus", 1, 4, 4, 5, 5, mySprite)
 
 function mod:addTrinkets(player, trinkets)
-    for i = 1, #trinkets do
-        player:AddTrinket(trinkets[i])
-        player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false)
-    end
+  local heldTrinket = player:GetTrinket(0)
+  if not (heldTrinket == 0 or heldTrinket == nil) then
+      player:TryRemoveTrinket(heldTrinket)
+  end
+
+  local heldTrinket2 = player:GetTrinket(0)
+  if not (heldTrinket2 == 0 or heldTrinket2 == nil) then
+      player:TryRemoveTrinket(heldTrinket2)
+  end
+
+  for i = 1, #trinkets do
+      player:AddTrinket(trinkets[i])
+      player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false)
+  end
+
+  if not (heldTrinket == 0 or heldTrinket == nil) then
+    player:AddTrinket(heldTrinket)
+  end
+
+  if not (heldTrinket2 == 0 or heldTrinket2 == nil) then
+    player:AddTrinket(heldTrinket2)
+  end
 end
 
 function mod:addCollectibles(player, collectibles)
   for i = 1, #collectibles do
-    print(collectibles[i])
     player:AddCollectible(collectibles[i])
     
 end

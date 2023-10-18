@@ -31,9 +31,7 @@ function maggy_b:onCache(player, cacheFlag)
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_YUM_HEART)
     end
 
-
     player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_GAMEKID)
-
 end
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, maggy_b.onCache)
 

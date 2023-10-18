@@ -55,3 +55,33 @@ function bluebaby_b:onNewFloor()
 end
 
 mod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, bluebaby_b.onNewFloor)
+
+if EID then
+    local function crownPlayerCondition(descObj)
+        if descObj.ObjType == 5 and descObj.ObjVariant == 100 and descObj.ObjSubType == CHAMPION_CROWN then
+            if (descObj.Entity ~= nil) then
+                if (Game():GetNearestPlayer(descObj.Entity.Position)):GetPlayerType() == CHARACTER then return true end
+            else
+                if EID.holdTabPlayer and EID.holdTabPlayer:ToPlayer():GetPlayerType() == CHARACTER then return true end
+            end
+        end
+    end
+    local function crownPlayerCallback(descObj)
+
+        descObj.Description =
+        "#{{Player".. CHARACTER .."}} {{ColorGray}}The Soiled" ..
+        "#{{Trinket" .. TrinketType.TRINKET_BLIND_RAGE .. "}} {{ColorSilver}}Applies Blindfold" ..
+        "#{{Minus}} Removes Collectibles:" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_HOLD .. "}} Hold" ..
+        "#{{Plus}} Adds Collectibles: " ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_MOMS_BRACELET .. "}} {{ColorSilver}}Pocket Mom's Bracelet" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_BIRTHRIGHT .. "}} {{ColorSilver}}Birthright" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_FATE .. "}} {{ColorSilver}}Fate" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_BLUE_BABYS_ONLY_FRIEND .. "}} {{ColorSilver}}???'s Only Friend" ..
+        "#{{Collectible" .. CollectibleType.COLLECTIBLE_SMELTER .. "}} Smelts Trinkets:" ..
+        "#{{Blank}} {{Trinket" .. TrinketType.TRINKET_BROWN_CAP .. "}} {{ColorSilver}}Brown Cap" ..
+        "#{{Blank}} {{Trinket" .. TrinketType.TRINKET_MOMS_PEARL .. "}} {{ColorOrange}}Golden Mom's Pearl"
+        return descObj
+    end
+    EID:addDescriptionModifier("CrownBlueBabyB", crownPlayerCondition, crownPlayerCallback)
+end
