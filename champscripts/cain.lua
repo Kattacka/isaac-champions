@@ -39,7 +39,7 @@ function cain:onCache(player, cacheFlag)
     player:AddKeys(-1)
 
     if tempEffects:HasNullEffect(NullItemID.ID_ESAU_JR) then return end
-    player:UseActiveItem(CollectibleType.COLLECTIBLE_FORGET_ME_NOW, false)
+    mod:RemoveTreasureRooms()
 end
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, cain.onCache)
 

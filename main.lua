@@ -6,8 +6,14 @@ mod.HiddenItemManager = require("champscripts.utility.hidden_item_manager")
 mod.SaveManager.Init(mod)
 mod.HiddenItemManager:Init(mod)
 
-mod.Utility = include("champscripts.utility.champ_util")
+local level = Game():GetLevel()
+local seeds = Game():GetSeeds()
+local stageSeed = seeds:GetStageSeed(level:GetStage())
 
+local rng = RNG()
+rng:SetSeed(stageSeed, 35)
+
+mod.Utility = include("champscripts.utility.champ_util")
 include("champscripts.crown")
 include("champscripts.isaac")
 include("champscripts.maggy")
@@ -178,33 +184,59 @@ mod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, mod.resetBlindfold)
 
 
 --disable treasure rooms
-function mod:preFloorTransition()
 
+local hasLoadedRooms = false
+local needsToRestart = false
+local newTreasureRoom
+local gridIndex
+function mod:loadRooms(isContinued)
+  if hasLoadedRooms == true then return end
+  hasLoadedRooms = true
+
+  Isaac.ExecuteCommand("goto d." .. 100)
+  local roomDescriptor = level:GetRoomByIdx(-3)
+  local data = roomDescriptor.Data
+  newTreasureRoom = data
+
+  needsToRestart = not isContinued
+  Game():StartRoomTransition(gridIndex, Direction.NO_DIRECTION, RoomTransitionAnim.FADE)
+
+end
+mod:AddPriorityCallback(ModCallbacks.MC_POST_GAME_STARTED,CallbackPriority.IMPORTANT, mod.loadRooms)
+
+function mod:OnNewRoom()
+  if needsToRestart then
+    needsToRestart = false
+      Isaac.ExecuteCommand("restart")
+  end
+end
+mod:AddPriorityCallback(ModCallbacks.MC_POST_NEW_ROOM, CallbackPriority.IMPORTANT, mod.OnNewRoom)
+
+function mod:RemoveTreasureRooms()
   local level = Game():GetLevel()
   local stageType = level:GetStageType()
+  local rooms = level:GetRooms()
+  local roomIndex
+
   if (level:GetStage() == LevelStage.STAGE1_2 and (stageType == StageType.STAGETYPE_REPENTANCE or stageType == StageType.STAGETYPE_REPENTANCE_B)) then return end
   if (level:GetStage() > LevelStage.STAGE5) then return end
   local runData = mod.SaveManager.GetRunSave()
-  if runData then
-    if runData.noTreasureRooms == true then
-      runData.challenge = Isaac.GetChallenge()
-      Game().Challenge = Challenge.CHALLENGE_PURIST
+  if runData and runData.noTreasureRooms == true then
+    for i = 0, rooms.Size, 1 do
+      local room = rooms:Get(i)
+      local data = room.Data
+      if data.Type == RoomType.ROOM_TREASURE then
+        roomIndex = room.GridIndex
+        break
+      end
     end
+    if not roomIndex then return end
+    local data = newTreasureRoom
+    local writeableRoom = level:GetRoomByIdx(roomIndex, -1)
+    writeableRoom.Data = data
   end
 end
-mod:AddCallback(ModCallbacks.MC_POST_CURSE_EVAL, mod.preFloorTransition)
-
-
-function mod:postFloorTransition()
-  local runData = mod.SaveManager.GetRunSave()
-  if runData then
-    if runData.noTreasureRooms == true then
-      Game().Challenge = runData.challenge
-    end
-  end
-end
-mod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, mod.postFloorTransition)
-
+mod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, mod.RemoveTreasureRooms)
 
 
 function mod:PreSave(data)

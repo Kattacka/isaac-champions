@@ -55,7 +55,8 @@ function crown:spawnCrown(player)
   then return end
   if (level:GetCurrentRoomIndex() ~= 84) then return end
 
-  local newOffsetFromRight = offsetFromRight - 40*Game():GetNumPlayers()-1
+  local save = mod.SaveManager.GetRunSave()
+  local newOffsetFromRight = offsetFromRight - 40*save.crownsSpawned-1
   local finalVector = Vector(x - newOffsetFromRight, y+10)
 
   Isaac.Spawn(5, 100, CHAMPION_CROWN, finalVector, Vector.Zero, nil)

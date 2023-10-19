@@ -1,6 +1,10 @@
 local champ_util = {}
 
 local GOLD_MODIFIER = 32768
+--Example Schedule function
+-- mod.Schedule(1, function ()
+
+-- end,{})
 
 function champ_util:HUDOffset(x, y, anchor)
     local notches = math.floor(Options.HUDOffset * 10 + 0.5)
