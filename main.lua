@@ -234,10 +234,10 @@ function mod:RemoveTreasureRooms()
   local roomIndex
 
   if (level:GetStage() == LevelStage.STAGE1_2 and (stageType == StageType.STAGETYPE_REPENTANCE or stageType == StageType.STAGETYPE_REPENTANCE_B)) then return end
-  if (level:GetStage() > LevelStage.STAGE5) then return end
+  if (level:GetStage() > LevelStage.STAGE5 or level:GetStage() == LevelStage.STAGE4_3) then return end
   local runData = mod.SaveManager.GetRunSave()
   if runData and runData.noTreasureRooms == true then
-    for i = 0, rooms.Size, 1 do
+    for i = 0, rooms.Size-2, 1 do
       local room = rooms:Get(i)
       local data = room.Data
       if data.Type == RoomType.ROOM_TREASURE then
@@ -260,7 +260,7 @@ function mod:RemoveTreasureRooms()
     end
   end
 end
-mod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, mod.RemoveTreasureRooms)
+mod:AddPriorityCallback(ModCallbacks.MC_POST_NEW_LEVEL, CallbackPriority.LATE, mod.RemoveTreasureRooms)
 
 
 function mod:PreSave(data)
