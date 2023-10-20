@@ -199,7 +199,7 @@ function mod:loadRooms(isContinued)
   newTreasureRoom = data
 
   needsToRestart = not isContinued
-  Game():StartRoomTransition(gridIndex, Direction.NO_DIRECTION, RoomTransitionAnim.FADE)
+  --Game():StartRoomTransition(gridIndex, Direction.NO_DIRECTION, RoomTransitionAnim.FADE)
 
 end
 mod:AddPriorityCallback(ModCallbacks.MC_POST_GAME_STARTED,CallbackPriority.IMPORTANT, mod.loadRooms)

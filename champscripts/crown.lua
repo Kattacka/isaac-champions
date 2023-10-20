@@ -4,30 +4,17 @@ local CHAMPION_CROWN = Isaac.GetItemIdByName("Champion Crown")
 local offsetFromRight = 180
 
 function crown:PostPlayerInit(player, playerVariant)
-
-  local save = mod.SaveManager.GetRunSave()
-  if save.crownsSpawned == nil then
-    return
-  else
-    save.crownsSpawned = save.crownsSpawned + 1
-    print(save.crownsSpawned)
+  if Game():GetNumPlayers() < 2 then return end
     mod.Schedule(1, function ()
       if player.Parent ~= nil then return end
       crown:spawnCrown(player)
   end,{})
-  end
-
 end
 mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, crown.PostPlayerInit, 0)
 
 
 function crown:PostGameStarted(isContinued)
   if isContinued == true then return end
-
-  local save = mod.SaveManager.GetRunSave()
-  save.crownsSpawned = 1
-  print(save.crownsSpawned)
-
   local player = Isaac.GetPlayer()
   crown:spawnCrown(player)
 end
@@ -55,9 +42,10 @@ function crown:spawnCrown(player)
   then return end
   if (level:GetCurrentRoomIndex() ~= 84) then return end
 
-  local save = mod.SaveManager.GetRunSave()
-  local newOffsetFromRight = offsetFromRight - 40*save.crownsSpawned-1
-  local finalVector = Vector(x - newOffsetFromRight, y+10)
+  local entities = Isaac.FindByType(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, CHAMPION_CROWN)
+  local crownNum = #entities
+  local newOffsetFromRight = offsetFromRight - 40*(crownNum)
+  local finalVector = room:FindFreePickupSpawnPosition(Vector(x - newOffsetFromRight, y+10))
 
   Isaac.Spawn(5, 100, CHAMPION_CROWN, finalVector, Vector.Zero, nil)
 end
@@ -85,21 +73,3 @@ function crown:enterRoom()
     end
 end
 mod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, crown.enterRoom)
-
-
-function crown:respawnCrowns()
-  local save = mod.SaveManager.GetRunSave()
-  if save.crownsSpawned and save.crownsSpawned < 2 then return end
-
-    mod.Schedule(1, function ()
-      for i = 0, Game():GetNumPlayers() - 1 do
-        local player = Isaac.GetPlayer(i)
-        if player.Parent == nil and not player:HasCollectible(CHAMPION_CROWN) then
-          crown:spawnCrown(player)
-        end
-      end
-    end,{})
-
-
-end
-mod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, crown.respawnCrowns)

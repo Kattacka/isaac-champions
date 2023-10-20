@@ -24,7 +24,6 @@ function apollyon:onCache(player, cacheFlag)
     local entities = Isaac.FindByType(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE)
     for _, entity in ipairs(entities) do
         local item = entity:ToPickup()
-        print(item.Price)
         if item.SubType ~= 0 and item.Price == 0 then
             item.AutoUpdatePrice = false
             item.Price = 69

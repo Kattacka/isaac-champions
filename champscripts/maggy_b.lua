@@ -6,13 +6,14 @@ local enemies_killed = {}
 
 function maggy_b:onCache(player, cacheFlag)
     if player == nil then return end
-    if not (cacheFlag == CacheFlag.CACHE_DAMAGE or cacheFlag == CacheFlag.CACHE_TEARFLAG) then return end
+    if not (cacheFlag == CacheFlag.CACHE_DAMAGE or cacheFlag == CacheFlag.CACHE_TEARFLAG or cacheFlag == CacheFlag.CACHE_FIREDELAY) then return end
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
 
 
     if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = (player.Damage) * 0.8 end
     if cacheFlag == CacheFlag.CACHE_TEARFLAG then player.TearFlags = player.TearFlags | TearFlags.TEAR_PUNCH end
+    if cacheFlag == CacheFlag.CACHE_FIREDELAY then player.MaxFireDelay = player.MaxFireDelay * 5 end
     local save = mod.SaveManager.GetRunSave(player)
     if save.ItemObtained == true then return end
     save.ItemObtained = true
@@ -31,7 +32,7 @@ function maggy_b:onCache(player, cacheFlag)
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_YUM_HEART)
     end
 
-    player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_GAMEKID)
+    player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_SUPLEX)
 end
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, maggy_b.onCache)
 
@@ -40,7 +41,6 @@ mod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, player)
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
 
-    mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_GIMPY, 1)
     mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_SOY_MILK, 1)
     mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_KNOCKOUT_DROPS, 1)
     mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_ISAACS_HEART, 1)
@@ -68,6 +68,19 @@ function maggy_b:onPickupInit(pickup)
   end
 mod:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, maggy_b.onPickupInit)
 
+function maggy_b:onEntityDie(entity)
+    local player = Game():GetNearestPlayer(entity.Position)
+    if not player:HasCollectible(CHAMPION_CROWN) then return end
+    if not player:GetPlayerType() == CHARACTER then return end
+    local sprite = player:GetSprite()
+    if not sprite:IsPlaying("LeapDown") then return end
+    if not entity:IsEnemy() then return end
+    local pickup = Isaac.Spawn(5, 10, 2, entity.Position, 4*RandomVector(), player)
+    pickup:ToPickup().Timeout = 60
+
+
+end
+mod:AddCallback(ModCallbacks.MC_POST_NPC_DEATH, maggy_b.onEntityDie)
 
 -- function maggy_b:onUse(_, rng, player)
 --     if not player then return end
