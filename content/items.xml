@@ -5,5 +5,5 @@
 
     <active id="3" name="Flip  " gfx="flip_reverse.png" description="Twist of fate" quality="0" maxcharges="3" tags="noeden quest lazarussharedglobal" hidden="true"/>
 
-    <active id="4" name="Teleport 3.0" gfx="collectibles_419_teleport20.png" description="Find your way" quality="3" maxcharges="1" tags="noeden quest" hidden="true"/>
+    <active id="4" name="Undefined 2.0" gfx="collectibles_324_undefined.png" description="I-Undefined" quality="3" maxcharges="1" tags="noeden quest" hidden="true"/>
 </items>

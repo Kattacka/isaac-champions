@@ -10,7 +10,7 @@ function crown:PostPlayerInit(player, playerVariant)
       crown:spawnCrown(player)
   end,{})
 end
-mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, crown.PostPlayerInit, 0)
+mod:AddPriorityCallback(ModCallbacks.MC_POST_PLAYER_INIT, CallbackPriority.LATE, crown.PostPlayerInit)
 
 
 function crown:PostGameStarted(isContinued)
@@ -18,7 +18,7 @@ function crown:PostGameStarted(isContinued)
   local player = Isaac.GetPlayer()
   crown:spawnCrown(player)
 end
-mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, crown.PostGameStarted)
+mod:AddPriorityCallback(ModCallbacks.MC_POST_GAME_STARTED, CallbackPriority.LATE, crown.PostGameStarted)
 
 
 function crown:spawnCrown(player)
@@ -42,9 +42,15 @@ function crown:spawnCrown(player)
   then return end
   if (level:GetCurrentRoomIndex() ~= 84) then return end
 
-  local entities = Isaac.FindByType(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, CHAMPION_CROWN)
-  local crownNum = #entities
-  local newOffsetFromRight = offsetFromRight - 40*(crownNum)
+  local save = mod.SaveManager.GetRunSave(nil, true)
+
+  if save.numCrowns == nil then
+    save.numCrowns = 1
+  else
+    save.numCrowns = save.numCrowns + 1
+  end
+
+  local newOffsetFromRight = offsetFromRight - 40*(save.numCrowns)
   local finalVector = room:FindFreePickupSpawnPosition(Vector(x - newOffsetFromRight, y+10))
 
   Isaac.Spawn(5, 100, CHAMPION_CROWN, finalVector, Vector.Zero, nil)

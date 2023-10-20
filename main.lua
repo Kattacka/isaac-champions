@@ -71,20 +71,32 @@ end)
 
 local CHAMPION_CROWN = Isaac.GetItemIdByName("Champion Crown")
 
+if EID then
 
+  EID:setModIndicatorName("Isaac Champions ")
+  EID:setModIndicatorIcon("Collectible"..CHAMPION_CROWN .."")
 
-EID:setModIndicatorName("Isaac Champions ")
-EID:setModIndicatorIcon("Collectible"..CHAMPION_CROWN .."")
+  EID:addCollectible(CHAMPION_CROWN,
+  "{{TreasureRoomChance}} Has a different effect per character" ..
+    "#{{Warning}} Effect not yet implemented for current character!"
+  )
 
-EID:addCollectible(CHAMPION_CROWN,
-"{{TreasureRoomChance}} Has a different effect per character" ..
-  "#{{Warning}} Effect not yet implemented for current character!"
-)
+  --
+  local function remQualCon(descObj)
+	  if descObj.ObjType == 5 and descObj.ObjVariant == 100 and descObj.ObjSubType == CHAMPION_CROWN then return true end
+  end
 
-local mySprite = Sprite()
-mySprite:Load("gfx/custom_ui/plus_minus.anm2", true)
-EID:addIcon("Plus", "plus", 1, 4, 4, 5, 5, mySprite)
-EID:addIcon("Minus", "minus", 1, 4, 4, 5, 5, mySprite)
+  local function remQualCall(descObj)
+	  descObj.Quality = nil
+	  return descObj
+  end
+  EID:addDescriptionModifier("Remove Quality", remQualCon, remQualCall)
+
+  local mySprite = Sprite()
+  mySprite:Load("gfx/custom_ui/plus_minus.anm2", true)
+  EID:addIcon("Plus", "plus", 1, 4, 4, 5, 5, mySprite)
+  EID:addIcon("Minus", "minus", 1, 4, 4, 5, 5, mySprite)
+end
 
 function mod:addTrinkets(player, trinkets)
   local heldTrinket = player:GetTrinket(0)
@@ -198,11 +210,13 @@ function mod:loadRooms(isContinued)
   local data = roomDescriptor.Data
   newTreasureRoom = data
 
+  
   needsToRestart = not isContinued
   --Game():StartRoomTransition(gridIndex, Direction.NO_DIRECTION, RoomTransitionAnim.FADE)
 
 end
 mod:AddPriorityCallback(ModCallbacks.MC_POST_GAME_STARTED,CallbackPriority.IMPORTANT, mod.loadRooms)
+
 
 function mod:OnNewRoom()
   if needsToRestart then
@@ -211,6 +225,7 @@ function mod:OnNewRoom()
   end
 end
 mod:AddPriorityCallback(ModCallbacks.MC_POST_NEW_ROOM, CallbackPriority.IMPORTANT, mod.OnNewRoom)
+
 
 function mod:RemoveTreasureRooms()
   local level = Game():GetLevel()
@@ -234,6 +249,15 @@ function mod:RemoveTreasureRooms()
     local data = newTreasureRoom
     local writeableRoom = level:GetRoomByIdx(roomIndex, -1)
     writeableRoom.Data = data
+
+    local room = Game():GetRoom()
+    for i = 1, 7, 1 do
+      local door = room:GetDoor(i)
+      if door and door.TargetRoomType == RoomType.ROOM_TREASURE then
+        door:SetRoomTypes(door.CurrentRoomType, RoomType.ROOM_DEFAULT)
+        door:SetLocked(false)
+      end
+    end
   end
 end
 mod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, mod.RemoveTreasureRooms)

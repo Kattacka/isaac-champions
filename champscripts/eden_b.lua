@@ -1,7 +1,7 @@
 local eden_b = {}
 local CHAMPION_CROWN = Isaac.GetItemIdByName("Champion Crown")
 local CHARACTER = PlayerType.PLAYER_EDEN_B
-local TELEPORT3 = Isaac.GetItemIdByName("Teleport 3.0")
+local UNDEFINED2 = Isaac.GetItemIdByName("Undefined 2.0")
 
 function eden_b:onCache(player, cacheFlag)
     if player == nil then return end
@@ -34,12 +34,12 @@ function eden_b:onCache(player, cacheFlag)
     end
 
 
-    local trinkets = {
-        TrinketType.TRINKET_PANIC_BUTTON,
-    }
-    mod:addTrinkets(player, trinkets)
+    -- local trinkets = {
+    --     TrinketType.TRINKET_PANIC_BUTTON,
+    -- }
+    -- mod:addTrinkets(player, trinkets)
 
-    player:SetPocketActiveItem(TELEPORT3)
+    player:SetPocketActiveItem(UNDEFINED2)
 
     if tempEffects:HasNullEffect(NullItemID.ID_ESAU_JR) then return end
     mod:RemoveTreasureRooms()
@@ -61,8 +61,8 @@ function eden_b:CheckActiveSlot(player)
     local overcharge = 0
     if player:HasCollectible(CollectibleType.COLLECTIBLE_BATTERY) then overcharge = 1 end
     for i = 0, 4, 1 do
-        if player:GetActiveItem(i) == TELEPORT3 and
-        player:GetActiveCharge(i) + player:GetBatteryCharge(i) >= 1 + overcharge then
+        if player:GetActiveItem(i) == UNDEFINED2 and
+        player:GetActiveCharge(i) + player:GetBatteryCharge(i) >= 1 then
             return i
         end
     end
@@ -72,7 +72,7 @@ end
 --Teleport player with teleport 3.0 on hit
 function eden_b:Teleport3onHit(entity, amount, flags)
     local player = entity:ToPlayer()
-    if not player:HasCollectible(TELEPORT3) then return end
+    if not player:HasCollectible(UNDEFINED2) then return end
 
     local fakeDamageFlags = DamageFlag.DAMAGE_NO_PENALTIES | DamageFlag.DAMAGE_RED_HEARTS | DamageFlag.DAMAGE_FAKE
     if flags & fakeDamageFlags > 0 then return end
@@ -102,11 +102,11 @@ mod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, eden_b.onHit, EntityType.ENTITY
 
 
 function eden_b:onTeleport3Use(_, rng, player)
-    player:UseActiveItem(CollectibleType.COLLECTIBLE_HOW_TO_JUMP, 1)
-    player:UseActiveItem(CollectibleType.COLLECTIBLE_TELEPORT_2, true)
+    player:UseActiveItem(CollectibleType.COLLECTIBLE_HOW_TO_JUMP)
+    player:UseActiveItem(CollectibleType.COLLECTIBLE_TELEPORT_2)
 end
 
-mod:AddCallback(ModCallbacks.MC_USE_ITEM, eden_b.onTeleport3Use, TELEPORT3)
+mod:AddCallback(ModCallbacks.MC_USE_ITEM, eden_b.onTeleport3Use, UNDEFINED2)
 
 if EID then
     local function crownPlayerCondition(descObj)
@@ -122,18 +122,16 @@ if EID then
         descObj.Description =
         "#{{Player".. CHARACTER .."}} {{ColorGray}}The Capricious" ..
         "#{{AchievementLocked}} Stops Treasure Room Generation" ..
-        "#\2 -50% Damage" ..
-        "#{{Minus}} Removes Collectibles:" ..
-        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_LUCKY_FOOT .. "}} Lucky Foot" ..
-        "#{{Blank}} {{Trinket" .. TrinketType.TRINKET_PAPER_CLIP .. "}} Paper Clip" ..
+        "#{{Collectible" .. CollectibleType.COLLECTIBLE_D4 .. "}} Keeps items on hit" ..
+        "#{{Minus}} Removes all Starting Collectibles" ..
         "#{{Plus}} Adds Collectibles: " ..
-        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_RED_KEY .. "}} {{ColorSilver}}Pocket Red Key" ..
-        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_FALSE_PHD .. "}} {{ColorSilver}}False PHD" ..
-        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_CRACKED_ORB .. "}} {{ColorSilver}}Cracked Orb" ..
-        "#{{Collectible" .. CollectibleType.COLLECTIBLE_SMELTER .. "}} Smelts Trinkets:" ..
-        "#{{Blank}} {{Trinket" .. TrinketType.TRINKET_CRYSTAL_KEY .. "}} {{ColorSilver}}Crystal Key" ..
-        "#{{Blank}} {{Trinket" .. TrinketType.TRINKET_GILDED_KEY .. "}} {{ColorSilver}}Guilded Key" ..
-        "#{{Pill}} Gives a luck down pill"
+        "#{{Blank}} {{Collectible" .. UNDEFINED2 .. "}} {{ColorSilver}}Pocket Undefined 2.0" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_BROKEN_MODEM .. "}} {{ColorSilver}}Broken Modem" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_CHAOS .. "}} {{ColorSilver}}Chaos" ..
+        "#{{Collectible" .. UNDEFINED2 .. "}} {{ColorObjName}}{{Battery}}{{1}} Undefined 2.0 " .. 
+        "#Teleports you following #{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_TELEPORT_2 .. "}} Teleport 2.0 rules." ..
+        "#If charged, activates #{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_UNDEFINED .. "}} Undefined on hit"
+
         return descObj
     end
     EID:addDescriptionModifier("CrownEdenB", crownPlayerCondition, crownPlayerCallback)
