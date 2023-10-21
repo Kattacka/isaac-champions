@@ -27,11 +27,25 @@ function champ_util:HUDOffset(x, y, anchor)
     end
     return math.floor(xoffset + 0.5), math.floor(yoffset + 0.5)
 end
-  
+
 
 function champ_util:HUDOffsetVector(vector, anchor)
     local x, y = champ_util:HUDOffset(vector.X, vector.Y, anchor)
     return Vector(x, y)
+end
+
+function champ_util:toTearsPerSecond(maxFireDelay)
+    return 30 / (maxFireDelay + 1)
+end
+
+function champ_util:toMaxFireDelay(tearsPerSecond)
+    return (30 / tearsPerSecond) - 1
+end
+
+function champ_util:addNegativeTearMultiplier(player, multiplier)
+    local tearsPerSecond = mod.Utility:toTearsPerSecond(player.MaxFireDelay)
+    tearsPerSecond = tearsPerSecond / multiplier
+    player.MaxFireDelay = mod.Utility:toMaxFireDelay(tearsPerSecond)
 end
 
 function champ_util:hasRevive(player)

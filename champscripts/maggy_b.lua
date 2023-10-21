@@ -11,9 +11,15 @@ function maggy_b:onCache(player, cacheFlag)
     if player:GetPlayerType() ~= CHARACTER then return end
 
 
-    if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = (player.Damage) * 0.8 end
+    --if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = (player.Damage) * 0.8 end
     if cacheFlag == CacheFlag.CACHE_TEARFLAG then player.TearFlags = player.TearFlags | TearFlags.TEAR_PUNCH end
-    if cacheFlag == CacheFlag.CACHE_FIREDELAY then player.MaxFireDelay = player.MaxFireDelay * 5 end
+    if cacheFlag == CacheFlag.CACHE_FIREDELAY then
+        mod.Utility:addNegativeTearMultiplier(player, 5.5)
+    end
+
+    local config = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_SOY_MILK)
+    player:RemoveCostume(config)
+
     local save = mod.SaveManager.GetRunSave(player)
     if save.ItemObtained == true then return end
     save.ItemObtained = true
@@ -24,7 +30,6 @@ function maggy_b:onCache(player, cacheFlag)
 
     local trinkets = {
         TrinketType.TRINKET_CROW_HEART,
-        TrinketType.TRINKET_ISAACS_FORK
     }
     mod:addTrinkets(player, trinkets)
 
@@ -69,13 +74,13 @@ function maggy_b:onPickupInit(pickup)
 mod:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, maggy_b.onPickupInit)
 
 function maggy_b:onEntityDie(entity)
+    if not entity:IsEnemy() then return end
     local player = Game():GetNearestPlayer(entity.Position)
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if not player:GetPlayerType() == CHARACTER then return end
     local sprite = player:GetSprite()
     if not sprite:IsPlaying("LeapDown") then return end
-    if not entity:IsEnemy() then return end
-    local pickup = Isaac.Spawn(5, 10, 2, entity.Position, 4*RandomVector(), player)
+    local pickup = Isaac.Spawn(5, 10, 2, entity.Position, (6*player.MoveSpeed)*RandomVector(), player)
     pickup:ToPickup().Timeout = 60
 
 

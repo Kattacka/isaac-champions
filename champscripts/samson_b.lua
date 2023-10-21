@@ -10,6 +10,11 @@ function samson_b:onCache(player, cacheFlag)
 
     player.Damage = player.Damage - 1.0
 
+    local config = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_GLYPH_OF_BALANCE)
+    player:RemoveCostume(config)
+    config = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_WAFER)
+    player:RemoveCostume(config)
+
     local save = mod.SaveManager.GetRunSave(player)
     if save.ItemObtained == true then return end
     save.ItemObtained = true
@@ -83,16 +88,23 @@ if EID then
     
     EID:addDescriptionModifier("CrownSamsonB", crownPlayerCondition, crownPlayerCallback)
 end
--- function samson_b:onHit(entity, amount, flags)
---     local player = entity:ToPlayer() 
---     if not player:HasCollectible(CHAMPION_CROWN) then return end
---     if player:GetPlayerType() ~= CHARACTER then return end
 
---     local fakeDamageFlags = DamageFlag.DAMAGE_NO_PENALTIES | DamageFlag.DAMAGE_RED_HEARTS | DamageFlag.DAMAGE_FAKE
+function samson_b:onHit(entity, amount, flags)
+    local player = entity:ToPlayer() 
+    if not player:HasCollectible(CHAMPION_CROWN) then return end
+    if player:GetPlayerType() ~= CHARACTER then return end
 
---     if flags & fakeDamageFlags > 0 then return end
-
---     player:UseActiveItem(CollectibleType.COLLECTIBLE_BERSERK, true)
---     return true
--- end
--- mod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, samson_b.onHit, EntityType.ENTITY_PLAYER)
+    local stage = Game():GetLevel():GetStage()
+    local roomType = Game():GetRoom():GetType()
+    if (flags & DamageFlag.DAMAGE_SPIKES) ~= 0 and roomType == RoomType.ROOM_BOSS and Game():GetRoom():IsClear()
+    and (stage == LevelStage.STAGE2_2 or stage == LevelStage.STAGE3_1 or stage == LevelStage.STAGE2_1) then
+        if player:GetEffects():HasCollectibleEffect(CollectibleType.COLLECTIBLE_BERSERK) then
+            local pickup = Isaac.Spawn(5, 10, 2, entity.Position, 10*RandomVector(), player)
+            pickup:ToPickup().Timeout = 60
+            return true
+        end
+        player:UseActiveItem(CollectibleType.COLLECTIBLE_BERSERK)
+        return false
+    end
+end
+mod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, samson_b.onHit, EntityType.ENTITY_PLAYER)

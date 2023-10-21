@@ -10,7 +10,7 @@ function azazel:onCache(player, cacheFlag)
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
 
-    if cacheFlag == CacheFlag.CACHE_FIREDELAY then player.MaxFireDelay = player.MaxFireDelay * 1.76 end
+    if cacheFlag == CacheFlag.CACHE_FIREDELAY then mod.Utility:addNegativeTearMultiplier(player, 1.75) end
     if cacheFlag == CacheFlag.CACHE_RANGE then player.TearRange = -100 end
     if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = (player.Damage * 0.5) + 0.03 end
 

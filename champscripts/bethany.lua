@@ -9,8 +9,9 @@ function bethany:onCache(player, cacheFlag)
     if player:GetPlayerType() ~= CHARACTER then return end
 
     if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = player.Damage / 2 + 0.7 end
-    if cacheFlag == CacheFlag.CACHE_FIREDELAY then player.MaxFireDelay = player.MaxFireDelay * 1.25 end
-
+    if cacheFlag == CacheFlag.CACHE_FIREDELAY then
+        mod.Utility:addNegativeTearMultiplier(player, 1.25)
+    end
     local save = mod.SaveManager.GetRunSave(player)
     if save.ItemObtained == true then return end
     save.ItemObtained = true

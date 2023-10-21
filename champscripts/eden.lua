@@ -11,9 +11,9 @@ function eden:onCache(player, cacheFlag)
     if player:GetPlayerType() ~= CHARACTER then return end
 
 
-    if cacheFlag == CacheFlag.CACHE_FIREDELAY then player.MaxFireDelay = (player.MaxFireDelay * 1.5) end
+    if cacheFlag == CacheFlag.CACHE_FIREDELAY then mod.Utility:addNegativeTearMultiplier(player, 2) end
 
-    if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = (player.Damage * 0.6) - 0.7 end
+    if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = (player.Damage * 0.5) - 0.7 end
 
 
     local save = mod.SaveManager.GetRunSave(player)
@@ -38,6 +38,7 @@ function eden:onCache(player, cacheFlag)
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_SAUSAGE) then
         player:AddCollectible(CollectibleType.COLLECTIBLE_SAUSAGE)
     end
+    player:AddCollectible(CollectibleType.COLLECTIBLE_SAUSAGE)
 
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_LIBRA) then
         player:AddCollectible(CollectibleType.COLLECTIBLE_LIBRA)
@@ -71,6 +72,7 @@ function eden:onUse(_, rng, player)
         local save = mod.SaveManager.GetRunSave(player) 
 
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_TMTRAINER)
+        player:RemoveCollectible(CollectibleType.COLLECTIBLE_SAUSAGE)
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_SAUSAGE)
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_LIBRA)
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_GENESIS)

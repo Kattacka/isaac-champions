@@ -53,7 +53,8 @@ function crown:spawnCrown(player)
   local newOffsetFromRight = offsetFromRight - 40*(save.numCrowns)
   local finalVector = room:FindFreePickupSpawnPosition(Vector(x - newOffsetFromRight, y+10))
 
-  Isaac.Spawn(5, 100, CHAMPION_CROWN, finalVector, Vector.Zero, nil)
+  local crownItem = Isaac.Spawn(5, 100, CHAMPION_CROWN, finalVector, Vector.Zero, nil)
+  crownItem:GetData().DamoclesDuplicate = true
 end
 
 

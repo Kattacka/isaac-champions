@@ -9,7 +9,9 @@ function bethany_b:onCache(player, cacheFlag)
     if player:GetPlayerType() ~= CHARACTER then return end
 
     if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = player.Damage - 1.27 end
-    if cacheFlag == CacheFlag.CACHE_FIREDELAY then player.MaxFireDelay = player.MaxFireDelay * 1.2 end
+    if cacheFlag == CacheFlag.CACHE_FIREDELAY then
+        mod.Utility:addNegativeTearMultiplier(player, 1.2)
+    end
     if cacheFlag == CacheFlag.CACHE_SHOTSPEED then player.ShotSpeed = player.ShotSpeed - 0.4 end
     if cacheFlag == CacheFlag.CACHE_RANGE then player.TearRange = player.TearRange - 40 end
 
