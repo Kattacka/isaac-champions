@@ -71,6 +71,13 @@ Both start with activated damocles + gulped wooden cross.
 Both start with one size down.  
 One starts with trinity shield.  
 
+### Tainted Maggy+:
+Removed yum heart  
+Enemies no longer drop disappearing hearts  
+0.8x Damage  
+Starts with pocket suplex, knockout drops, and isaac's heart  
+Suplexed enemies drop disappearing hearts  
+
 ### Tainted Cain+: 
 Treasure rooms don't spawn.  
 Starts with notched axe and schoolbag + gulped lucky rock, No!, and Nuh uh!  
