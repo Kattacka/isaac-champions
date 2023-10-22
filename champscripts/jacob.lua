@@ -8,11 +8,12 @@ function jacob:onCache(player, cacheFlag)
 
         
     if player == nil then return end
-    if cacheFlag ~= CacheFlag.CACHE_SIZE then return end
+    if not (cacheFlag == CacheFlag.CACHE_SIZE or cacheFlag == CacheFlag.CACHE_DAMAGE) then return end
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if not (player:GetPlayerType() == CHARACTER or player:GetPlayerType() == CHARACTER2) then return end
     
     local twinPlayer = player:GetOtherTwin()
+    if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = player.Damage * 0.75 end
 
     local save = mod.SaveManager.GetRunSave(player)
     if save.ItemObtained == true then return end
@@ -75,6 +76,25 @@ function jacob:onCache(player, cacheFlag)
 end
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, jacob.onCache)
 
+function jacob:onHit(entity, amount, flags)
+    local player = entity:ToPlayer()
+    if not player:HasCollectible(CHAMPION_CROWN) then return end
+    if not (player:GetPlayerType() == CHARACTER or player:GetPlayerType() == CHARACTER2) then return end
+
+    local save = mod.SaveManager.GetRunSave(player)
+    if save.gotHit == true then return end
+
+    local fakeDamageFlags = DamageFlag.DAMAGE_NO_PENALTIES | DamageFlag.DAMAGE_RED_HEARTS | DamageFlag.DAMAGE_FAKE
+    if flags & fakeDamageFlags > 0 then return end
+
+    print("gogo")
+    save.gotHit = true
+
+    player:BloodExplode()
+    player:AddCostume(Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_ANEMIC))
+end
+mod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, jacob.onHit, EntityType.ENTITY_PLAYER)
+
 --Prevent DamoclesAPI from spawning three pedestals
 if CCO then
     function jacob:customChallengeDamocles()
@@ -82,10 +102,35 @@ if CCO then
         if (next(championChars) == nil) then
             return 0
         else
-            print("delete")
             return -1
         end
     end
     CCO.DamoclesAPI.AddDamoclesCallback(jacob.customChallengeDamocles)
 end
 
+if EID then
+    local function crownPlayerCondition(descObj)
+        if descObj and descObj.ObjType == 5 and descObj.ObjVariant == 100 and descObj.ObjSubType == CHAMPION_CROWN then
+            if (descObj.Entity ~= nil) then
+                if (Game():GetNearestPlayer(descObj.Entity.Position)):GetPlayerType() == CHARACTER or (Game():GetNearestPlayer(descObj.Entity.Position)):GetPlayerType() == CHARACTER2 then return true end
+            else
+                if EID.holdTabPlayer and EID.holdTabPlayer:ToPlayer():GetPlayerType() == CHARACTER or (Game():GetNearestPlayer(descObj.Entity.Position)):GetPlayerType() == CHARACTER2 then return true end
+            end
+        end
+    end
+    local function crownPlayerCallback(descObj)
+        descObj.Description =
+        "#{{Player".. CHARACTER .."}} {{Player".. CHARACTER2 .."}} {{ColorGray}}Jacob and Esau" ..
+        "#\2 -25% Damage down" ..
+        "#\1 Size down" ..
+        "#{{Plus}} Adds Collectibles: " ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_DAMOCLES_PASSIVE .. "}} {{ColorSilver}}Damocles" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_TRINITY_SHIELD .. "}} {{ColorSilver}}Trinity Shield" ..
+        "#{{Collectible" .. CollectibleType.COLLECTIBLE_SMELTER .. "}} Smelts Trinkets:" ..
+        "#{{Blank}} {{Trinket" .. TrinketType.TRINKET_WOODEN_CROSS .. "}} {{ColorSilver}}Wooden Cross"
+
+        return descObj
+    end
+
+    EID:addDescriptionModifier("CrownJacob", crownPlayerCondition, crownPlayerCallback)
+end

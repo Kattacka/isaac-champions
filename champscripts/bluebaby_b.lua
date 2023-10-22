@@ -37,28 +37,9 @@ function bluebaby_b:onCache(player, cacheFlag)
 end
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, bluebaby_b.onCache)
 
-
-function bluebaby_b:onNewFloor()
-    local finalPlayer = nil
-    for i = 0, Game():GetNumPlayers() - 1 do
-        local player = Isaac.GetPlayer(i)
-        if player:GetPlayerType() == PlayerType.PLAYER_JACOB_B then
-            finalPlayer = player
-        end
-      end
-
-    if finalPlayer == nil then return end
-    if finalPlayer:GetPlayerType() ~= PlayerType.PLAYER_JACOB_B then return end
-    if not finalPlayer:HasCollectible(CHAMPION_CROWN) then return end
-
-    finalPlayer:UseActiveItem(CollectibleType.COLLECTIBLE_ANIMA_SOLA, true)
-end
-
-mod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, bluebaby_b.onNewFloor)
-
 if EID then
     local function crownPlayerCondition(descObj)
-        if descObj.ObjType == 5 and descObj.ObjVariant == 100 and descObj.ObjSubType == CHAMPION_CROWN then
+        if descObj and descObj.ObjType == 5 and descObj.ObjVariant == 100 and descObj.ObjSubType == CHAMPION_CROWN then
             if (descObj.Entity ~= nil) then
                 if (Game():GetNearestPlayer(descObj.Entity.Position)):GetPlayerType() == CHARACTER then return true end
             else

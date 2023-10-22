@@ -43,3 +43,33 @@ function lilith:onCache(player, cacheFlag)
 end
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, lilith.onCache)
 
+if EID then
+    local function crownPlayerCondition(descObj)
+        if descObj and descObj.ObjType == 5 and descObj.ObjVariant == 100 and descObj.ObjSubType == CHAMPION_CROWN then
+            if (descObj.Entity ~= nil) then
+                if (Game():GetNearestPlayer(descObj.Entity.Position)):GetPlayerType() == CHARACTER then return true end
+            else
+                if EID.holdTabPlayer and EID.holdTabPlayer:ToPlayer():GetPlayerType() == CHARACTER then return true end
+            end
+        end
+    end
+    local function crownPlayerCallback(descObj)
+        descObj.Description =
+        "#{{Player".. CHARACTER .."}} {{ColorGray}}Lilith" ..
+        "#\2  -40% Damage down" ..
+        "#{{Blank}}  -3 Range down" ..
+        "#{{Minus}} Removes Collectibles:" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_BOX_OF_FRIENDS .. "}} {{ColorSilver}}Box of Friends" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_CAMBION_CONCEPTION .. "}} {{ColorSilver}}Cambion Conception" ..
+        "#{{Plus}} Adds Collectibles: " ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_BIRTHRIGHT .. "}} {{ColorSilver}}Birthright" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_KING_BABY .. "}} {{ColorSilver}}King Baby" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_PROPTOSIS .. "}} {{ColorSilver}}Proptosis" ..
+        "#{{Collectible" .. CollectibleType.COLLECTIBLE_SMELTER .. "}} Smelts Trinkets:" ..
+        "#{{Blank}} {{Trinket" .. TrinketType.TRINKET_FRIENDSHIP_NECKLACE .. "}} {{ColorSilver}}Friendship Necklace" ..
+        "#{{Blank}} {{Trinket" .. TrinketType.TRINKET_ADOPTION_PAPERS .. "}} {{ColorSilver}}Adoption Papers"
+        return descObj
+    end
+    
+    EID:addDescriptionModifier("CrownLilith", crownPlayerCondition, crownPlayerCallback)
+end

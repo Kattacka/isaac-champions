@@ -42,3 +42,28 @@ function jacob_b:onNewFloor()
 end
 
 mod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, jacob_b.onNewFloor)
+
+if EID then
+    local function crownPlayerCondition(descObj)
+        if descObj and descObj.ObjType == 5 and descObj.ObjVariant == 100 and descObj.ObjSubType == CHAMPION_CROWN then
+            if (descObj.Entity ~= nil) then
+                if (Game():GetNearestPlayer(descObj.Entity.Position)):GetPlayerType() == CHARACTER then return true end
+            else
+                if EID.holdTabPlayer and EID.holdTabPlayer:ToPlayer():GetPlayerType() == CHARACTER then return true end
+            end
+        end
+    end
+    local function crownPlayerCallback(descObj)
+        descObj.Description =
+        "#{{Player".. CHARACTER .."}} {{ColorGray}}The Deserter" ..
+        "#{{Trinket" .. TrinketType.TRINKET_BLIND_RAGE .. "}} {{ColorSilver}}Applies Blindfold" ..
+        "#{{Plus}} Adds Collectibles: " ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_BIRTHRIGHT .. "}} {{ColorSilver}}Birthright" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_BATTERY .. "}} {{ColorSilver}}The Battery" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_LORD_OF_THE_PIT .. "}} {{ColorSilver}}Lord of the Pit" 
+
+        return descObj
+    end
+
+    EID:addDescriptionModifier("CrownJacobB", crownPlayerCondition, crownPlayerCallback)
+end

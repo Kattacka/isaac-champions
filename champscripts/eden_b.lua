@@ -110,7 +110,7 @@ mod:AddCallback(ModCallbacks.MC_USE_ITEM, eden_b.onTeleport3Use, UNDEFINED2)
 
 if EID then
     local function crownPlayerCondition(descObj)
-        if descObj.ObjType == 5 and descObj.ObjVariant == 100 and descObj.ObjSubType == CHAMPION_CROWN then
+        if descObj and descObj.ObjType == 5 and descObj.ObjVariant == 100 and descObj.ObjSubType == CHAMPION_CROWN then
             if (descObj.Entity ~= nil) then
                 if (Game():GetNearestPlayer(descObj.Entity.Position)):GetPlayerType() == CHARACTER then return true end
             else

@@ -109,3 +109,32 @@ mod:AddCallback(ModCallbacks.MC_USE_ITEM, lazarus_b.onFlip1Use, NEW_FLIP1)
 -- end
 
 -- mod:AddCallback(ModCallbacks.MC_USE_ITEM, lazarus_b.onFlip2Use, NEW_FLIP2)
+
+if EID then
+    local function crownPlayerCondition(descObj)
+        if descObj and descObj.ObjType == 5 and descObj.ObjVariant == 100 and descObj.ObjSubType == CHAMPION_CROWN then
+            if (descObj.Entity ~= nil) then
+                if (Game():GetNearestPlayer(descObj.Entity.Position)):GetPlayerType() == CHARACTER or (Game():GetNearestPlayer(descObj.Entity.Position)):GetPlayerType() == CHARACTER2 then return true end
+            else
+                if EID.holdTabPlayer and EID.holdTabPlayer:ToPlayer():GetPlayerType() == CHARACTER or (Game():GetNearestPlayer(descObj.Entity.Position)):GetPlayerType() == CHARACTER2 then return true end
+            end
+        end
+    end
+    local function crownPlayerCallback(descObj)
+        descObj.Description =
+        "#{{Player".. CHARACTER .."}} {{Player".. CHARACTER2 .."}} {{ColorGray}}The Benighted" ..
+        "#{{Collectible" .. CollectibleType.COLLECTIBLE_FLIP .. "}} {{Battery}}{{3}} Flip reduced to 3 charges " ..
+        "#{{Blank}} No longer flips item pedestals" ..
+        "#{{Player".. CHARACTER .."}} {{Plus}}   Adds Collectibles: " ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_EVES_MASCARA .. "}} {{ColorSilver}}Eve's Mascera" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_VANISHING_TWIN .. "}} {{ColorSilver}}Vanishing Twin" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_MORE_OPTIONS .. "}} {{ColorSilver}}More Options" ..
+        "#{{Player".. CHARACTER2 .."}} {{Plus}}   Adds Collectibles: " ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_SOY_MILK .. "}} {{ColorSilver}}Soy Milk" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_MORE_OPTIONS .. "}} {{ColorSilver}}More Options" 
+
+        return descObj
+    end
+
+    EID:addDescriptionModifier("CrownLazarusB", crownPlayerCondition, crownPlayerCallback)
+end

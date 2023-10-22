@@ -28,7 +28,7 @@ mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, isaac.onCache)
 
 if EID then
     local function crownPlayerCondition(descObj)
-        if descObj.ObjType == 5 and descObj.ObjVariant == 100 and descObj.ObjSubType == CHAMPION_CROWN then
+        if descObj and descObj.ObjType == 5 and descObj.ObjVariant == 100 and descObj.ObjSubType == CHAMPION_CROWN then
             if (descObj.Entity ~= nil) then
                 if (Game():GetNearestPlayer(descObj.Entity.Position)):GetPlayerType() == CHARACTER then return true end
             else
@@ -40,7 +40,7 @@ if EID then
         descObj.Description =
         "#{{Player".. CHARACTER .."}} {{ColorGray}}Isaac" ..
         "#{{Minus}} Removes Collectibles:" ..
-        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_D6 .. "}} D6" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_D6 .. "}} {{ColorSilver}}D6" ..
         "#{{Plus}} Adds Collectibles: " ..
         "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_MOVING_BOX .. "}} {{ColorSilver}}Pocket Moving Box" ..
         "#{{Collectible" .. CollectibleType.COLLECTIBLE_SMELTER .. "}} Smelts Trinkets:" ..

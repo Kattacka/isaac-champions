@@ -27,19 +27,19 @@ include("champscripts.azazel")
 include("champscripts.eden")
 include("champscripts.lilith")
 include("champscripts.lost")
-include("champscripts.forgotten")
+--include("champscripts.forgotten")
 include("champscripts.bethany")
 include("champscripts.jacob")
-include("champscripts.isaac_b")
+--include("champscripts.isaac_b")
 include("champscripts.maggy_b")
 include("champscripts.cain_b")
 include("champscripts.lazarus_b")
 include("champscripts.apollyon_b")
 include("champscripts.bluebaby_b")
 include("champscripts.samson_b")
-include("champscripts.bethany_b")
+--include("champscripts.bethany_b")
 
-include("champscripts.keeper_b")
+--include("champscripts.keeper_b")
 include("champscripts.eden_b")
 include("champscripts.jacob_b")
 
@@ -81,9 +81,9 @@ if EID then
     "#{{Warning}} Effect not yet implemented for current character!"
   )
 
-  --
+
   local function remQualCon(descObj)
-	  if descObj.ObjType == 5 and descObj.ObjVariant == 100 and descObj.ObjSubType == CHAMPION_CROWN then return true end
+	  if descObj and descObj.ObjType == 5 and descObj.ObjVariant == 100 and descObj.ObjSubType == CHAMPION_CROWN then return true end
   end
 
   local function remQualCall(descObj)

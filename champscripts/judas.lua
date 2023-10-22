@@ -112,3 +112,31 @@ function judas:onWormDie(entity)
 end
 
 mod:AddCallback(ModCallbacks.MC_POST_NPC_DEATH, judas.onWormDie)
+
+if EID then
+  local function crownPlayerCondition(descObj)
+      if descObj and descObj.ObjType == 5 and descObj.ObjVariant == 100 and descObj.ObjSubType == CHAMPION_CROWN then
+        if (descObj.Entity ~= nil) then
+          if (Game():GetNearestPlayer(descObj.Entity.Position)):GetPlayerType() == CHARACTER or (Game():GetNearestPlayer(descObj.Entity.Position)):GetPlayerType() == CHARACTER2 then return true end
+      else
+          if EID.holdTabPlayer and EID.holdTabPlayer:ToPlayer():GetPlayerType() == CHARACTER or (Game():GetNearestPlayer(descObj.Entity.Position)):GetPlayerType() == CHARACTER2 then return true end
+      end
+      end
+  end
+  local function crownPlayerCallback(descObj)
+
+      descObj.Description =
+      "#{{Player".. CHARACTER .."}} {{ColorGray}}Judas" ..
+      "#{{Player".. CHARACTER2 .."}} {{ColorMaroon}}Transforms you into Dark Judas" ..
+      "#{{Trinket" .. TrinketType.TRINKET_BLIND_RAGE .. "}} {{ColorSilver}}Applies Blindfold" ..
+      "#{{Plus}} Adds Collectibles: " ..
+      "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_URN_OF_SOULS .. "}} {{ColorSilver}}Pocket Urn of Souls" ..
+      "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_BIRTHRIGHT .. "}} {{ColorSilver}}Birthright" ..
+      "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_MY_SHADOW .. "}} {{ColorSilver}}My Shadow" ..
+      "#{{Collectible" .. CollectibleType.COLLECTIBLE_SMELTER .. "}} Smelts Trinkets:" ..
+      "#{{Blank}} {{Trinket" .. TrinketType.TRINKET_DAEMONS_TAIL .. "}} {{ColorSilver}}Daemon's Tail" ..
+      "#{{Collectible" .. CollectibleType.COLLECTIBLE_VENGEFUL_SPIRIT .. "}} Grants permanent Vengeful Spirit Wisp"
+      return descObj
+  end
+  EID:addDescriptionModifier("CrownJudas", crownPlayerCondition, crownPlayerCallback)
+end

@@ -20,18 +20,22 @@ mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, azazel.onCache)
 
 mod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, player)
 
-    if not player:HasCollectible(CHAMPION_CROWN) then return end
-    if player:GetPlayerType() ~= CHARACTER then return end
-
-    mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_BIRTHRIGHT, 1)
-    mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_ANTI_GRAVITY, 1)
-    mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_TINY_PLANET, 1)
+    if player:HasCollectible(CHAMPION_CROWN) and player:GetPlayerType() == CHARACTER then
+        mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_BIRTHRIGHT, 1, AZAZEL)
+        mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_ANTI_GRAVITY, 1, AZAZEL)
+        mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_TINY_PLANET, 1, AZAZEL)
+    end
+    -- else
+    --     mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_BIRTHRIGHT, 0, AZAZEL)
+    --     mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_ANTI_GRAVITY, 0, AZAZEL)
+    --     mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_TINY_PLANET, 0, AZAZEL)
+    -- end
 
 end)
 
 if EID then
     local function crownPlayerCondition(descObj)
-        if descObj.ObjType == 5 and descObj.ObjVariant == 100 and descObj.ObjSubType == CHAMPION_CROWN then
+        if descObj and descObj.ObjType == 5 and descObj.ObjVariant == 100 and descObj.ObjSubType == CHAMPION_CROWN then
             if (descObj.Entity ~= nil) then
                 if (Game():GetNearestPlayer(descObj.Entity.Position)):GetPlayerType() == CHARACTER then return true end
             else

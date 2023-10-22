@@ -53,7 +53,7 @@ mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, apollyon.onCache)
 
 if EID then
     local function crownPlayerCondition(descObj)
-        if descObj.ObjType == 5 and descObj.ObjVariant == 100 and descObj.ObjSubType == CHAMPION_CROWN then
+        if descObj and descObj.ObjType == 5 and descObj.ObjVariant == 100 and descObj.ObjSubType == CHAMPION_CROWN then
             if (descObj.Entity ~= nil) then
                 if (Game():GetNearestPlayer(descObj.Entity.Position)):GetPlayerType() == CHARACTER then return true end
             else
@@ -65,7 +65,7 @@ if EID then
 
         descObj.Description =
         "#{{Player".. CHARACTER .."}} {{ColorGray}}Apollyon" ..
-        "#{{Collectible" .. CollectibleType.COLLECTIBLE_VOID .. "}} Pockets Void" ..
+        "#{{Collectible" .. CollectibleType.COLLECTIBLE_VOID .. "}} Moves Void to Pocket Slot" ..
         "#{{Collectible" .. CollectibleType.COLLECTIBLE_VOID .. "}} {{ColorPurple}}Voids Collectibles:" ..
         "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_SPINDOWN_DICE .. "}} {{ColorTransform}}Spindown Dice" ..
         "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_CROOKED_PENNY .. "}} {{ColorTransform}}Crooked Penny" ..

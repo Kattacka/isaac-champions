@@ -28,10 +28,10 @@ function maggy_b:onCache(player, cacheFlag)
 
     player:AddHearts(2)
 
-    local trinkets = {
-        TrinketType.TRINKET_CROW_HEART,
-    }
-    mod:addTrinkets(player, trinkets)
+    -- local trinkets = {
+    --     TrinketType.TRINKET_CROW_HEART,
+    -- }
+    -- mod:addTrinkets(player, trinkets)
 
     if player:HasCollectible(CollectibleType.COLLECTIBLE_YUM_HEART) then
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_YUM_HEART)
@@ -80,19 +80,71 @@ function maggy_b:onEntityDie(entity)
     if not player:GetPlayerType() == CHARACTER then return end
     local sprite = player:GetSprite()
     if not sprite:IsPlaying("LeapDown") then return end
+
+    local save = mod.SaveManager.GetRunSave(player)
+    if save.heartsSpawned == nil then
+        save.heartsSpawned = 1
+    else
+        save.heartsSpawned = save.heartsSpawned + 1
+    end
+
+    if save.heartsSpawned > 3 then
+        if save.heartsSpawned < 5 then
+            mod.Schedule(80, function ()
+                local save1 = mod.SaveManager.GetRunSave(player)
+                save1.heartsSpawned = 0
+            end,{})
+        end
+        return
+    end
     local pickup = Isaac.Spawn(5, 10, 2, entity.Position, (6*player.MoveSpeed)*RandomVector(), player)
     pickup:ToPickup().Timeout = 60
-
-
 end
 mod:AddCallback(ModCallbacks.MC_POST_NPC_DEATH, maggy_b.onEntityDie)
 
--- function maggy_b:onUse(_, rng, player)
---     if not player then return end
---     if not player:HasCollectible(CHAMPION_CROWN) then return end
---     if player:GetPlayerType() ~= CHARACTER then return end
---     player:AddBlackHearts(1)
+function maggy_b:enterRoom()
+    local room = Game():GetRoom()
+    local level = Game():GetLevel()
 
--- end
+    if not room:IsFirstVisit() then return end
+    if (level:GetCurrentRoomIndex() ~= 84) then return end
 
--- mod:AddCallback(ModCallbacks.MC_USE_ITEM, maggy_b.onUse, CollectibleType.COLLECTIBLE_SATANIC_BIBLE)
+    local champions = mod:getAllChampChars(CHARACTER)
+    if (next(champions) == nil) then return end
+    for i = 1, #champions do
+        local player = champions[i]
+        local save = mod.SaveManager.GetRunSave(player)
+        save.heartsSpawned = 0
+    end
+
+end
+mod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, maggy_b.enterRoom)
+
+if EID then
+    local function crownPlayerCondition(descObj)
+        if descObj and descObj.ObjType == 5 and descObj.ObjVariant == 100 and descObj.ObjSubType == CHAMPION_CROWN then
+            if (descObj.Entity ~= nil) then
+                if (Game():GetNearestPlayer(descObj.Entity.Position)):GetPlayerType() == CHARACTER then return true end
+            else
+                if EID.holdTabPlayer and EID.holdTabPlayer:ToPlayer():GetPlayerType() == CHARACTER then return true end
+            end
+        end
+    end
+    local function crownPlayerCallback(descObj)
+        descObj.Description =
+        "#{{Player".. CHARACTER .."}} {{ColorGray}}The Dauntless " ..
+        "#{{HalfHeart}} Stops enemies from dropping hearts" ..
+        "#\2  -80% Damage down" ..
+        "#{{Minus}} Removes Collectibles:" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_YUM_HEART .. "}} {{ColorSilver}}Yum Heart" ..
+        "#{{Plus}} Adds Collectibles: " ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_SUPLEX .. "}} {{ColorSilver}}Pocket Suplex" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_KNOCKOUT_DROPS .. "}} {{ColorSilver}}Knockout Drops" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_ISAACS_HEART .. "}} {{ColorSilver}}Isaac's Heart" ..
+        "#{{Collectible" .. CollectibleType.COLLECTIBLE_SUPLEX .. "}} Suplexed enemies drop disappearing red hearts"
+
+        return descObj
+    end
+    
+    EID:addDescriptionModifier("CrownMaggyB", crownPlayerCondition, crownPlayerCallback)
+end
