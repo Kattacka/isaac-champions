@@ -74,7 +74,7 @@ One starts with trinity shield.
 ### Tainted Maggy+:
 Removed yum heart  
 Enemies no longer drop disappearing hearts  
-0.8x Damage  
+0.2x Damage  
 Starts with pocket suplex, knockout drops, and isaac's heart  
 Suplexed enemies drop disappearing hearts  
 
