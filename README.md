@@ -2,16 +2,16 @@
 
 Currently Implemented:
 
-# Isaac+: 
- Removed D6
- Starts with pocket moving box + gulped dice bag and gulped cracked dice
+## Isaac+: 
+  Removed D6
+  Starts with pocket moving box + gulped dice bag and gulped cracked dice
 
-#Maggy+:
- Removed Yum heart
- 0.5x tear rate
- +1 Extra heart container (filled with rotten heart)
- Starts with pocket yuck heart + gulped fish tail, apple of sodom, and crow's heart.
- +1 Bomb
+## Maggy+:
+  Removed Yum heart
+  0.5x tear rate
+  +1 Extra heart container (filled with rotten heart)
+  Starts with pocket yuck heart + gulped fish tail, apple of sodom, and crow's heart.
+  +1 Bomb
 
 Cain+:
 Treasure rooms won't spawn for the run.
