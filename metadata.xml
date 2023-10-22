@@ -2,10 +2,25 @@
 <metadata>
     <name>isaac-champions</name>
     <directory>isaac-champions</directory>
-    <id></id>
-    <description>Isac has champon
+    <id>3057506609</id>
+    <description>It's not another C side... it's an A+ side! Introducing...
+
+[h1] Isaac Champions! [/h1] 
+This mod adds champion variants of (almost) every character, tainted or not! Champion characters start with a different item and stat loadout than their vanilla counterpart, but still count for the same completion marks as them. Champion chars were meant to be played after completing the game and starting a new save file, giving you a fresh way to relive the classics while grinding for the next dead god, but don't let that stop you, play how you want!
+
+[h1] Champion Crown [/h1] 
+Starting a run as a champion character is super simple, all you need to do is pickup the [b]Champion Crown[/b] item at the beginning of the run and you'll be all champed up! Be careful though, as leaving the room and coming back will make the pedestal go away.
+
+[h1] Champion Characters [/h1] 
+Currently, [b]20[/b] champion characters are completed. A full list of their effects can be found [url=https://github.com/Kattacka/isaac-champions/blob/main/README.md]HERE[/url]. Champion characters come with changed stats, items, trinkets, and sometimes even mechanics. All changes use vanilla items and mechanics only, so now you can explore the amazing hidden synergy potential of items you never get to use! I don't have any ideas for any more characters at this point, so feel free to suggest more with these limitations in mind.
+
+
+As always, use the discussion threads below for any bug reports or synergies, I hope you enjoy champions!
 </description>
-    <version>1.0</version>
-    <visibility></visibility>
+    <version>1.1</version>
+    <visibility>Public</visibility>
+    <tag id="Lua"/>
+    <tag id="Player Characters"/>
+    <tag id="Challenges"/>
     <tag id="Tweaks"/>
 </metadata>

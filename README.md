@@ -47,7 +47,7 @@ Starts with pocket genesis, TMTrainer, libra, magic mush, and mini mush.
 Lost+:
 No Holy Mantle
 Starts with clear rune, rune bag, and heartbreak.
-Starts with agiz rune.
+Starts with algiz rune.
 
 Lilith+:
 Removed box of friends and cambion conception.
@@ -59,10 +59,6 @@ Apollyon+:
 Void moved to pocket slot.
 Starts with voided spindown dice and crooked penny + gulped No!
 
-Forgotten+:
-0.3x damage, 1.4x tears, negative range
-Starts with cursed eye and epic fetus.
-
 Bethany+:
 Removed book of virtues.
 0.5x damage, 0.8x tears
@@ -70,9 +66,9 @@ Starts with pocket prayer card, redemption, act of contrition + gulped devil's c
 +1 Bomb
 
 Jacob and Esau+:
-Both start with activated damocles.
+Both start with activated damocles + gulped wooden cross.
 Both start with one size down.
-One starts with pretty fly pill, the other with a holy card.
+One starts with trinity shield.
 
 Tainted Cain+: 
 Treasure rooms don't spawn.
@@ -86,7 +82,9 @@ Starts with pocket converter, champion belt, glyph of balance, astral projection
 Tainted Eden+:
 Treasure rooms don't spawn.
 Removed random starting items.
-Starts with pocket undefined, the blanket, chaos + gulped panic button (items and trinkets don't reroll)
+Getting hit no longer rerolls you.
+Starts with pocket undefined 2.0, broken modem, and chaos.
+Undefined 2.0 has 1 room charge and activates teleport 2.0 effect on use. Getting hit while it's charged will use it, using undefined teleport instead.
 
 Tainted Apollyon+: 
 Blindfolded
@@ -101,11 +99,6 @@ Item pedestals aren't affected by Flip.
 Flip is now 3 charges and only swaps between Lazarus forms.
 Starts with more options and vanishing twin.
 Laz A starts with eve's mascera and Laz B starts with soy milk.
-
-Tainted Bethany+:
-Remove Lemegeton
-0.8x Tears, Shotspeed -0.4
-Starts with pocket telepathy for dummies, eye of the occult, cursed eye + gulped wiggle worm.
 
 Tainted Jacob+:
 Blindfolded

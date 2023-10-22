@@ -143,7 +143,7 @@ function mod:getAllChampChars(character)
     return championChars
 end
 
-function mod:setBlindfold(player, enabled, addCostume)
+function mod:setBlindfold(player, enabled, updateCostume)
   local game = Game()
   local character = player:GetPlayerType()
   local challenge = Isaac.GetChallenge()
@@ -153,7 +153,7 @@ function mod:setBlindfold(player, enabled, addCostume)
     player:ChangePlayerType(character)
     game.Challenge = challenge
 
-    if addCostume then
+    if updateCostume then
       player:AddNullCostume(NullItemID.ID_BLINDFOLD)
     else
       player:TryRemoveNullCostume(NullItemID.ID_BLINDFOLD)
@@ -163,7 +163,7 @@ function mod:setBlindfold(player, enabled, addCostume)
     player:ChangePlayerType(character)
     game.Challenge = challenge
 
-    if addCostume then
+    if updateCostume then
       player:TryRemoveNullCostume(NullItemID.ID_BLINDFOLD)
     end
   end
@@ -187,7 +187,11 @@ function mod:resetBlindfold()
 
     for i = 1, #blindChampions do 
       if player:GetPlayerType() == blindChampions[i] and player:HasCollectible(CHAMPION_CROWN) then
-        mod:setBlindfold(player, true, true)
+        if player:HasCurseMistEffect() then
+        mod:setBlindfold(player, false, true)
+        else
+          mod:setBlindfold(player, true, true)
+        end
       end
     end
   end
