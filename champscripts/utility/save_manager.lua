@@ -403,9 +403,8 @@ local function onGameStart(_, player)
 
     skipNextLevelClear = true
     skipNextRoomClear = true
-
+    SaveManager.Load()
     if newGame then
-        SaveManager.Load()
         dataCache.game = SaveManager.Utility.PatchSaveFile({}, SaveManager.DEFAULT_SAVE.game)
         dataCache.gameNoBackup = SaveManager.Utility.PatchSaveFile({}, SaveManager.DEFAULT_SAVE.gameNoBackup)
         hourglassBackup = SaveManager.Utility.PatchSaveFile({}, SaveManager.DEFAULT_SAVE.game)

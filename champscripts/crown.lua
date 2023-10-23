@@ -8,6 +8,7 @@ function crown:PostPlayerInit(player, playerVariant)
     mod.Schedule(1, function ()
       if player.Parent ~= nil then return end
       crown:spawnCrown(player)
+      mod.SaveManager.Save()
   end,{})
 end
 mod:AddPriorityCallback(ModCallbacks.MC_POST_PLAYER_INIT, CallbackPriority.LATE, crown.PostPlayerInit)
@@ -17,6 +18,7 @@ function crown:PostGameStarted(isContinued)
   if isContinued == true then return end
   local player = Isaac.GetPlayer()
   crown:spawnCrown(player)
+  mod.SaveManager.Save()
 end
 mod:AddPriorityCallback(ModCallbacks.MC_POST_GAME_STARTED, CallbackPriority.LATE, crown.PostGameStarted)
 
