@@ -12,12 +12,16 @@ This mod adds champion variants of (almost) every character, tainted or not! Cha
 Starting a run as a champion character is super simple, all you need to do is pickup the [b]Champion Crown[/b] item at the beginning of the run and you'll be all champed up! Be careful though, as leaving the room and coming back will make the pedestal go away.
 
 [h1] Champion Characters [/h1] 
-Currently, [b]20[/b] champion characters are completed. A full list of their effects can be found [url=https://github.com/Kattacka/isaac-champions/blob/main/README.md]HERE[/url]. Champion characters come with changed stats, items, trinkets, and sometimes even mechanics. All changes use vanilla items and mechanics only, so now you can explore the amazing hidden synergy potential of items you never get to use! I don't have any ideas for any more characters at this point, so feel free to suggest more with these limitations in mind.
+Currently, [b]21[/b] champion characters are completed. A full list of their effects can be found [url=https://github.com/Kattacka/isaac-champions/blob/main/README.md]HERE[/url]. Champion characters come with changed stats, items, trinkets, and sometimes even mechanics. All changes use vanilla items and mechanics only, so now you can explore the amazing hidden synergy potential of items you never get to use! I don't have any ideas for any more characters at this point, so feel free to suggest more with these limitations in mind.
 
 
-As always, use the discussion threads below for any bug reports or synergies, I hope you enjoy champions!
+As always, use the discussion threads below for any bug reports or suggestions. I hope you enjoy champions!
+
+Special thanks to Eucalyptus for playtesting and code support, and to Ferpe for the thumbnail and crown sprite.
+
+Incompatible with [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2865017190]Better Moving Box[/url] and [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3007547144]Smelter Unlocks Marbles Too[/url] (Better Moving Box messes up Isaac+'s starting moving box so it's in the active slot instead of the pocket active slot and Smelter Unlocks Marbles messes up characters that start with smelted trinkets. I can't do anything about that soz)
 </description>
-    <version>1.1</version>
+    <version>1.2</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Player Characters"/>
