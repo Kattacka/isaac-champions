@@ -11,8 +11,10 @@ function maggy:onCache(player, cacheFlag)
     if cacheFlag == CacheFlag.CACHE_FIREDELAY then mod.Utility:addNegativeTearMultiplier(player, 2) end
 
     local save = mod.SaveManager.GetRunSave(player)
-    if save.ItemObtained == true then return end
-    save.ItemObtained = true
+    if save then
+        if save.ItemObtained == true then return end
+        save.ItemObtained = true
+    end
 
     player:AddMaxHearts(2)
     player:AddRottenHearts(2)

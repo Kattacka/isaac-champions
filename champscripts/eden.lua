@@ -17,8 +17,10 @@ function eden:onCache(player, cacheFlag)
 
 
     local save = mod.SaveManager.GetRunSave(player)
-    if save.ItemObtained == true then return end
-    save.ItemObtained = true
+    if save then
+        if save.ItemObtained == true then return end
+        save.ItemObtained = true
+    end
 
     local game = Game()
 	local room = game:GetRoom()
@@ -69,7 +71,6 @@ function eden:onUse(_, rng, player)
 
     for i = 1, #championEdens do
         local player = championEdens[i]
-        local save = mod.SaveManager.GetRunSave(player) 
 
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_TMTRAINER)
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_SAUSAGE)

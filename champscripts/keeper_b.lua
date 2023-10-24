@@ -11,8 +11,10 @@ function keeper_b:onCache(player, cacheFlag)
     if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = player.Damage *0.6 - 1.5 end
 
     local save = mod.SaveManager.GetRunSave(player)
-    if save.ItemObtained == true then return end
-    save.ItemObtained = true
+    if save then
+        if save.ItemObtained == true then return end
+        save.ItemObtained = true
+    end
 
     local trinkets = {
        TrinketType.TRINKET_TORN_POCKET

@@ -16,13 +16,16 @@ function jacob:onCache(player, cacheFlag)
     if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = player.Damage * 0.75 end
 
     local save = mod.SaveManager.GetRunSave(player)
-    if save.ItemObtained == true then return end
-    save.ItemObtained = true
+    if save then
+        if save.ItemObtained == true then return end
+        save.ItemObtained = true
+    end
 
     local twinSave = mod.SaveManager.GetRunSave(twinPlayer)
-    if twinSave.ItemObtained == true then return end
-    twinSave.ItemObtained = true
-
+    if twinSave then
+        if twinSave.ItemObtained == true then return end
+        twinSave.ItemObtained = true
+    end
 
     player:UsePill(PillEffect.PILLEFFECT_SMALLER, PillColor.PILL_NULL, UseFlag.USE_NOHUD | UseFlag.USE_NOANNOUNCER | UseFlag.USE_NOANIM)
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_DAMOCLES_PASSIVE) then
@@ -82,7 +85,7 @@ function jacob:onHit(entity, amount, flags)
     if not (player:GetPlayerType() == CHARACTER or player:GetPlayerType() == CHARACTER2) then return end
 
     local save = mod.SaveManager.GetRunSave(player)
-    if save.gotHit == true then return end
+    if save and save.gotHit == true then return end
 
     local fakeDamageFlags = DamageFlag.DAMAGE_NO_PENALTIES | DamageFlag.DAMAGE_RED_HEARTS | DamageFlag.DAMAGE_FAKE
     if flags & fakeDamageFlags > 0 then return end

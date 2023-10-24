@@ -11,8 +11,10 @@ function eden_b:onCache(player, cacheFlag)
     if player:GetPlayerType() ~= CHARACTER then return end
 
     local save = mod.SaveManager.GetRunSave(player)
-    if save.ItemObtained == true then return end
-    save.ItemObtained = true
+    if save then
+        if save.ItemObtained == true then return end
+        save.ItemObtained = true
+    end
 
     local runData = mod.SaveManager.GetRunSave()
     if runData then

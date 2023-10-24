@@ -21,8 +21,10 @@ function maggy_b:onCache(player, cacheFlag)
     player:RemoveCostume(config)
 
     local save = mod.SaveManager.GetRunSave(player)
-    if save.ItemObtained == true then return end
-    save.ItemObtained = true
+    if save then
+        if save.ItemObtained == true then return end
+        save.ItemObtained = true
+    end
 
     mod:setBlindfold(player, true, true)
 
@@ -82,20 +84,22 @@ function maggy_b:onEntityDie(entity)
     if not sprite:IsPlaying("LeapDown") then return end
 
     local save = mod.SaveManager.GetRunSave(player)
-    if save.heartsSpawned == nil then
-        save.heartsSpawned = 1
-    else
-        save.heartsSpawned = save.heartsSpawned + 1
-    end
-
-    if save.heartsSpawned > 3 then
-        if save.heartsSpawned < 5 then
-            mod.Schedule(80, function ()
-                local save1 = mod.SaveManager.GetRunSave(player)
-                save1.heartsSpawned = 0
-            end,{})
+    if save then
+        if save.heartsSpawned == nil then
+            save.heartsSpawned = 1
+        else
+            save.heartsSpawned = save.heartsSpawned + 1
         end
-        return
+
+        if save.heartsSpawned > 3 then
+            if save.heartsSpawned < 5 then
+                mod.Schedule(80, function ()
+                    local save1 = mod.SaveManager.GetRunSave(player)
+                    save1.heartsSpawned = 0
+                end,{})
+            end
+            return
+        end
     end
     local pickup = Isaac.Spawn(5, 10, 2, entity.Position, (6*player.MoveSpeed)*RandomVector(), player)
     pickup:ToPickup().Timeout = 60
@@ -114,7 +118,7 @@ function maggy_b:enterRoom()
     for i = 1, #champions do
         local player = champions[i]
         local save = mod.SaveManager.GetRunSave(player)
-        save.heartsSpawned = 0
+        if save then save.heartsSpawned = 0 end
     end
 
 end

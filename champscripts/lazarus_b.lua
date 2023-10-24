@@ -15,6 +15,7 @@ function lazarus_b:onCache(player, cacheFlag)
 
 
         local save = mod.SaveManager.GetRunSave(player)
+        if save then
 
         if (save.TLazAInit == true or save.TLazBInit == true) then return end
 
@@ -64,6 +65,7 @@ function lazarus_b:onCache(player, cacheFlag)
               end,{})
         end
         end
+    end
 
 
 

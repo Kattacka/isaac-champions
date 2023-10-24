@@ -13,8 +13,10 @@ function bethany:onCache(player, cacheFlag)
         mod.Utility:addNegativeTearMultiplier(player, 1.25)
     end
     local save = mod.SaveManager.GetRunSave(player)
-    if save.ItemObtained == true then return end
-    save.ItemObtained = true
+    if save then
+        if save.ItemObtained == true then return end
+        save.ItemObtained = true
+    end
 
     player:AddMaxHearts(-2)
 

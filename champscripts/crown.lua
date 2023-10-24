@@ -45,13 +45,13 @@ function crown:spawnCrown(player)
   if (level:GetCurrentRoomIndex() ~= 84) then return end
 
   local save = mod.SaveManager.GetRunSave(nil, true)
-
-  if save.numCrowns == nil then
-    save.numCrowns = 1
-  else
-    save.numCrowns = save.numCrowns + 1
+  if save then
+    if save.numCrowns == nil then
+      save.numCrowns = 1
+    else
+      save.numCrowns = save.numCrowns + 1
+    end
   end
-
   local newOffsetFromRight = offsetFromRight - 40*(save.numCrowns)
   local finalVector = room:FindFreePickupSpawnPosition(Vector(x - newOffsetFromRight, y+10))
 

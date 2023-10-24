@@ -379,6 +379,7 @@ function SaveManager.Load()
 
     if modReference:HasData() then
         local data = json.decode(modReference:LoadData())
+        if data == true or data == false then data = {} end
         saveData = SaveManager.Utility.PatchSaveFile(data, SaveManager.DEFAULT_SAVE)
     end
 

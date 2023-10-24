@@ -13,8 +13,10 @@ function judas:onCache(player, cacheFlag)
     if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = player.Damage * 0.6 - 1 end
 
     local save = mod.SaveManager.GetRunSave(player)
-    if save.ItemObtained == true then return end
-    save.ItemObtained = true
+    if save then
+        if save.ItemObtained == true then return end
+        save.ItemObtained = true
+    end
 
     if player:GetPlayerType() ~= CHARACTER2 then
       player:ChangePlayerType(CHARACTER2)

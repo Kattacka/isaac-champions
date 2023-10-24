@@ -273,7 +273,7 @@ function mod:PreSave(data)
 -- Include` hiddenItemData` in your SaveData table!
 
   local save = mod.SaveManager.GetRunSave(nil)
-  save.HIDDEN_ITEM_DATA = hiddenItemData
+  if save then save.HIDDEN_ITEM_DATA = hiddenItemData end
 end
 
 -- also notice that custom callbacks use a special function in the save manager!!!
@@ -282,7 +282,7 @@ mod.SaveManager.AddCallback(mod.SaveManager.Utility.CustomCallback.PRE_DATA_SAVE
 -- this primarily handles luamod
 function mod:PostLoad(data)
   local save = mod.SaveManager.GetRunSave(nil)
-  mod.HiddenItemManager:LoadData(save.HIDDEN_ITEM_DATA)
+  if save then mod.HiddenItemManager:LoadData(save.HIDDEN_ITEM_DATA) end
 end
 -- also notice that custom callbacks use a special function in the save manager!!!
 mod.SaveManager.AddCallback(mod.SaveManager.Utility.CustomCallback.POST_DATA_LOAD, mod.PostLoad)
@@ -290,6 +290,6 @@ mod.SaveManager.AddCallback(mod.SaveManager.Utility.CustomCallback.POST_DATA_LOA
 -- UnlockAPI wipes data on game start, which is later than the initial load, so load it again in that case.
 function mod:PostLoadGameStart()
   local save = mod.SaveManager.GetRunSave(nil)
-  mod.HiddenItemManager:LoadData(save.HIDDEN_ITEM_DATA)
+  if save then mod.HiddenItemManager:LoadData(save.HIDDEN_ITEM_DATA) end
 end
 mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, mod.PostLoadGameStart)

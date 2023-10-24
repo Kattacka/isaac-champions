@@ -21,7 +21,7 @@ Special thanks to Eucalyptus for playtesting and code support, and to Ferpe for 
 
 Incompatible with [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2865017190]Better Moving Box[/url] and [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3007547144]Smelter Unlocks Marbles Too[/url] (Better Moving Box messes up Isaac+'s starting moving box so it's in the active slot instead of the pocket active slot and Smelter Unlocks Marbles messes up characters that start with smelted trinkets. I can't do anything about that soz)
 </description>
-    <version>1.2</version>
+    <version>1.3</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Player Characters"/>

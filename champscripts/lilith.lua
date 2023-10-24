@@ -12,8 +12,10 @@ function lilith:onCache(player, cacheFlag)
     if cacheFlag == CacheFlag.CACHE_RANGE then player.TearRange = player.TearRange - 60 end
 
     local save = mod.SaveManager.GetRunSave(player)
-    if save.ItemObtained == true then return end
-    save.ItemObtained = true
+    if save then
+        if save.ItemObtained == true then return end
+        save.ItemObtained = true
+    end
 
     local trinkets = {
         TrinketType.TRINKET_FRIENDSHIP_NECKLACE,

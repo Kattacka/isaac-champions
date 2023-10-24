@@ -16,8 +16,10 @@ function samson_b:onCache(player, cacheFlag)
     player:RemoveCostume(config)
 
     local save = mod.SaveManager.GetRunSave(player)
-    if save.ItemObtained == true then return end
-    save.ItemObtained = true
+    if save then
+        if save.ItemObtained == true then return end
+        save.ItemObtained = true
+    end
 
     player:AddBrokenHearts(11)
  
