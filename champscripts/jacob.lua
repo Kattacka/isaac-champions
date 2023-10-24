@@ -15,13 +15,13 @@ function jacob:onCache(player, cacheFlag)
     local twinPlayer = player:GetOtherTwin()
     if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = player.Damage * 0.75 end
 
-    local save = mod.SaveManager.GetRunSave(player)
+    local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
         if save.ItemObtained == true then return end
         save.ItemObtained = true
     end
 
-    local twinSave = mod.SaveManager.GetRunSave(twinPlayer)
+    local twinSave = IsaacChampions.SaveManager.GetRunSave(twinPlayer)
     if twinSave then
         if twinSave.ItemObtained == true then return end
         twinSave.ItemObtained = true
@@ -39,7 +39,7 @@ function jacob:onCache(player, cacheFlag)
     local trinkets = {
         TrinketType.TRINKET_WOODEN_CROSS,
     }
-    mod:addTrinkets(player, trinkets)
+    IsaacChampions:addTrinkets(player, trinkets)
 
     if not twinPlayer:HasCollectible(CHAMPION_CROWN) then
         twinPlayer:AddCollectible(CHAMPION_CROWN)
@@ -50,7 +50,7 @@ function jacob:onCache(player, cacheFlag)
         twinPlayer:AddCollectible(CollectibleType.COLLECTIBLE_DAMOCLES_PASSIVE)
     end
 
-    mod:addTrinkets(twinPlayer, trinkets)
+    IsaacChampions:addTrinkets(twinPlayer, trinkets)
 
     if not twinPlayer:HasCollectible(CHAMPION_CROWN) then
         twinPlayer:AddCollectible(CHAMPION_CROWN)
@@ -77,14 +77,14 @@ function jacob:onCache(player, cacheFlag)
     end
 
 end
-mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, jacob.onCache)
+IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, jacob.onCache)
 
 function jacob:onHit(entity, amount, flags)
     local player = entity:ToPlayer()
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if not (player:GetPlayerType() == CHARACTER or player:GetPlayerType() == CHARACTER2) then return end
 
-    local save = mod.SaveManager.GetRunSave(player)
+    local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save and save.gotHit == true then return end
 
     local fakeDamageFlags = DamageFlag.DAMAGE_NO_PENALTIES | DamageFlag.DAMAGE_RED_HEARTS | DamageFlag.DAMAGE_FAKE
@@ -96,12 +96,12 @@ function jacob:onHit(entity, amount, flags)
     player:BloodExplode()
     player:AddCostume(Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_ANEMIC))
 end
-mod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, jacob.onHit, EntityType.ENTITY_PLAYER)
+IsaacChampions:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, jacob.onHit, EntityType.ENTITY_PLAYER)
 
 --Prevent DamoclesAPI from spawning three pedestals
 if CCO then
     function jacob:customChallengeDamocles()
-        local championChars = mod:getAllChampChars(CHARACTER)
+        local championChars = IsaacChampions:getAllChampChars(CHARACTER)
         if (next(championChars) == nil) then
             return 0
         else

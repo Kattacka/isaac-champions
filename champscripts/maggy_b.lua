@@ -14,26 +14,26 @@ function maggy_b:onCache(player, cacheFlag)
     --if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = (player.Damage) * 0.8 end
     if cacheFlag == CacheFlag.CACHE_TEARFLAG then player.TearFlags = player.TearFlags | TearFlags.TEAR_PUNCH end
     if cacheFlag == CacheFlag.CACHE_FIREDELAY then
-        mod.Utility:addNegativeTearMultiplier(player, 5.5)
+        IsaacChampions.Utility:addNegativeTearMultiplier(player, 5.5)
     end
 
     local config = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_SOY_MILK)
     player:RemoveCostume(config)
 
-    local save = mod.SaveManager.GetRunSave(player)
+    local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
         if save.ItemObtained == true then return end
         save.ItemObtained = true
     end
 
-    mod:setBlindfold(player, true, true)
+    IsaacChampions:setBlindfold(player, true, true)
 
     player:AddHearts(2)
 
     -- local trinkets = {
     --     TrinketType.TRINKET_CROW_HEART,
     -- }
-    -- mod:addTrinkets(player, trinkets)
+    -- IsaacChampions:addTrinkets(player, trinkets)
 
     if player:HasCollectible(CollectibleType.COLLECTIBLE_YUM_HEART) then
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_YUM_HEART)
@@ -41,16 +41,16 @@ function maggy_b:onCache(player, cacheFlag)
 
     player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_SUPLEX)
 end
-mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, maggy_b.onCache)
+IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, maggy_b.onCache)
 
-mod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, player)
+IsaacChampions:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, player)
 
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
 
-    mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_SOY_MILK, 1)
-    mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_KNOCKOUT_DROPS, 1)
-    mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_ISAACS_HEART, 1)
+    IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_SOY_MILK, 1)
+    IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_KNOCKOUT_DROPS, 1)
+    IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_ISAACS_HEART, 1)
 
 end)
 
@@ -58,12 +58,12 @@ end)
 function maggy_b:onPickupInit(pickup)
 
     if not (pickup.Variant == PickupVariant.PICKUP_HEART and pickup.SubType == HeartSubType.HEART_HALF) then return end
-    local championChars = mod:getAllChampChars(CHARACTER)
+    local championChars = IsaacChampions:getAllChampChars(CHARACTER)
     if (next(championChars) == nil) then return end
     if not pickup.SpawnerEntity then return end
-    if mod.Utility:anyPlayerHasNullEffect(NullItemID.ID_SOUL_MAGDALENE) then return end
+    if IsaacChampions.Utility:anyPlayerHasNullEffect(NullItemID.ID_SOUL_MAGDALENE) then return end
 
-    mod.Schedule(1, function ()
+    IsaacChampions.Schedule(1, function ()
         if pickup.Timeout == 58 then
             local rng = pickup:GetDropRNG()
             local roll = rng:RandomFloat()
@@ -73,7 +73,7 @@ function maggy_b:onPickupInit(pickup)
         end
     end,{})
   end
-mod:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, maggy_b.onPickupInit)
+IsaacChampions:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, maggy_b.onPickupInit)
 
 function maggy_b:onEntityDie(entity)
     if not entity:IsEnemy() then return end
@@ -83,7 +83,7 @@ function maggy_b:onEntityDie(entity)
     local sprite = player:GetSprite()
     if not sprite:IsPlaying("LeapDown") then return end
 
-    local save = mod.SaveManager.GetRunSave(player)
+    local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
         if save.heartsSpawned == nil then
             save.heartsSpawned = 1
@@ -93,8 +93,8 @@ function maggy_b:onEntityDie(entity)
 
         if save.heartsSpawned > 3 then
             if save.heartsSpawned < 5 then
-                mod.Schedule(80, function ()
-                    local save1 = mod.SaveManager.GetRunSave(player)
+                IsaacChampions.Schedule(80, function ()
+                    local save1 = IsaacChampions.SaveManager.GetRunSave(player)
                     save1.heartsSpawned = 0
                 end,{})
             end
@@ -104,7 +104,7 @@ function maggy_b:onEntityDie(entity)
     local pickup = Isaac.Spawn(5, 10, 2, entity.Position, (6*player.MoveSpeed)*RandomVector(), player)
     pickup:ToPickup().Timeout = 60
 end
-mod:AddCallback(ModCallbacks.MC_POST_NPC_DEATH, maggy_b.onEntityDie)
+IsaacChampions:AddCallback(ModCallbacks.MC_POST_NPC_DEATH, maggy_b.onEntityDie)
 
 function maggy_b:enterRoom()
     local room = Game():GetRoom()
@@ -113,16 +113,16 @@ function maggy_b:enterRoom()
     if not room:IsFirstVisit() then return end
     if (level:GetCurrentRoomIndex() ~= 84) then return end
 
-    local champions = mod:getAllChampChars(CHARACTER)
+    local champions = IsaacChampions:getAllChampChars(CHARACTER)
     if (next(champions) == nil) then return end
     for i = 1, #champions do
         local player = champions[i]
-        local save = mod.SaveManager.GetRunSave(player)
+        local save = IsaacChampions.SaveManager.GetRunSave(player)
         if save then save.heartsSpawned = 0 end
     end
 
 end
-mod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, maggy_b.enterRoom)
+IsaacChampions:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, maggy_b.enterRoom)
 
 if EID then
     local function crownPlayerCondition(descObj)

@@ -50,10 +50,10 @@ function HiddenItemManager:Init(mod)
 		HiddenItemManager.Mod = mod
 		
 		for _, tab in ipairs(Callbacks) do
-			mod:AddPriorityCallback(tab.Callback, tab.Priority, tab.Func, tab.Param)
+			IsaacChampions:AddPriorityCallback(tab.Callback, tab.Priority, tab.Func, tab.Param)
 		end
 		
-		HiddenItemManager.WispTag = "HiddenItemManager:" .. mod.Name
+		HiddenItemManager.WispTag = "HiddenItemManager:" .. IsaacChampions.Name
 		
 		initialized = true
 	end
@@ -638,7 +638,7 @@ function HiddenItemManager:PostUpdate()
 	end
 	
 	-- When wisps disappear unexpectedly, try to respawn them at least a few times.
-	-- We won't try forever, however, to avoid infinite fights with another mod.
+	-- We won't try forever, however, to avoid infinite fights with another IsaacChampions.
 	for oldKey, data in pairs(wispsToRespawn) do
 		local player = GetPlayer(data)
 		RemoveWisp(oldKey)

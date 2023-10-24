@@ -12,7 +12,7 @@ function judas:onCache(player, cacheFlag)
 
     if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = player.Damage * 0.6 - 1 end
 
-    local save = mod.SaveManager.GetRunSave(player)
+    local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
         if save.ItemObtained == true then return end
         save.ItemObtained = true
@@ -24,18 +24,18 @@ function judas:onCache(player, cacheFlag)
 
     player:AddBlackHearts(1)
 
-    mod:setBlindfold(player, true, true)
+    IsaacChampions:setBlindfold(player, true, true)
 
     local trinkets = {
         TrinketType.TRINKET_DAEMONS_TAIL
     }
-    mod:addTrinkets(player, trinkets)
+    IsaacChampions:addTrinkets(player, trinkets)
 
     local collectibles = {
       CollectibleType.COLLECTIBLE_MY_SHADOW,
       CollectibleType.COLLECTIBLE_BIRTHRIGHT,
     }
-    mod:addCollectibles(player, collectibles)
+    IsaacChampions:addCollectibles(player, collectibles)
 
     player:RemoveCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL)
     player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_URN_OF_SOULS)
@@ -44,11 +44,11 @@ function judas:onCache(player, cacheFlag)
 
 end
 
-mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, judas.onCache)
+IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, judas.onCache)
 
 function judas:PostNewLevelWisp()
   -- give the player a Vengeful Spirit wisp. It despawns at the start of each floor, so you also respawn it at the start of each floor.
-  local champions = mod:getAllChampChars(CHARACTER2)
+  local champions = IsaacChampions:getAllChampChars(CHARACTER2)
   if (next(champions) == nil) then return end
   for i = 1, #champions do
       local player = champions[i]
@@ -56,7 +56,7 @@ function judas:PostNewLevelWisp()
   end
 end
 
-mod:AddCallback( ModCallbacks.MC_POST_NEW_LEVEL, judas.PostNewLevelWisp )
+IsaacChampions:AddCallback( ModCallbacks.MC_POST_NEW_LEVEL, judas.PostNewLevelWisp )
 
 local SOUL_COLLECT_RANGE = 45
 
@@ -95,17 +95,17 @@ end
 
 
 --// We reset the storedSouls table to prevent memory leaks every time the room is reloaded.
-mod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function() 
+IsaacChampions:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function() 
   storedSouls = {}
 end)
 
-mod:AddCallback(ModCallbacks.MC_POST_RENDER, judas.SoulPostRender)
+IsaacChampions:AddCallback(ModCallbacks.MC_POST_RENDER, judas.SoulPostRender)
 
 
 function judas:onWormDie(entity)
   if not (entity.Type == 23 and entity.Variant == 0 and entity.SubType == 1) then return end
 
-  local champions = mod:getAllChampChars(CHARACTER2)
+  local champions = IsaacChampions:getAllChampChars(CHARACTER2)
   if champions == nil or champions == {} then return end
   for i = 1, #champions do
       local player = champions[i]
@@ -113,7 +113,7 @@ function judas:onWormDie(entity)
   end
 end
 
-mod:AddCallback(ModCallbacks.MC_POST_NPC_DEATH, judas.onWormDie)
+IsaacChampions:AddCallback(ModCallbacks.MC_POST_NPC_DEATH, judas.onWormDie)
 
 if EID then
   local function crownPlayerCondition(descObj)

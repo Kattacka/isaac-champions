@@ -11,7 +11,7 @@ function lilith:onCache(player, cacheFlag)
     if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = player.Damage *0.66 - 1.42 end
     if cacheFlag == CacheFlag.CACHE_RANGE then player.TearRange = player.TearRange - 60 end
 
-    local save = mod.SaveManager.GetRunSave(player)
+    local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
         if save.ItemObtained == true then return end
         save.ItemObtained = true
@@ -21,7 +21,7 @@ function lilith:onCache(player, cacheFlag)
         TrinketType.TRINKET_FRIENDSHIP_NECKLACE,
         TrinketType.TRINKET_ADOPTION_PAPERS,
     }
-    mod:addTrinkets(player, trinkets)
+    IsaacChampions:addTrinkets(player, trinkets)
 
     if player:HasCollectible(CollectibleType.COLLECTIBLE_BOX_OF_FRIENDS) then
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_BOX_OF_FRIENDS)
@@ -43,7 +43,7 @@ function lilith:onCache(player, cacheFlag)
         player:AddCollectible(CollectibleType.COLLECTIBLE_KING_BABY)
     end
 end
-mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, lilith.onCache)
+IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, lilith.onCache)
 
 if EID then
     local function crownPlayerCondition(descObj)

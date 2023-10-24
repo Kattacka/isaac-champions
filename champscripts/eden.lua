@@ -11,12 +11,12 @@ function eden:onCache(player, cacheFlag)
     if player:GetPlayerType() ~= CHARACTER then return end
 
 
-    if cacheFlag == CacheFlag.CACHE_FIREDELAY then mod.Utility:addNegativeTearMultiplier(player, 2) end
+    if cacheFlag == CacheFlag.CACHE_FIREDELAY then IsaacChampions.Utility:addNegativeTearMultiplier(player, 2) end
 
     if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = (player.Damage * 0.5) - 0.7 end
 
 
-    local save = mod.SaveManager.GetRunSave(player)
+    local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
         if save.ItemObtained == true then return end
         save.ItemObtained = true
@@ -61,12 +61,12 @@ function eden:onCache(player, cacheFlag)
 
     
 end
-mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, eden.onCache)
+IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, eden.onCache)
 
 
 function eden:onUse(_, rng, player)
     if not player then return end
-    local championEdens = mod:getAllChampChars(CHARACTER)
+    local championEdens = IsaacChampions:getAllChampChars(CHARACTER)
     if (next(championEdens) == nil) then return end
 
     for i = 1, #championEdens do
@@ -80,11 +80,11 @@ function eden:onUse(_, rng, player)
     end
 end
 
-mod:AddCallback(ModCallbacks.MC_USE_ITEM, eden.onUse, CollectibleType.COLLECTIBLE_GENESIS)
+IsaacChampions:AddCallback(ModCallbacks.MC_USE_ITEM, eden.onUse, CollectibleType.COLLECTIBLE_GENESIS)
 
 
 function eden:onNewRoom()
-    local championEdens  = mod:getAllChampChars(CHARACTER)
+    local championEdens  = IsaacChampions:getAllChampChars(CHARACTER)
 
     if (next(championEdens) == nil) then return end
     local game = Game()
@@ -103,7 +103,7 @@ function eden:onNewRoom()
     end
 end
 
-mod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, eden.onNewRoom)
+IsaacChampions:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, eden.onNewRoom)
 
 if EID then
     local function crownPlayerCondition(descObj)

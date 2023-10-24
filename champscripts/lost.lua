@@ -8,7 +8,7 @@ function lost:onCache(player, cacheFlag)
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
 
-    local save = mod.SaveManager.GetRunSave(player)
+    local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
         if save.ItemObtained == true then return end
         save.ItemObtained = true
@@ -28,7 +28,7 @@ function lost:onCache(player, cacheFlag)
         tempEffects:RemoveCollectibleEffect(CollectibleType.COLLECTIBLE_HOLY_MANTLE, 1)
     end
 end
-mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, lost.onCache)
+IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, lost.onCache)
 
 
 function lost:onPerfectUpdate(player)
@@ -46,10 +46,10 @@ function lost:onPerfectUpdate(player)
         tempEffects:RemoveCollectibleEffect(CollectibleType.COLLECTIBLE_HOLY_MANTLE, 1)
     end
 end
-mod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, lost.onPerfectUpdate)
+IsaacChampions:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, lost.onPerfectUpdate)
 
 -- function lost:onNewFloor()
---     local champions = mod:getAllChampChars(CHARACTER)
+--     local champions = IsaacChampions:getAllChampChars(CHARACTER)
 --     if (next(champions) == nil) then return end
 --     for i = 1, #champions do
 --         local player = champions[i]
@@ -60,7 +60,7 @@ mod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, lost.onPerfectUpdate)
 --     end
 -- end
 
--- mod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, lost.onNewFloor)
+-- IsaacChampions:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, lost.onNewFloor)
 
 lost.BrokenHeartIcon = Sprite()
 lost.BrokenHeartIcon:Load("gfx/custom_ui/ui_hearts.anm2", true)
@@ -72,7 +72,7 @@ lost.BrokenHeartText:Load("font/pftempestasevencondensed.fnt")
 
 ---main.lua
 ---RENDER--
-function mod:PostRender()
+function IsaacChampions:PostRender()
     local player = Isaac.GetPlayer(0)
     if player == nil then return end
     if not player:HasCollectible(CHAMPION_CROWN) then return end
@@ -86,19 +86,19 @@ function mod:PostRender()
     local horizontalOffest = 0
  
     local tempEffects = player:GetEffects()
-    if tempEffects:HasCollectibleEffect(CollectibleType.COLLECTIBLE_HOLY_MANTLE) or mod.Utility:hasRevive(player) then 
-        if not (mod.Utility:hasRevive(player)) then
+    if tempEffects:HasCollectibleEffect(CollectibleType.COLLECTIBLE_HOLY_MANTLE) or IsaacChampions.Utility:hasRevive(player) then 
+        if not (IsaacChampions.Utility:hasRevive(player)) then
             horizontalOffest = 13
         else
             verticalOffset = 12
         end
     end
-    local iconPos = Vector(mod.Utility:HUDOffset(48 + horizontalOffest, 10 + verticalOffset, 'topleft')) -- 47. 13
-    local textPos = Vector(mod.Utility:HUDOffset(56 + horizontalOffest, 2 + verticalOffset, 'topleft'))  -- 55, 5
+    local iconPos = Vector(IsaacChampions.Utility:HUDOffset(48 + horizontalOffest, 10 + verticalOffset, 'topleft')) -- 47. 13
+    local textPos = Vector(IsaacChampions.Utility:HUDOffset(56 + horizontalOffest, 2 + verticalOffset, 'topleft'))  -- 55, 5
     lost.BrokenHeartIcon:Render(iconPos)
     lost.BrokenHeartText:DrawString("x" .. player:GetBrokenHearts(), textPos.X, textPos.Y, KColor(1 ,1 ,1 ,1), 0, true)
 end
-mod:AddCallback(ModCallbacks.MC_POST_RENDER, mod.PostRender)
+IsaacChampions:AddCallback(ModCallbacks.MC_POST_RENDER, IsaacChampions.PostRender)
 
 if EID then
     local function crownPlayerCondition(descObj)

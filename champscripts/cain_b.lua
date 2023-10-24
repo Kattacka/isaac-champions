@@ -8,13 +8,13 @@ function cain_b:onCache(player, cacheFlag)
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
 
-    local save = mod.SaveManager.GetRunSave(player)
+    local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
         if save.ItemObtained == true then return end
         save.ItemObtained = true
     end
 
-    local runData = mod.SaveManager.GetRunSave()
+    local runData = IsaacChampions.SaveManager.GetRunSave()
     if runData then
         runData.noTreasureRooms = true
     end
@@ -27,7 +27,7 @@ function cain_b:onCache(player, cacheFlag)
         TrinketType.TRINKET_LUCKY_ROCK,
         TrinketType.TRINKET_MYOSOTIS,
     }
-    mod:addTrinkets(player, trinkets)
+    IsaacChampions:addTrinkets(player, trinkets)
 
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_SCHOOLBAG) then
         player:AddCollectible(CollectibleType.COLLECTIBLE_SCHOOLBAG)
@@ -39,9 +39,9 @@ function cain_b:onCache(player, cacheFlag)
     player:SetActiveCharge(100)
 
     if tempEffects:HasNullEffect(NullItemID.ID_ESAU_JR) then return end
-    mod:RemoveTreasureRooms()
+    IsaacChampions:RemoveTreasureRooms()
 end
-mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, cain_b.onCache)
+IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, cain_b.onCache)
 
 if EID then
     local function crownPlayerCondition(descObj)

@@ -8,9 +8,9 @@ function maggy:onCache(player, cacheFlag)
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
 
-    if cacheFlag == CacheFlag.CACHE_FIREDELAY then mod.Utility:addNegativeTearMultiplier(player, 2) end
+    if cacheFlag == CacheFlag.CACHE_FIREDELAY then IsaacChampions.Utility:addNegativeTearMultiplier(player, 2) end
 
-    local save = mod.SaveManager.GetRunSave(player)
+    local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
         if save.ItemObtained == true then return end
         save.ItemObtained = true
@@ -24,7 +24,7 @@ function maggy:onCache(player, cacheFlag)
         TrinketType.TRINKET_APPLE_OF_SODOM,
         TrinketType.TRINKET_FISH_TAIL,
     }
-    mod:addTrinkets(player, trinkets)
+    IsaacChampions:addTrinkets(player, trinkets)
 
     if player:HasCollectible(CollectibleType.COLLECTIBLE_YUM_HEART) then
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_YUM_HEART)
@@ -41,7 +41,7 @@ function maggy:onCache(player, cacheFlag)
     player:AddBombs(1)
 
 end
-mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, maggy.onCache)
+IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, maggy.onCache)
 
 if EID then
     local function crownPlayerCondition(descObj)

@@ -5,22 +5,22 @@ local offsetFromRight = 180
 
 function crown:PostPlayerInit(player, playerVariant)
   if Game():GetNumPlayers() < 2 then return end
-    mod.Schedule(1, function ()
+    IsaacChampions.Schedule(1, function ()
       if player.Parent ~= nil then return end
       crown:spawnCrown(player)
-      mod.SaveManager.Save()
+      IsaacChampions.SaveManager.Save()
   end,{})
 end
-mod:AddPriorityCallback(ModCallbacks.MC_POST_PLAYER_INIT, CallbackPriority.LATE, crown.PostPlayerInit)
+IsaacChampions:AddPriorityCallback(ModCallbacks.MC_POST_PLAYER_INIT, CallbackPriority.LATE, crown.PostPlayerInit)
 
 
 function crown:PostGameStarted(isContinued)
   if isContinued == true then return end
   local player = Isaac.GetPlayer()
   crown:spawnCrown(player)
-  mod.SaveManager.Save()
+  IsaacChampions.SaveManager.Save()
 end
-mod:AddPriorityCallback(ModCallbacks.MC_POST_GAME_STARTED, CallbackPriority.LATE, crown.PostGameStarted)
+IsaacChampions:AddPriorityCallback(ModCallbacks.MC_POST_GAME_STARTED, CallbackPriority.LATE, crown.PostGameStarted)
 
 
 function crown:spawnCrown(player)
@@ -44,7 +44,7 @@ function crown:spawnCrown(player)
   then return end
   if (level:GetCurrentRoomIndex() ~= 84) then return end
 
-  local save = mod.SaveManager.GetRunSave(nil, true)
+  local save = IsaacChampions.SaveManager.GetRunSave(nil, true)
   if save then
     if save.numCrowns == nil then
       save.numCrowns = 1
@@ -60,7 +60,7 @@ function crown:spawnCrown(player)
 end
 
 
--- mod.Schedule(1, function ()
+-- IsaacChampions.Schedule(1, function ()
 
 -- end,{})
 
@@ -81,4 +81,4 @@ function crown:enterRoom()
       end
     end
 end
-mod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, crown.enterRoom)
+IsaacChampions:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, crown.enterRoom)

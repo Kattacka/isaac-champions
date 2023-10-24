@@ -14,7 +14,7 @@ function lazarus_b:onCache(player, cacheFlag)
     if not (player:GetPlayerType() == CHARACTER or player:GetPlayerType() == CHARACTER2) then return end
 
 
-        local save = mod.SaveManager.GetRunSave(player)
+        local save = IsaacChampions.SaveManager.GetRunSave(player)
         if save then
 
         if (save.TLazAInit == true or save.TLazBInit == true) then return end
@@ -31,7 +31,7 @@ function lazarus_b:onCache(player, cacheFlag)
             local playerID = player.ControllerIndex
             player:UseActiveItem(CollectibleType.COLLECTIBLE_FLIP, true)
 
-            mod.Schedule(1, function ()
+            IsaacChampions.Schedule(1, function ()
                 --code to run in 1 frame
               
                 local newPlayer = lazarus_b:compare(playerID)
@@ -53,7 +53,7 @@ function lazarus_b:onCache(player, cacheFlag)
             local playerID = player.ControllerIndex
             player:UseActiveItem(CollectibleType.COLLECTIBLE_FLIP, true)
 
-            mod.Schedule(1, function ()
+            IsaacChampions.Schedule(1, function ()
                 --code to run in 1 frame
               
                 local newPlayer = lazarus_b:compare(playerID)
@@ -71,7 +71,7 @@ function lazarus_b:onCache(player, cacheFlag)
 
 
 end
-mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, lazarus_b.onCache)
+IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, lazarus_b.onCache)
 
 function lazarus_b:compare(playerCompare)
     for i = 0, Game():GetNumPlayers() - 1 do
@@ -98,7 +98,7 @@ function lazarus_b:onFlip1Use(_, rng, player)
     newPlayer:SetActiveCharge(0, ActiveSlot.SLOT_POCKET)
 end
 
-mod:AddCallback(ModCallbacks.MC_USE_ITEM, lazarus_b.onFlip1Use, NEW_FLIP1)
+IsaacChampions:AddCallback(ModCallbacks.MC_USE_ITEM, lazarus_b.onFlip1Use, NEW_FLIP1)
 
 -- function lazarus_b:onFlip2Use(_, rng, player)
 --     if not player then return end
@@ -110,7 +110,7 @@ mod:AddCallback(ModCallbacks.MC_USE_ITEM, lazarus_b.onFlip1Use, NEW_FLIP1)
 --     player:UseActiveItem(CollectibleType.COLLECTIBLE_FLIP, true)
 -- end
 
--- mod:AddCallback(ModCallbacks.MC_USE_ITEM, lazarus_b.onFlip2Use, NEW_FLIP2)
+-- IsaacChampions:AddCallback(ModCallbacks.MC_USE_ITEM, lazarus_b.onFlip2Use, NEW_FLIP2)
 
 if EID then
     local function crownPlayerCondition(descObj)

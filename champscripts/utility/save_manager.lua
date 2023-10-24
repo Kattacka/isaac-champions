@@ -504,7 +504,7 @@ end
 ]]
 
 -- Initializes the save manager.
----@param mod table @The reference to your mod. This is the table that is returned when you call `RegisterMod`.
+---@param mod table @The reference to your IsaacChampions. This is the table that is returned when you call `RegisterMod`.
 function SaveManager.Init(mod)
     modReference = mod
 

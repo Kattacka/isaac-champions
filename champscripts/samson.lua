@@ -7,7 +7,7 @@ function samson:onCache(player, cacheFlag)
     if cacheFlag ~= CacheFlag.CACHE_FIREDELAY then return end
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
-    if cacheFlag == CacheFlag.CACHE_FIREDELAY then mod.Utility:addNegativeTearMultiplier(player, 3) end
+    if cacheFlag == CacheFlag.CACHE_FIREDELAY then IsaacChampions.Utility:addNegativeTearMultiplier(player, 3) end
 
     if player:HasCollectible(CollectibleType.COLLECTIBLE_BLOODY_LUST) then
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_BLOODY_LUST)
@@ -30,7 +30,7 @@ function samson:onCache(player, cacheFlag)
     end
     
 end
-mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, samson.onCache)
+IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, samson.onCache)
 
 if EID then
     local function crownPlayerCondition(descObj)

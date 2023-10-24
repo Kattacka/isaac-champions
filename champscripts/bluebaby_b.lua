@@ -8,20 +8,20 @@ function bluebaby_b:onCache(player, cacheFlag)
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
 
-    local save = mod.SaveManager.GetRunSave(player)
+    local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
         if save.ItemObtained == true then return end
         save.ItemObtained = true
     end
 
-    mod:setBlindfold(player, true, true)
+    IsaacChampions:setBlindfold(player, true, true)
 
     local trinkets = {
         TrinketType.TRINKET_BROWN_CAP,
         TrinketType.TRINKET_MOMS_PEARL + 32768,
     }
 
-    mod:addTrinkets(player, trinkets)
+    IsaacChampions:addTrinkets(player, trinkets)
 
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_FATE) then
         player:AddCollectible(CollectibleType.COLLECTIBLE_FATE)
@@ -37,7 +37,7 @@ function bluebaby_b:onCache(player, cacheFlag)
 
     player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_MOMS_BRACELET)
 end
-mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, bluebaby_b.onCache)
+IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, bluebaby_b.onCache)
 
 if EID then
     local function crownPlayerCondition(descObj)

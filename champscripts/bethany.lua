@@ -10,9 +10,9 @@ function bethany:onCache(player, cacheFlag)
 
     if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = player.Damage / 2 + 0.7 end
     if cacheFlag == CacheFlag.CACHE_FIREDELAY then
-        mod.Utility:addNegativeTearMultiplier(player, 1.25)
+        IsaacChampions.Utility:addNegativeTearMultiplier(player, 1.25)
     end
-    local save = mod.SaveManager.GetRunSave(player)
+    local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
         if save.ItemObtained == true then return end
         save.ItemObtained = true
@@ -24,7 +24,7 @@ function bethany:onCache(player, cacheFlag)
         TrinketType.TRINKET_DEVILS_CROWN
     }
 
-    mod:addTrinkets(player, trinkets)
+    IsaacChampions:addTrinkets(player, trinkets)
 
     if player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_VIRTUES) then
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_VIRTUES)
@@ -43,7 +43,7 @@ function bethany:onCache(player, cacheFlag)
     player:AddBombs(1)
 
 end
-mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, bethany.onCache)
+IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, bethany.onCache)
 
 if EID then
     local function crownPlayerCondition(descObj)

@@ -8,18 +8,18 @@ function apollyon_b:onCache(player, cacheFlag)
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
 
-    local save = mod.SaveManager.GetRunSave(player)
+    local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
         if save.ItemObtained == true then return end
         save.ItemObtained = true
     end
     
-    mod:setBlindfold(player, true, true)
+    IsaacChampions:setBlindfold(player, true, true)
 
     -- local trinkets = {
     --     TrinketType.TRINKET_CRICKET_LEG + 32768,
     -- }
-    -- mod:addTrinkets(player, trinkets)
+    -- IsaacChampions:addTrinkets(player, trinkets)
 
     Isaac.Spawn(5, 350, TrinketType.TRINKET_CRICKET_LEG, Isaac.GetFreeNearPosition(player.Position, 20), Vector.Zero, player)
 
@@ -29,13 +29,13 @@ function apollyon_b:onCache(player, cacheFlag)
         CollectibleType.COLLECTIBLE_BEST_BUD,
         CollectibleType.COLLECTIBLE_BROWN_NUGGET,
     }
-    mod:addCollectibles(player, collectibles)
+    IsaacChampions:addCollectibles(player, collectibles)
 
     player:RemoveCollectible(CollectibleType.COLLECTIBLE_BEST_BUD, true, nil, false)
     player:RemoveCollectible(CollectibleType.COLLECTIBLE_BEST_BUD, true, nil, false)
 
 end
-mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, apollyon_b.onCache)
+IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, apollyon_b.onCache)
 
 if EID then
     local function crownPlayerCondition(descObj)

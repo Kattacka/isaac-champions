@@ -15,7 +15,7 @@ function samson_b:onCache(player, cacheFlag)
     config = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_WAFER)
     player:RemoveCostume(config)
 
-    local save = mod.SaveManager.GetRunSave(player)
+    local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
         if save.ItemObtained == true then return end
         save.ItemObtained = true
@@ -28,7 +28,7 @@ function samson_b:onCache(player, cacheFlag)
         TrinketType.TRINKET_DOOR_STOP,
         TrinketType.TRINKET_KEEPERS_BARGAIN,
     }
-    mod:addTrinkets(player, trinkets)
+    IsaacChampions:addTrinkets(player, trinkets)
 
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_GLYPH_OF_BALANCE) then
         player:AddCollectible(CollectibleType.COLLECTIBLE_GLYPH_OF_BALANCE)
@@ -56,7 +56,7 @@ function samson_b:onCache(player, cacheFlag)
 
     player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_CONVERTER)
 end
-mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, samson_b.onCache)
+IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, samson_b.onCache)
 
 if EID then
     local function crownPlayerCondition(descObj)
@@ -109,4 +109,4 @@ function samson_b:onHit(entity, amount, flags)
         return false
     end
 end
-mod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, samson_b.onHit, EntityType.ENTITY_PLAYER)
+IsaacChampions:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, samson_b.onHit, EntityType.ENTITY_PLAYER)

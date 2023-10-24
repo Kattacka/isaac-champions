@@ -10,13 +10,13 @@ function eden_b:onCache(player, cacheFlag)
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
 
-    local save = mod.SaveManager.GetRunSave(player)
+    local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
         if save.ItemObtained == true then return end
         save.ItemObtained = true
     end
 
-    local runData = mod.SaveManager.GetRunSave()
+    local runData = IsaacChampions.SaveManager.GetRunSave()
     if runData then
         runData.noTreasureRooms = true
     end
@@ -39,23 +39,23 @@ function eden_b:onCache(player, cacheFlag)
     -- local trinkets = {
     --     TrinketType.TRINKET_PANIC_BUTTON,
     -- }
-    -- mod:addTrinkets(player, trinkets)
+    -- IsaacChampions:addTrinkets(player, trinkets)
 
     player:SetPocketActiveItem(UNDEFINED2)
 
     if tempEffects:HasNullEffect(NullItemID.ID_ESAU_JR) then return end
-    mod:RemoveTreasureRooms()
+    IsaacChampions:RemoveTreasureRooms()
 end
-mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, eden_b.onCache)
+IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, eden_b.onCache)
 
 
-mod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, player)
+IsaacChampions:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, player)
 
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
 
-    mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_BROKEN_MODEM, 1)
-    mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_CHAOS, 1)
+    IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_BROKEN_MODEM, 1)
+    IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_CHAOS, 1)
 end)
 
 
@@ -87,7 +87,7 @@ function eden_b:Teleport3onHit(entity, amount, flags)
     player:UseActiveItem(CollectibleType.COLLECTIBLE_UNDEFINED, 1)
     return nil
 end
-mod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, eden_b.Teleport3onHit, EntityType.ENTITY_PLAYER)
+IsaacChampions:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, eden_b.Teleport3onHit, EntityType.ENTITY_PLAYER)
 
 --Prevent reroll on hit
 function eden_b:onHit(entity, amount, flags, source, countDown)
@@ -100,7 +100,7 @@ function eden_b:onHit(entity, amount, flags, source, countDown)
     player:TakeDamage(amount, flags | DamageFlag.DAMAGE_NO_PENALTIES, source, countDown)
     return false
 end
-mod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, eden_b.onHit, EntityType.ENTITY_PLAYER)
+IsaacChampions:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, eden_b.onHit, EntityType.ENTITY_PLAYER)
 
 
 function eden_b:onTeleport3Use(_, rng, player)
@@ -108,7 +108,7 @@ function eden_b:onTeleport3Use(_, rng, player)
     player:UseActiveItem(CollectibleType.COLLECTIBLE_TELEPORT_2)
 end
 
-mod:AddCallback(ModCallbacks.MC_USE_ITEM, eden_b.onTeleport3Use, UNDEFINED2)
+IsaacChampions:AddCallback(ModCallbacks.MC_USE_ITEM, eden_b.onTeleport3Use, UNDEFINED2)
 
 if EID then
     local function crownPlayerCondition(descObj)

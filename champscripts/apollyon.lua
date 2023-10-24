@@ -8,7 +8,7 @@ function apollyon:onCache(player, cacheFlag)
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
 
-    local save = mod.SaveManager.GetRunSave(player)
+    local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
         if save.ItemObtained == true then return end
         save.ItemObtained = true
@@ -17,7 +17,7 @@ function apollyon:onCache(player, cacheFlag)
     local trinkets = {
         TrinketType.TRINKET_NO,
     }
-    mod:addTrinkets(player, trinkets)
+    IsaacChampions:addTrinkets(player, trinkets)
 
     player:RemoveCollectible(CollectibleType.COLLECTIBLE_VOID)
     player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_VOID)
@@ -51,7 +51,7 @@ function apollyon:onCache(player, cacheFlag)
 
 
 end
-mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, apollyon.onCache)
+IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, apollyon.onCache)
 
 if EID then
     local function crownPlayerCondition(descObj)

@@ -10,7 +10,7 @@ function eve:onCache(player, cacheFlag)
 
     player.Luck = player.Luck - 3.0
 
-    local save = mod.SaveManager.GetRunSave(player)
+    local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
         if save.ItemObtained == true then return end
         save.ItemObtained = true
@@ -21,7 +21,7 @@ function eve:onCache(player, cacheFlag)
         TrinketType.TRINKET_PANIC_BUTTON,
         TrinketType.TRINKET_BIBLE_TRACT,
     }
-    mod:addTrinkets(player, trinkets)
+    IsaacChampions:addTrinkets(player, trinkets)
 
     if player:GetActiveItem(0) == CollectibleType.COLLECTIBLE_RAZOR_BLADE or player:GetActiveItem(1) == CollectibleType.COLLECTIBLE_RAZOR_BLADE then
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_RAZOR_BLADE)
@@ -45,7 +45,7 @@ function eve:onCache(player, cacheFlag)
         player:AddCollectible(CollectibleType.COLLECTIBLE_BIRD_CAGE)
     end
 end
-mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, eve.onCache)
+IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, eve.onCache)
 
 
 function eve:onHit(entity, amount, flags)
@@ -60,7 +60,7 @@ function eve:onHit(entity, amount, flags)
     player:UseActiveItem(CollectibleType.COLLECTIBLE_RAZOR_BLADE, true)
     return false
 end
-mod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, eve.onHit, EntityType.ENTITY_PLAYER)
+IsaacChampions:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, eve.onHit, EntityType.ENTITY_PLAYER)
 
 if EID then
     local function crownPlayerCondition(descObj)

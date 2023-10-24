@@ -10,25 +10,25 @@ function azazel:onCache(player, cacheFlag)
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
 
-    if cacheFlag == CacheFlag.CACHE_FIREDELAY then mod.Utility:addNegativeTearMultiplier(player, 1.75) end
+    if cacheFlag == CacheFlag.CACHE_FIREDELAY then IsaacChampions.Utility:addNegativeTearMultiplier(player, 1.75) end
     if cacheFlag == CacheFlag.CACHE_RANGE then player.TearRange = -100 end
     if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = (player.Damage * 0.5) + 0.03 end
 
     
 end
-mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, azazel.onCache)
+IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, azazel.onCache)
 
-mod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, player)
+IsaacChampions:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, player)
 
     if player:HasCollectible(CHAMPION_CROWN) and player:GetPlayerType() == CHARACTER then
-        mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_BIRTHRIGHT, 1, AZAZEL)
-        mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_ANTI_GRAVITY, 1, AZAZEL)
-        mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_TINY_PLANET, 1, AZAZEL)
+        IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_BIRTHRIGHT, 1, AZAZEL)
+        IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_ANTI_GRAVITY, 1, AZAZEL)
+        IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_TINY_PLANET, 1, AZAZEL)
     end
     -- else
-    --     mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_BIRTHRIGHT, 0, AZAZEL)
-    --     mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_ANTI_GRAVITY, 0, AZAZEL)
-    --     mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_TINY_PLANET, 0, AZAZEL)
+    --     IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_BIRTHRIGHT, 0, AZAZEL)
+    --     IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_ANTI_GRAVITY, 0, AZAZEL)
+    --     IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_TINY_PLANET, 0, AZAZEL)
     -- end
 
 end)

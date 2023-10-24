@@ -2,7 +2,7 @@ local champ_util = {}
 
 local GOLD_MODIFIER = 32768
 --Example Schedule function
--- mod.Schedule(1, function ()
+-- IsaacChampions.Schedule(1, function ()
 
 -- end,{})
 
@@ -43,9 +43,9 @@ function champ_util:toMaxFireDelay(tearsPerSecond)
 end
 
 function champ_util:addNegativeTearMultiplier(player, multiplier)
-    local tearsPerSecond = mod.Utility:toTearsPerSecond(player.MaxFireDelay)
+    local tearsPerSecond = IsaacChampions.Utility:toTearsPerSecond(player.MaxFireDelay)
     tearsPerSecond = tearsPerSecond / multiplier
-    player.MaxFireDelay = mod.Utility:toMaxFireDelay(tearsPerSecond)
+    player.MaxFireDelay = IsaacChampions.Utility:toMaxFireDelay(tearsPerSecond)
 end
 
 function champ_util:hasRevive(player)

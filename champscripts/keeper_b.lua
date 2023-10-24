@@ -10,7 +10,7 @@ function keeper_b:onCache(player, cacheFlag)
 
     if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = player.Damage *0.6 - 1.5 end
 
-    local save = mod.SaveManager.GetRunSave(player)
+    local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
         if save.ItemObtained == true then return end
         save.ItemObtained = true
@@ -19,7 +19,7 @@ function keeper_b:onCache(player, cacheFlag)
     local trinkets = {
        TrinketType.TRINKET_TORN_POCKET
     }
-    mod:addTrinkets(player, trinkets)
+    IsaacChampions:addTrinkets(player, trinkets)
 
 
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_MIDAS_TOUCH) then
@@ -32,5 +32,5 @@ function keeper_b:onCache(player, cacheFlag)
 
     player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_GOLDEN_RAZOR)
 end
-mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, keeper_b.onCache)
+IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, keeper_b.onCache)
 

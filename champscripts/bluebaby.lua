@@ -10,7 +10,7 @@ function bluebaby:onCache(player, cacheFlag)
 
     if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = player.Damage*0.9 - 1.0 end
 
-    local save = mod.SaveManager.GetRunSave(player)
+    local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
         if save.ItemObtained == true then return end
         save.ItemObtained = true
@@ -21,7 +21,7 @@ function bluebaby:onCache(player, cacheFlag)
 
         TrinketType.TRINKET_BUTT_PENNY,
     }
-    mod:addTrinkets(player, trinkets)
+    IsaacChampions:addTrinkets(player, trinkets)
 
     if player:HasCollectible(CollectibleType.COLLECTIBLE_POOP) then
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_POOP)
@@ -32,4 +32,4 @@ function bluebaby:onCache(player, cacheFlag)
     end
 
 end
-mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, bluebaby.onCache)
+IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, bluebaby.onCache)

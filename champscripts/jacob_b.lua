@@ -9,13 +9,13 @@ function jacob_b:onCache(player, cacheFlag)
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
 
-    local save = mod.SaveManager.GetRunSave(player)
+    local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
         if save.ItemObtained == true then return end
         save.ItemObtained = true
     end
 
-    mod:setBlindfold(player, true, true)
+    IsaacChampions:setBlindfold(player, true, true)
 
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_BATTERY) then
         player:AddCollectible(CollectibleType.COLLECTIBLE_BATTERY)
@@ -31,11 +31,11 @@ function jacob_b:onCache(player, cacheFlag)
     
     player:UseActiveItem(CollectibleType.COLLECTIBLE_ANIMA_SOLA, true)
 end
-mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, jacob_b.onCache)
+IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, jacob_b.onCache)
 
 
 function jacob_b:onNewFloor()
-    local champions = mod:getAllChampChars(CHARACTER)
+    local champions = IsaacChampions:getAllChampChars(CHARACTER)
     if (next(champions) == nil) then return end
     for i = 1, #champions do
         local player = champions[i]
@@ -43,7 +43,7 @@ function jacob_b:onNewFloor()
     end
 end
 
-mod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, jacob_b.onNewFloor)
+IsaacChampions:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, jacob_b.onNewFloor)
 
 if EID then
     local function crownPlayerCondition(descObj)

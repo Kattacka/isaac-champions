@@ -10,13 +10,13 @@ function cain:onCache(player, cacheFlag)
 
     if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = (player.Damage * 0.5) + 0.75 end
 
-    local save = mod.SaveManager.GetRunSave(player)
+    local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
         if save.ItemObtained == true then return end
         save.ItemObtained = true
     end
 
-    local runData = mod.SaveManager.GetRunSave()
+    local runData = IsaacChampions.SaveManager.GetRunSave()
     if runData then
         runData.noTreasureRooms = true
     end
@@ -28,7 +28,7 @@ function cain:onCache(player, cacheFlag)
     local trinkets = {
         TrinketType.TRINKET_CRYSTAL_KEY,
     }
-    mod:addTrinkets(player, trinkets)
+    IsaacChampions:addTrinkets(player, trinkets)
 
     player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_RED_KEY)
 
@@ -41,18 +41,18 @@ function cain:onCache(player, cacheFlag)
     player:AddKeys(-1)
 
     if tempEffects:HasNullEffect(NullItemID.ID_ESAU_JR) then return end
-    mod:RemoveTreasureRooms()
+    IsaacChampions:RemoveTreasureRooms()
 end
-mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, cain.onCache)
+IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, cain.onCache)
 
 
-mod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, player)
+IsaacChampions:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, player)
 
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
 
-    mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_FALSE_PHD, 1)
-    mod.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_CRACKED_ORB, 1)
+    IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_FALSE_PHD, 1)
+    IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_CRACKED_ORB, 1)
 
 end)
 

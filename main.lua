@@ -1,10 +1,10 @@
-mod = RegisterMod("isaac-champions", 1)
+IsaacChampions = RegisterMod("isaac-champions", 1)
 
-mod.SaveManager = include("champscripts.utility.save_manager")
-mod.HiddenItemManager = require("champscripts.utility.hidden_item_manager")
+IsaacChampions.SaveManager = include("champscripts.utility.save_manager")
+IsaacChampions.HiddenItemManager = require("champscripts.utility.hidden_item_manager")
 
-mod.SaveManager.Init(mod)
-mod.HiddenItemManager:Init(mod)
+IsaacChampions.SaveManager.Init(IsaacChampions)
+IsaacChampions.HiddenItemManager:Init(IsaacChampions)
 
 local level = Game():GetLevel()
 local seeds = Game():GetSeeds()
@@ -13,7 +13,7 @@ local stageSeed = seeds:GetStageSeed(level:GetStage())
 local rng = RNG()
 rng:SetSeed(stageSeed, 35)
 
-mod.Utility = include("champscripts.utility.champ_util")
+IsaacChampions.Utility = include("champscripts.utility.champ_util")
 include("champscripts.crown")
 include("champscripts.isaac")
 include("champscripts.maggy")
@@ -48,9 +48,9 @@ include("champscripts.jacob_b")
 ---@param delay number
 ---@param func function
 ---@param args any
-mod.ScheduleData = {}
-function mod.Schedule(delay, func, args)
-  table.insert(mod.ScheduleData, {
+IsaacChampions.ScheduleData = {}
+function IsaacChampions.Schedule(delay, func, args)
+  table.insert(IsaacChampions.ScheduleData, {
     Time = Game():GetFrameCount(),
     Delay = delay,
     Call = func,
@@ -58,13 +58,13 @@ function mod.Schedule(delay, func, args)
   })
 end
 
-mod:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
+IsaacChampions:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
   local time = Game():GetFrameCount()
-  for i = #mod.ScheduleData, 1, -1 do
-    local data = mod.ScheduleData[i]
+  for i = #IsaacChampions.ScheduleData, 1, -1 do
+    local data = IsaacChampions.ScheduleData[i]
     if data.Time + data.Delay <= time then
       data.Call(table.unpack(data.Args))
-      table.remove(mod.ScheduleData, i)
+      table.remove(IsaacChampions.ScheduleData, i)
     end
   end
 end)
@@ -98,7 +98,7 @@ if EID then
   EID:addIcon("Minus", "minus", 1, 4, 4, 5, 5, mySprite)
 end
 
-function mod:addTrinkets(player, trinkets)
+function IsaacChampions:addTrinkets(player, trinkets)
   local heldTrinket = player:GetTrinket(0)
   if not (heldTrinket == 0 or heldTrinket == nil) then
       player:TryRemoveTrinket(heldTrinket)
@@ -123,7 +123,7 @@ function mod:addTrinkets(player, trinkets)
   end
 end
 
-function mod:addCollectibles(player, collectibles)
+function IsaacChampions:addCollectibles(player, collectibles)
   for i = 1, #collectibles do
     player:AddCollectible(collectibles[i])
     
@@ -131,7 +131,7 @@ end
 
 end
 
-function mod:getAllChampChars(character)
+function IsaacChampions:getAllChampChars(character)
     local championChars = {}
     for i = 0, Game():GetNumPlayers() - 1 do
         local player = Isaac.GetPlayer(i)
@@ -143,7 +143,7 @@ function mod:getAllChampChars(character)
     return championChars
 end
 
-function mod:setBlindfold(player, enabled, updateCostume)
+function IsaacChampions:setBlindfold(player, enabled, updateCostume)
   local game = Game()
   local character = player:GetPlayerType()
   local challenge = Isaac.GetChallenge()
@@ -169,7 +169,7 @@ function mod:setBlindfold(player, enabled, updateCostume)
   end
 end
 
-function mod:resetBlindfold()
+function IsaacChampions:resetBlindfold()
   local room = Game():GetRoom()
   local level = Game():GetLevel()
 
@@ -188,15 +188,15 @@ function mod:resetBlindfold()
     for i = 1, #blindChampions do 
       if player:GetPlayerType() == blindChampions[i] and player:HasCollectible(CHAMPION_CROWN) then
         if player:HasCurseMistEffect() then
-        mod:setBlindfold(player, false, true)
+        IsaacChampions:setBlindfold(player, false, true)
         else
-          mod:setBlindfold(player, true, true)
+          IsaacChampions:setBlindfold(player, true, true)
         end
       end
     end
   end
 end
-mod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, mod.resetBlindfold)
+IsaacChampions:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, IsaacChampions.resetBlindfold)
 
 
 --disable treasure rooms
@@ -205,7 +205,7 @@ local hasLoadedRooms = false
 local needsToRestart = false
 local newTreasureRoom
 local gridIndex
-function mod:loadRooms(isContinued)
+function IsaacChampions:loadRooms(isContinued)
   if hasLoadedRooms == true then return end
   hasLoadedRooms = true
 
@@ -219,19 +219,19 @@ function mod:loadRooms(isContinued)
   --Game():StartRoomTransition(gridIndex, Direction.NO_DIRECTION, RoomTransitionAnim.FADE)
 
 end
-mod:AddPriorityCallback(ModCallbacks.MC_POST_GAME_STARTED,CallbackPriority.IMPORTANT, mod.loadRooms)
+IsaacChampions:AddPriorityCallback(ModCallbacks.MC_POST_GAME_STARTED,CallbackPriority.IMPORTANT, IsaacChampions.loadRooms)
 
 
-function mod:OnNewRoom()
+function IsaacChampions:OnNewRoom()
   if needsToRestart then
     needsToRestart = false
       Isaac.ExecuteCommand("restart")
   end
 end
-mod:AddPriorityCallback(ModCallbacks.MC_POST_NEW_ROOM, CallbackPriority.IMPORTANT, mod.OnNewRoom)
+IsaacChampions:AddPriorityCallback(ModCallbacks.MC_POST_NEW_ROOM, CallbackPriority.IMPORTANT, IsaacChampions.OnNewRoom)
 
 
-function mod:RemoveTreasureRooms()
+function IsaacChampions:RemoveTreasureRooms()
   local level = Game():GetLevel()
   local stageType = level:GetStageType()
   local rooms = level:GetRooms()
@@ -239,7 +239,7 @@ function mod:RemoveTreasureRooms()
 
   if (level:GetStage() == LevelStage.STAGE1_2 and (stageType == StageType.STAGETYPE_REPENTANCE or stageType == StageType.STAGETYPE_REPENTANCE_B)) then return end
   if (level:GetStage() > LevelStage.STAGE5 or level:GetStage() == LevelStage.STAGE4_3) then return end
-  local runData = mod.SaveManager.GetRunSave()
+  local runData = IsaacChampions.SaveManager.GetRunSave()
   if runData and runData.noTreasureRooms == true then
     for i = 0, rooms.Size-2, 1 do
       local room = rooms:Get(i)
@@ -264,32 +264,32 @@ function mod:RemoveTreasureRooms()
     end
   end
 end
-mod:AddPriorityCallback(ModCallbacks.MC_POST_NEW_LEVEL, CallbackPriority.LATE, mod.RemoveTreasureRooms)
+IsaacChampions:AddPriorityCallback(ModCallbacks.MC_POST_NEW_LEVEL, CallbackPriority.LATE, IsaacChampions.RemoveTreasureRooms)
 
 
-function mod:PreSave(data)
+function IsaacChampions:PreSave(data)
   -- notice how this callback is provided the entire save file
-  local hiddenItemData = mod.HiddenItemManager:GetSaveData()
+  local hiddenItemData = IsaacChampions.HiddenItemManager:GetSaveData()
 -- Include` hiddenItemData` in your SaveData table!
 
-  local save = mod.SaveManager.GetRunSave(nil)
+  local save = IsaacChampions.SaveManager.GetRunSave(nil)
   if save then save.HIDDEN_ITEM_DATA = hiddenItemData end
 end
 
 -- also notice that custom callbacks use a special function in the save manager!!!
-mod.SaveManager.AddCallback(mod.SaveManager.Utility.CustomCallback.PRE_DATA_SAVE, mod.PreSave)
+IsaacChampions.SaveManager.AddCallback(IsaacChampions.SaveManager.Utility.CustomCallback.PRE_DATA_SAVE, IsaacChampions.PreSave)
 
 -- this primarily handles luamod
-function mod:PostLoad(data)
-  local save = mod.SaveManager.GetRunSave(nil)
-  if save then mod.HiddenItemManager:LoadData(save.HIDDEN_ITEM_DATA) end
+function IsaacChampions:PostLoad(data)
+  local save = IsaacChampions.SaveManager.GetRunSave(nil)
+  if save then IsaacChampions.HiddenItemManager:LoadData(save.HIDDEN_ITEM_DATA) end
 end
 -- also notice that custom callbacks use a special function in the save manager!!!
-mod.SaveManager.AddCallback(mod.SaveManager.Utility.CustomCallback.POST_DATA_LOAD, mod.PostLoad)
+IsaacChampions.SaveManager.AddCallback(IsaacChampions.SaveManager.Utility.CustomCallback.POST_DATA_LOAD, IsaacChampions.PostLoad)
 
 -- UnlockAPI wipes data on game start, which is later than the initial load, so load it again in that case.
-function mod:PostLoadGameStart()
-  local save = mod.SaveManager.GetRunSave(nil)
-  if save then mod.HiddenItemManager:LoadData(save.HIDDEN_ITEM_DATA) end
+function IsaacChampions:PostLoadGameStart()
+  local save = IsaacChampions.SaveManager.GetRunSave(nil)
+  if save then IsaacChampions.HiddenItemManager:LoadData(save.HIDDEN_ITEM_DATA) end
 end
-mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, mod.PostLoadGameStart)
+IsaacChampions:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, IsaacChampions.PostLoadGameStart)
