@@ -35,7 +35,7 @@ include("champscripts.maggy_b")
 include("champscripts.cain_b")
 include("champscripts.lazarus_b")
 include("champscripts.apollyon_b")
-include("champscripts.bluebaby_b")
+--include("champscripts.bluebaby_b")
 include("champscripts.samson_b")
 --include("champscripts.bethany_b")
 

@@ -19,9 +19,13 @@ As always, use the discussion threads below for any bug reports or suggestions. 
 
 Special thanks to Eucalyptus for playtesting and code support, and to Ferpe for the thumbnail and crown sprite.
 
-Incompatible with [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2865017190]Better Moving Box[/url] and [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3007547144]Smelter Unlocks Marbles Too[/url] (Better Moving Box messes up Isaac+'s starting moving box so it's in the active slot instead of the pocket active slot and Smelter Unlocks Marbles messes up characters that start with smelted trinkets. I can't do anything about that soz)
+[h1] Incompatibilities [/h1] 
+[url=https://steamcommunity.com/sharedfiles/filedetails/?id=2865017190]Better Moving Box[/url] (Makes Isaac+'s moving box be unpocketed) 
+[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3007547144]Smelter Unlocks Marbles Too[/url] (Breaks starting trinkets smelting)
+[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3035686305]Devoid: Apollyon Rework[/url] (The reworked void can't absorb items)
+
 </description>
-    <version>1.3</version>
+    <version>1.5</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Player Characters"/>
