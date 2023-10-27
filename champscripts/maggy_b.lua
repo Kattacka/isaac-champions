@@ -79,7 +79,7 @@ function maggy_b:onEntityDie(entity)
     if not entity:IsEnemy() then return end
     local player = Game():GetNearestPlayer(entity.Position)
     if not player:HasCollectible(CHAMPION_CROWN) then return end
-    if not player:GetPlayerType() == CHARACTER then return end
+    if player:GetPlayerType() ~= CHARACTER then return end
     local sprite = player:GetSprite()
     if not sprite:IsPlaying("LeapDown") then return end
 

@@ -36,12 +36,18 @@ function lost:onPerfectUpdate(player)
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:HasCollectible(CollectibleType.COLLECTIBLE_HOLY_MANTLE, true) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
-    if player:HasTrinket(TrinketType.TRINKET_WOODEN_CROSS) then
+    local tempEffects = player:GetEffects()
+    local room = Game():GetRoom()
+
+    if player:HasTrinket(TrinketType.TRINKET_WOODEN_CROSS) or 
+    tempEffects:HasNullEffect(NullItemID.ID_HOLY_CARD) or 
+    (player:HasCollectible(CollectibleType.COLLECTIBLE_BLANKET) and room:GetType() == RoomType.ROOM_BOSS) then
         if Game():GetRoom():GetFrameCount() ~= 1 then return end
     else
         if Game():GetRoom():GetFrameCount() ~= 0 then return end
     end
-    local tempEffects = player:GetEffects()
+
+    
     if tempEffects:HasCollectibleEffect(CollectibleType.COLLECTIBLE_HOLY_MANTLE) then
         tempEffects:RemoveCollectibleEffect(CollectibleType.COLLECTIBLE_HOLY_MANTLE, 1)
     end

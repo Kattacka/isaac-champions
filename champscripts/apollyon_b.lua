@@ -21,7 +21,15 @@ function apollyon_b:onCache(player, cacheFlag)
     -- }
     -- IsaacChampions:addTrinkets(player, trinkets)
 
-    Isaac.Spawn(5, 350, TrinketType.TRINKET_CRICKET_LEG, Isaac.GetFreeNearPosition(player.Position, 20), Vector.Zero, player)
+    local heldTrinket = player:GetTrinket(0)
+    if not (heldTrinket == 0 or heldTrinket == nil) then
+        player:TryRemoveTrinket(heldTrinket)
+    end
+    player:AddTrinket(TrinketType.TRINKET_CRICKET_LEG)
+  
+    if not (heldTrinket == 0 or heldTrinket == nil) then
+        Isaac.Spawn(5, 350, heldTrinket, Isaac.GetFreeNearPosition(player.Position, 20), Vector.Zero, player)
+    end
 
     local collectibles = {
         CollectibleType.COLLECTIBLE_HIVE_MIND,

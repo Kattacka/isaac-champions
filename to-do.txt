@@ -1,4 +1,3 @@
-Fix a treasure room spawning in curse of the XL
 
 Blacklist ludovico as champ lilith
 

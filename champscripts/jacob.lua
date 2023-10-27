@@ -55,6 +55,7 @@ function jacob:onCache(player, cacheFlag)
     if not twinPlayer:HasCollectible(CHAMPION_CROWN) then
         twinPlayer:AddCollectible(CHAMPION_CROWN)
     end
+
     --Remove tainted damocles from tainted item pool
     if TaintedTreasure then
        if TaintedTreasure.taintedpoolloaded then
@@ -90,7 +91,6 @@ function jacob:onHit(entity, amount, flags)
     local fakeDamageFlags = DamageFlag.DAMAGE_NO_PENALTIES | DamageFlag.DAMAGE_RED_HEARTS | DamageFlag.DAMAGE_FAKE
     if flags & fakeDamageFlags > 0 then return end
 
-    print("gogo")
     save.gotHit = true
 
     player:BloodExplode()
@@ -99,7 +99,7 @@ end
 IsaacChampions:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, jacob.onHit, EntityType.ENTITY_PLAYER)
 
 --Prevent DamoclesAPI from spawning three pedestals
-if CCO then
+if CCO and CCO.DamoclesAPI then
     function jacob:customChallengeDamocles()
         local championChars = IsaacChampions:getAllChampChars(CHARACTER)
         if (next(championChars) == nil) then

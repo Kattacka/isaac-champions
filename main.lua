@@ -38,7 +38,7 @@ include("champscripts.apollyon_b")
 --include("champscripts.bluebaby_b")
 include("champscripts.samson_b")
 --include("champscripts.bethany_b")
-
+--include("champscripts.lost_b")
 --include("champscripts.keeper_b")
 include("champscripts.eden_b")
 include("champscripts.jacob_b")
@@ -207,6 +207,7 @@ local newTreasureRoom
 local gridIndex
 function IsaacChampions:loadRooms(isContinued)
   if hasLoadedRooms == true then return end
+  if Game().Difficulty>1 then return end --detect greed mode
   hasLoadedRooms = true
 
   Isaac.ExecuteCommand("goto d." .. 100)
@@ -235,29 +236,32 @@ function IsaacChampions:RemoveTreasureRooms()
   local level = Game():GetLevel()
   local stageType = level:GetStageType()
   local rooms = level:GetRooms()
-  local roomIndex
-
+  local roomIndexes = {}
+  if Game().Difficulty>1 then return end --detect greed mode
   if (level:GetStage() == LevelStage.STAGE1_2 and (stageType == StageType.STAGETYPE_REPENTANCE or stageType == StageType.STAGETYPE_REPENTANCE_B)) then return end
   if (level:GetStage() > LevelStage.STAGE5 or level:GetStage() == LevelStage.STAGE4_3) then return end
   local runData = IsaacChampions.SaveManager.GetRunSave()
   if runData and runData.noTreasureRooms == true then
+
     for i = 0, rooms.Size-2, 1 do
       local room = rooms:Get(i)
       local data = room.Data
-      if data.Type == RoomType.ROOM_TREASURE then
-        roomIndex = room.GridIndex
-        break
+      if data.Type == RoomType.ROOM_TREASURE or data.Type == RoomType.ROOM_PLANETARIUM then
+        table.insert(roomIndexes, room.GridIndex)
       end
     end
-    if not roomIndex then return end
+    
     local data = newTreasureRoom
-    local writeableRoom = level:GetRoomByIdx(roomIndex, -1)
-    writeableRoom.Data = data
+    if (next(roomIndexes) == nil) then return end
+    for i = 1, #roomIndexes do
+      local writeableRoom = level:GetRoomByIdx(roomIndexes[i], -1)
+      writeableRoom.Data = data
+    end
 
     local room = Game():GetRoom()
     for i = 1, 7, 1 do
       local door = room:GetDoor(i)
-      if door and door.TargetRoomType == RoomType.ROOM_TREASURE then
+      if door and (door.TargetRoomType == RoomType.ROOM_TREASURE or door.TargetRoomType == RoomType.ROOM_PLANETARIUM) then
         door:SetRoomTypes(door.CurrentRoomType, RoomType.ROOM_DEFAULT)
         door:SetLocked(false)
       end
