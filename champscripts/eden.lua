@@ -118,7 +118,6 @@ if EID then
     local function crownPlayerCallback(descObj)
         descObj.Description =
         "#{{Player".. CHARACTER .."}} {{ColorGray}}Eden" ..
-        "#{{AchievementLocked}} Stops Treasure Room Generation" ..
         "#\2  -50% Damage down - 0.7" ..
         "#{{Blank}}  -50% Fire Rate down" ..
         "#{{Minus}} Removes all Starting Collectibles" ..
