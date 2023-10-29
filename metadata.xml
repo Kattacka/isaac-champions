@@ -14,6 +14,7 @@ Starting a run as a champion character is super simple, all you need to do is pi
 [h1] Champion Characters [/h1] 
 Currently, [b]21[/b] champion characters are completed. A full list of their effects can be found [url=https://github.com/Kattacka/isaac-champions/blob/main/README.md]HERE[/url]. Champion characters come with changed stats, items, trinkets, and sometimes even mechanics. All changes use vanilla items and mechanics only, so now you can explore the amazing hidden synergy potential of items you never get to use! I don't have any ideas for any more characters at this point, so feel free to suggest more with these limitations in mind.
 
+Fully compatible with External Item Descriptions! Check the crown to see the effects of each character!
 
 As always, use the discussion threads below for any bug reports or suggestions. I hope you enjoy champions!
 
@@ -25,7 +26,7 @@ Special thanks to Eucalyptus for playtesting and code support, and to Ferpe for 
 [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3035686305]Devoid: Apollyon Rework[/url] (The reworked void can't absorb items)
 
 </description>
-    <version>1.6</version>
+    <version>1.8</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Player Characters"/>

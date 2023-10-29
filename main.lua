@@ -177,6 +177,7 @@ function IsaacChampions:resetBlindfold()
     PlayerType.PLAYER_APOLLYON_B,
     PlayerType.PLAYER_BLUEBABY_B,
     PlayerType.PLAYER_JACOB_B,
+    PlayerType.PLAYER_JACOB2_B,
     PlayerType.PLAYER_MAGDALENE_B,
     PlayerType.PLAYER_JUDAS,
     PlayerType.PLAYER_BLACKJUDAS,
