@@ -8,7 +8,7 @@ function eve:onCache(player, cacheFlag)
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
 
-    player.Luck = player.Luck - 3.0
+    player.Luck = player.Luck * 0.7
 
     local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
@@ -76,7 +76,7 @@ if EID then
         descObj.Description =
         "#{{Player".. CHARACTER .."}} {{ColorGray}}Eve" ..
         "#{{Collectible" .. CollectibleType.COLLECTIBLE_RAZOR_BLADE .. "}} Moves Razor Blade to Pocket Slot" ..
-        "#\2 -3 Luck down" ..
+        "#\2 -30% Luck down" ..
         "#{{Minus}} Removes Collectibles:" ..
         "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_WHORE_OF_BABYLON .. "}} {{ColorSilver}}Whore of Babylon" ..
         "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_DEAD_BIRD .. "}} {{ColorSilver}}Dead Bird" ..

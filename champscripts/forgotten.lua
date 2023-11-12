@@ -6,7 +6,7 @@ local CHARACTER2 = PlayerType.PLAYER_THESOUL
 function forgotten:onCache(player, cacheFlag)
     if player == nil then return end
 
-    if (cacheFlag ~= CacheFlag.CACHE_FIREDELAY and cacheFlag~= CacheFlag.CACHE_DAMAGE and cacheFlag~= CacheFlag.CACHE_RANGE) then return end
+    if (cacheFlag ~= CacheFlag.CACHE_FIREDELAY and cacheFlag~= CacheFlag.CACHE_DAMAGE and cacheFlag~= CacheFlag.CACHE_RANGE and cacheFlag~= CacheFlag.CACHE_TEARFLAG) then return end
     
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
@@ -14,6 +14,7 @@ function forgotten:onCache(player, cacheFlag)
     --if cacheFlag == CacheFlag.CACHE_FIREDELAY then player.MaxFireDelay = player.MaxFireDelay *0.6 end
     if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = player.Damage * 0.2 - 3 end
     --if cacheFlag == CacheFlag.CACHE_RANGE then player.TearRange = 10000 end
+    if cacheFlag == CacheFlag.CACHE_TEARFLAG then player.TearFlags = player.TearFlags | TearFlags.TEAR_PUNCH end
 
     local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
@@ -51,15 +52,15 @@ function forgotten:onPerfectUpdate(player)
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     local playerType = player:GetPlayerType()
     
-    if playerType == not (CHARACTER or CHARACTER2) then return end
+    if not (playerType == CHARACTER or playerType == CHARACTER2) then return end
 
     if playerType ~= currentChar then
         if playerType == CHARACTER then
             IsaacChampions:setBlindfold(player, false, true)
-            player:RemoveCollectible(CollectibleType.COLLECTIBLE_MERCURIUS)
+            player:RemoveCollectible(CollectibleType.COLLECTIBLE_POINTY_RIB)
         else if playerType == CHARACTER2 then
             IsaacChampions:setBlindfold(player, true, true)
-            player:AddCollectible(CollectibleType.COLLECTIBLE_MERCURIUS)
+            player:AddCollectible(CollectibleType.COLLECTIBLE_POINTY_RIB)
         end
     end
     end
@@ -67,3 +68,30 @@ function forgotten:onPerfectUpdate(player)
     currentChar = playerType
 end
 IsaacChampions:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, forgotten.onPerfectUpdate)
+
+-- local usedForgorRecall = false
+
+-- function forgotten:InputAction(entity, _, buttonAction)
+--     -- local player = entity:ToPlayer()
+--     -- if player == nil then return end
+--     -- if not player:HasCollectible(CHAMPION_CROWN) then return end
+--     -- local playerType = player:GetPlayerType()
+    
+--     -- if not (playerType == CHARACTER or playerType == CHARACTER2) then return end
+--     if 
+--     buttonAction == ButtonAction.ACTION_DROP then
+--         print("fuck is this")
+--         return 1.0
+--     end
+-- end
+-- IsaacChampions:AddCallback(ModCallbacks.MC_INPUT_ACTION, forgotten.InputAction, InputHook.GET_ACTION_VALUE)
+
+-- function forgotten:onRecallUse(_, rng, player)
+--     if player == nil then return end
+--     local playerType = player:GetPlayerType()
+--     if not (playerType == CHARACTER or playerType == CHARACTER2) then return end
+
+--     usedForgorRecall = true
+--     player:UseActiveItem(CollectibleType.COLLECTIBLE_HOW_TO_JUMP)
+-- end
+-- IsaacChampions:AddCallback(ModCallbacks.MC_USE_ITEM, forgotten.onRecallUse, CollectibleType.COLLECTIBLE_RECALL)

@@ -21,6 +21,8 @@ function eden_b:onCache(player, cacheFlag)
         runData.noTreasureRooms = true
     end
 
+
+
     local tempEffects = player:GetEffects()
     if not tempEffects:HasNullEffect(NullItemID.ID_ESAU_JR) then
         for i = 0, Isaac.GetItemConfig():GetCollectibles().Size -1, 1 do
@@ -94,8 +96,25 @@ function eden_b:onHit(entity, amount, flags, source, countDown)
     local player = entity:ToPlayer()
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
+    local level = Game():GetLevel()
+
     local fakeDamageFlags = DamageFlag.DAMAGE_NO_PENALTIES | DamageFlag.DAMAGE_RED_HEARTS | DamageFlag.DAMAGE_FAKE
     if flags & fakeDamageFlags > 0 then return end
+
+
+    Game():ClearStagesWithoutDamage()
+
+    if player:HasTrinket(TrinketType.TRINKET_CROW_HEART) then
+        if player:GetHearts() > 0 then
+            level:SetStateFlag(LevelStateFlag.STATE_REDHEART_DAMAGED, true)
+           -- level:SetRedHeartDamage()
+        end
+    else
+        if player:GetSoulHearts() == 0 then
+            level:SetStateFlag(LevelStateFlag.STATE_REDHEART_DAMAGED, true)
+          --  level:SetRedHeartDamage()
+        end
+    end
 
     player:TakeDamage(amount, flags | DamageFlag.DAMAGE_NO_PENALTIES, source, countDown)
     return false
@@ -107,8 +126,8 @@ function eden_b:onTeleport3Use(_, rng, player)
     player:UseActiveItem(CollectibleType.COLLECTIBLE_HOW_TO_JUMP)
     player:UseActiveItem(CollectibleType.COLLECTIBLE_TELEPORT_2)
 end
-
 IsaacChampions:AddCallback(ModCallbacks.MC_USE_ITEM, eden_b.onTeleport3Use, UNDEFINED2)
+
 
 if EID then
     local function crownPlayerCondition(descObj)

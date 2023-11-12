@@ -59,7 +59,7 @@ if EID then
         descObj.Description =
         "#{{Player".. CHARACTER .."}} {{ColorGray}}Lilith" ..
         "#\2  -40% Damage down" ..
-        "#{{Blank}}  -3 Range down" ..
+        "#{{Blank}}  -1 Range down" ..
         "#{{Minus}} Removes Collectibles:" ..
         "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_BOX_OF_FRIENDS .. "}} {{ColorSilver}}Box of Friends" ..
         "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_CAMBION_CONCEPTION .. "}} {{ColorSilver}}Cambion Conception" ..
