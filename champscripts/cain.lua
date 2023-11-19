@@ -12,8 +12,8 @@ function cain:onCache(player, cacheFlag)
 
     local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
-        if save.ItemObtained == true then return end
-        save.ItemObtained = true
+        if save.ItemObtainedCain == true then return end
+        save.ItemObtainedCain = true
     end
 
     local runData = IsaacChampions.SaveManager.GetRunSave()

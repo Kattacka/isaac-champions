@@ -13,8 +13,8 @@ function lilith:onCache(player, cacheFlag)
 
     local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
-        if save.ItemObtained == true then return end
-        save.ItemObtained = true
+        if save.ItemObtainedLilith == true then return end
+        save.ItemObtainedLilith = true
     end
 
     local trinkets = {

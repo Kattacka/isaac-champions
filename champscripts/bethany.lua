@@ -14,8 +14,8 @@ function bethany:onCache(player, cacheFlag)
     end
     local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
-        if save.ItemObtained == true then return end
-        save.ItemObtained = true
+        if save.ItemObtainedBethany == true then return end
+        save.ItemObtainedBethany = true
     end
 
     player:AddMaxHearts(-2)

@@ -12,8 +12,8 @@ function keeper_b:onCache(player, cacheFlag)
 
     local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
-        if save.ItemObtained == true then return end
-        save.ItemObtained = true
+        if save.ItemObtainedKeeper == true then return end
+        save.ItemObtainedKeeper = true
     end
 
     local trinkets = {

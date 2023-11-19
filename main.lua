@@ -200,7 +200,17 @@ function IsaacChampions:resetBlindfold()
 end
 IsaacChampions:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, IsaacChampions.resetBlindfold)
 
+function IsaacChampions:onCllickeUse(_, rng, player)
+  if not player then return end
+  if not player:HasCollectible(CHAMPION_CROWN) then return end
+  player:TryRemoveNullCostume(NullItemID.ID_BLINDFOLD)
+  local runData = IsaacChampions.SaveManager.GetRunSave()
+  if runData then
+      runData.noTreasureRooms = false
+  end
+end
 
+IsaacChampions:AddCallback(ModCallbacks.MC_USE_ITEM, IsaacChampions.onCllickeUse, CollectibleType.COLLECTIBLE_CLICKER)
 --disable treasure rooms
 
 local hasLoadedRooms = false

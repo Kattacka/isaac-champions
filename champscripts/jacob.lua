@@ -17,14 +17,14 @@ function jacob:onCache(player, cacheFlag)
 
     local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
-        if save.ItemObtained == true then return end
-        save.ItemObtained = true
+        if save.ItemObtainedJacob_b == true then return end
+        save.ItemObtainedJacob_b = true
     end
 
     local twinSave = IsaacChampions.SaveManager.GetRunSave(twinPlayer)
     if twinSave then
-        if twinSave.ItemObtained == true then return end
-        twinSave.ItemObtained = true
+        if twinSave.ItemObtainedJacob_b == true then return end
+        twinSave.ItemObtainedJacob_b = true
     end
 
     player:UsePill(PillEffect.PILLEFFECT_SMALLER, PillColor.PILL_NULL, UseFlag.USE_NOHUD | UseFlag.USE_NOANNOUNCER | UseFlag.USE_NOANIM)

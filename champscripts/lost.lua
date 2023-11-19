@@ -10,8 +10,8 @@ function lost:onCache(player, cacheFlag)
 
     local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
-        if save.ItemObtained == true then return end
-        save.ItemObtained = true
+        if save.ItemObtainedLost == true then return end
+        save.ItemObtainedLost = true
     end
 
     player:RemoveCollectible(CollectibleType.COLLECTIBLE_ETERNAL_D6)

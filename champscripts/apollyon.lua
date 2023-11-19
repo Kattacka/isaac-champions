@@ -10,8 +10,8 @@ function apollyon:onCache(player, cacheFlag)
 
     local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
-        if save.ItemObtained == true then return end
-        save.ItemObtained = true
+        if save.ItemObtainedApollyon == true then return end
+        save.ItemObtainedApollyon = true
     end
     
     local trinkets = {

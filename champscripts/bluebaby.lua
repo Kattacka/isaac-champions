@@ -13,8 +13,8 @@ function bluebaby:onCache(player, cacheFlag)
 
     local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
-        if save.ItemObtained == true then return end
-        save.ItemObtained = true
+        if save.ItemObtainedBluebaby == true then return end
+        save.ItemObtainedBluebaby = true
     end
 
     local trinkets = {

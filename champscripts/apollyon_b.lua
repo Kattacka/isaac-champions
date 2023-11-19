@@ -10,8 +10,8 @@ function apollyon_b:onCache(player, cacheFlag)
 
     local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
-        if save.ItemObtained == true then return end
-        save.ItemObtained = true
+        if save.ItemObtainedApollyon_b == true then return end
+        save.ItemObtainedApollyon_b = true
     end
     
     IsaacChampions:setBlindfold(player, true, true)

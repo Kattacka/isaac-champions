@@ -17,8 +17,8 @@ function samson_b:onCache(player, cacheFlag)
 
     local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
-        if save.ItemObtained == true then return end
-        save.ItemObtained = true
+        if save.ItemObtainedSamson_b == true then return end
+        save.ItemObtainedSamson_b = true
     end
 
     player:AddBrokenHearts(11)

@@ -22,8 +22,8 @@ function maggy_b:onCache(player, cacheFlag)
 
     local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
-        if save.ItemObtained == true then return end
-        save.ItemObtained = true
+        if save.ItemObtainedMaggy_b == true then return end
+        save.ItemObtainedMaggy_b = true
     end
 
     IsaacChampions:setBlindfold(player, true, true)

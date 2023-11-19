@@ -12,8 +12,8 @@ function eden_b:onCache(player, cacheFlag)
 
     local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
-        if save.ItemObtained == true then return end
-        save.ItemObtained = true
+        if save.ItemObtainedEden_b == true then return end
+        save.ItemObtainedEden_b = true
     end
 
     local runData = IsaacChampions.SaveManager.GetRunSave()
@@ -22,12 +22,13 @@ function eden_b:onCache(player, cacheFlag)
     end
 
 
-
+    local itemsRemoved = 0
     local tempEffects = player:GetEffects()
     if not tempEffects:HasNullEffect(NullItemID.ID_ESAU_JR) then
         for i = 0, Isaac.GetItemConfig():GetCollectibles().Size -1, 1 do
-            if player:HasCollectible(i) and i ~= CHAMPION_CROWN then
+            if player:HasCollectible(i) and i ~= CHAMPION_CROWN and itemsRemoved < 3 then
                 player:RemoveCollectible(i)
+                itemsRemoved = itemsRemoved + 1
             end
         end
     end

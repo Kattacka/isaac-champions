@@ -14,8 +14,8 @@ function eve_b:onCache(player, cacheFlag)
     end
     local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
-        if save.ItemObtained == true then return end
-        save.ItemObtained = true
+        if save.ItemObtainedEve_b == true then return end
+        save.ItemObtainedEve_b = true
     end
 
     --player:AddMaxHearts(-2)

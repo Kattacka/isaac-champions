@@ -14,8 +14,8 @@ function judas:onCache(player, cacheFlag)
 
     local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
-        if save.ItemObtained == true then return end
-        save.ItemObtained = true
+        if save.ItemObtainedJudas == true then return end
+        save.ItemObtainedJudas = true
     end
 
     if player:GetPlayerType() ~= CHARACTER2 then
@@ -37,8 +37,13 @@ function judas:onCache(player, cacheFlag)
     }
     IsaacChampions:addCollectibles(player, collectibles)
 
-    player:RemoveCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL)
-    player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_URN_OF_SOULS)
+    if player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL) then
+      player:RemoveCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL)
+    end
+
+    IsaacChampions.Schedule(1, function ()
+      player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_URN_OF_SOULS)
+    end,{})
 
     player:AddWisp(CollectibleType.COLLECTIBLE_VENGEFUL_SPIRIT, player.Position)
 

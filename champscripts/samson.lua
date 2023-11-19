@@ -9,6 +9,12 @@ function samson:onCache(player, cacheFlag)
     if player:GetPlayerType() ~= CHARACTER then return end
     if cacheFlag == CacheFlag.CACHE_FIREDELAY then IsaacChampions.Utility:addNegativeTearMultiplier(player, 3) end
 
+    local save = IsaacChampions.SaveManager.GetRunSave(player)
+    if save then
+        if save.ItemObtainedSamson == true then return end
+        save.ItemObtainedSamson = true
+    end
+
     if player:HasCollectible(CollectibleType.COLLECTIBLE_BLOODY_LUST) then
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_BLOODY_LUST)
     end

@@ -18,8 +18,8 @@ function forgotten:onCache(player, cacheFlag)
 
     local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
-        if save.ItemObtained == true then return end
-        save.ItemObtained = true
+        if save.ItemObtainedForgotten == true then return end
+        save.ItemObtainedForgotten = true
     end
 
     local trinkets = {

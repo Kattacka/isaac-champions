@@ -18,8 +18,8 @@ function eden:onCache(player, cacheFlag)
 
     local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
-        if save.ItemObtained == true then return end
-        save.ItemObtained = true
+        if save.ItemObtainedEden == true then return end
+        save.ItemObtainedEden = true
     end
 
     local game = Game()
@@ -28,11 +28,13 @@ function eden:onCache(player, cacheFlag)
 
     if level:GetCurrentRoomIndex() == GridRooms.ROOM_GENESIS_IDX then return end
 
+    local itemsRemoved = 0
     local tempEffects = player:GetEffects()
     if not tempEffects:HasNullEffect(NullItemID.ID_ESAU_JR) then
         for i = 0, Isaac.GetItemConfig():GetCollectibles().Size -1, 1 do
-            if player:HasCollectible(i) and i ~= CHAMPION_CROWN then
+            if player:HasCollectible(i) and i ~= CHAMPION_CROWN and itemsRemoved < 3 then
                 player:RemoveCollectible(i)
+                itemsRemoved = itemsRemoved + 1
             end
         end
     end
@@ -94,9 +96,14 @@ function eden:onNewRoom()
     if level:GetCurrentRoomIndex() == GridRooms.ROOM_GENESIS_IDX then
         for i = 1, #championEdens do
             local player = championEdens[i]
-            for j = 0, Isaac.GetItemConfig():GetCollectibles().Size - 1, 1 do
-                if player:HasCollectible(j) and j ~= CHAMPION_CROWN then
-                    player:RemoveCollectible(j)
+            local itemsRemoved = 0
+            local tempEffects = player:GetEffects()
+            if not tempEffects:HasNullEffect(NullItemID.ID_ESAU_JR) then
+                for j = 0, Isaac.GetItemConfig():GetCollectibles().Size -1, 1 do
+                    if player:HasCollectible(j) and j ~= CHAMPION_CROWN and itemsRemoved < 3 then
+                        player:RemoveCollectible(j)
+                        itemsRemoved = itemsRemoved + 1
+                    end
                 end
             end
         end
