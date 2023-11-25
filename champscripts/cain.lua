@@ -25,6 +25,12 @@ function cain:onCache(player, cacheFlag)
 
     player:TryRemoveTrinket(TrinketType.TRINKET_PAPER_CLIP)
 
+    local entities = Isaac.FindByType(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TRINKET, TrinketType.TRINKET_PAPER_CLIP)
+    for _, entity in ipairs(entities) do
+        local paperClip = entity:ToPickup()
+        paperClip:Remove()
+    end
+
     local trinkets = {
         TrinketType.TRINKET_CRYSTAL_KEY,
     }

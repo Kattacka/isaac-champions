@@ -19,8 +19,8 @@ function apollyon:onCache(player, cacheFlag)
     }
     IsaacChampions:addTrinkets(player, trinkets)
 
-    player:RemoveCollectible(CollectibleType.COLLECTIBLE_VOID)
-    player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_VOID)
+    -- player:RemoveCollectible(CollectibleType.COLLECTIBLE_VOID)
+    -- player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_VOID)
 
     --Make all items in room shop items so you can void only the desired items, then turn them back
     local entities = Isaac.FindByType(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE)
@@ -36,8 +36,12 @@ function apollyon:onCache(player, cacheFlag)
     item1:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
     item2:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
 
-    player:UseActiveItem(CollectibleType.COLLECTIBLE_VOID, 0, 0)
-    
+    local DIV_VOID_ID = Isaac.GetItemIdByName('[DIVIDED VOID]Tech ID')+1
+    if DIV_VOID_ID ~= 0 then 
+        player:UseActiveItem(DIV_VOID_ID, 0, 0)
+    else
+        player:UseActiveItem(CollectibleType.COLLECTIBLE_VOID, 0, 0)
+    end
     entities = Isaac.FindByType(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE)
     for _, entity in ipairs(entities) do
         local item = entity:ToPickup()
@@ -67,7 +71,6 @@ if EID then
 
         descObj.Description =
         "#{{Player".. CHARACTER .."}} {{ColorGray}}Apollyon" ..
-        "#{{Collectible" .. CollectibleType.COLLECTIBLE_VOID .. "}} Moves Void to Pocket Slot" ..
         "#{{Collectible" .. CollectibleType.COLLECTIBLE_VOID .. "}} {{ColorPurple}}Voids Collectibles:" ..
         "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_SPINDOWN_DICE .. "}} {{ColorTransform}}Spindown Dice" ..
         "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_CROOKED_PENNY .. "}} {{ColorTransform}}Crooked Penny" ..

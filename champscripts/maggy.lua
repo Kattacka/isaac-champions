@@ -26,6 +26,16 @@ function maggy:onCache(player, cacheFlag)
     }
     IsaacChampions:addTrinkets(player, trinkets)
 
+    local colorToEffect = {}
+    for i = 1, PillColor.NUM_STANDARD_PILLS do
+      colorToEffect[Game():GetItemPool():GetPillEffect(i, player)] = i
+    end
+
+    print(player:GetPill(0))
+    print(colorToEffect[player:GetPill(0)])
+    player:SetPill(0, 0)
+    player:AddPill(Game():GetItemPool():ForceAddPillEffect(PillEffect.PILLEFFECT_INFESTED_QUESTION))
+
     if player:HasCollectible(CollectibleType.COLLECTIBLE_YUM_HEART) then
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_YUM_HEART)
     end
@@ -39,6 +49,12 @@ function maggy:onCache(player, cacheFlag)
     end
 
     player:AddBombs(1)
+
+    local entities = Isaac.FindByType(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_PILL)
+    for _, entity in ipairs(entities) do
+        local pill = entity:ToPickup()
+        pill:Remove()
+    end
 
 end
 IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, maggy.onCache)
@@ -67,7 +83,8 @@ if EID then
         "#{{Collectible" .. CollectibleType.COLLECTIBLE_SMELTER .. "}} Smelts Trinkets:" ..
         "#{{Blank}} {{Trinket" .. TrinketType.TRINKET_CROW_HEART .. "}} {{ColorSilver}}Crow Heart" ..
         "#{{Blank}} {{Trinket" .. TrinketType.TRINKET_APPLE_OF_SODOM .. "}} {{ColorSilver}}Apple of Sodom" ..
-        "#{{Blank}} {{Trinket" .. TrinketType.TRINKET_FISH_TAIL .. "}} {{ColorSilver}}Fish Tail"
+        "#{{Blank}} {{Trinket" .. TrinketType.TRINKET_FISH_TAIL .. "}} {{ColorSilver}}Fish Tail" ..
+        "#{{Pill5}} Replaces Full Health with Infested?"
 
         return descObj
     end

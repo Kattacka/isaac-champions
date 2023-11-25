@@ -64,7 +64,7 @@ function lost_b:onCache(player, cacheFlag)
     local entities = Isaac.FindByType(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, Card.CARD_HOLY)
     for _, entity in ipairs(entities) do
         local holyCard = entity:ToPickup()
-        holyCard:Kill()
+        holyCard:Remove()
     end
     local tempEffects = player:GetEffects()
     if tempEffects:HasNullEffect(NullItemID.ID_HOLY_CARD) then

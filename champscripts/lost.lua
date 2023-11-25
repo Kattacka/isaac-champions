@@ -19,6 +19,7 @@ function lost:onCache(player, cacheFlag)
     player:AddCollectible(CollectibleType.COLLECTIBLE_RUNE_BAG)
     player:AddCollectible(CollectibleType.COLLECTIBLE_HEARTBREAK)
     player:AddCollectible(CollectibleType.COLLECTIBLE_CLEAR_RUNE, 4, false)
+    player:AddCard(Card.RUNE_PERTHRO)
     player:AddCard(Card.RUNE_ALGIZ)
 
     player:AddBrokenHearts(-2)
@@ -54,19 +55,27 @@ function lost:onPerfectUpdate(player)
 end
 IsaacChampions:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, lost.onPerfectUpdate)
 
--- function lost:onNewFloor()
---     local champions = IsaacChampions:getAllChampChars(CHARACTER)
---     if (next(champions) == nil) then return end
---     for i = 1, #champions do
---         local player = champions[i]
---         local tempEffects = player:GetEffects()
---         if tempEffects:HasCollectibleEffect(CollectibleType.COLLECTIBLE_HOLY_MANTLE) then
---             tempEffects:RemoveCollectibleEffect(CollectibleType.COLLECTIBLE_HOLY_MANTLE, 1)
---         end
---     end
--- end
+function lost:onNewFloor()
+    IsaacChampions.Schedule(1, function()
+        local champions = IsaacChampions:getAllChampChars(CHARACTER)
+        if (next(champions) == nil) then return end
+        for i = 1, #champions do
+            local player = champions[i]
+            local tempEffects = player:GetEffects()
+            if not (player:HasCollectible(CollectibleType.COLLECTIBLE_HOLY_MANTLE, true) or
+                player:HasTrinket(TrinketType.TRINKET_WOODEN_CROSS) or
+                tempEffects:HasNullEffect(NullItemID.ID_HOLY_CARD)) then
 
--- IsaacChampions:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, lost.onNewFloor)
+                if tempEffects:HasCollectibleEffect(CollectibleType.COLLECTIBLE_HOLY_MANTLE) then
+                    tempEffects:RemoveCollectibleEffect(CollectibleType.COLLECTIBLE_HOLY_MANTLE, 1)
+                end
+            end
+        end
+    end, {})
+end
+
+
+IsaacChampions:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, lost.onNewFloor)
 
 lost.BrokenHeartIcon = Sprite()
 lost.BrokenHeartIcon:Load("gfx/custom_ui/ui_hearts.anm2", true)
@@ -119,14 +128,14 @@ if EID then
     local function crownPlayerCallback(descObj)
         descObj.Description =
         "#{{Player".. CHARACTER .."}} {{ColorGray}}The Lost" ..
-        "#{{Collectible" .. CollectibleType.COLLECTIBLE_HOLY_MANTLE .. "}} Disables Holy Mantle effectt" ..
         "#{{Minus}} Removes Collectibles:" ..
         "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_ETERNAL_D6 .. "}} {{ColorSilver}}Eternal D6" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_HOLY_MANTLE .. "}} {{ColorSilver}}Holy Mantle" ..
         "#{{Plus}} Adds Collectibles: " ..
         "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_HEARTBREAK .. "}} {{ColorSilver}}Heartbreak" ..
         "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_CLEAR_RUNE .. "}} {{ColorSilver}}Clear Rune" ..
         "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_RUNE_BAG .. "}} {{ColorSilver}}Rune Bag" ..
-        "#{{Rune}} Gives an algiz rune" ..
+        "#{{Rune}} Gives an algiz rune and a perthro rune" ..
         "#{{BrokenHeart}} You die at 12 broken hearts"
         return descObj
     end

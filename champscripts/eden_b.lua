@@ -21,7 +21,6 @@ function eden_b:onCache(player, cacheFlag)
         runData.noTreasureRooms = true
     end
 
-
     local itemsRemoved = 0
     local tempEffects = player:GetEffects()
     if not tempEffects:HasNullEffect(NullItemID.ID_ESAU_JR) then

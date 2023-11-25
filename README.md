@@ -48,7 +48,7 @@ Starts with pocket genesis, TMTrainer, libra, magic mush, and mini mush.
 ### Lost+:
 No Holy Mantle  
 Starts with clear rune, rune bag, and heartbreak.  
-Starts with algiz rune.  
+Starts with algiz rune and perthro rune. 
 
 ### Lilith+:
 Removed box of friends and cambion conception.  
@@ -57,7 +57,6 @@ Removed box of friends and cambion conception.
 Starts with birthright, king baby, proptosis + gulped adoption papers and friendship circlet.  
 
 ### Apollyon+:
-Void moved to pocket slot.  
 Starts with voided spindown dice and crooked penny + gulped No!  
 
 ### Bethany+:
