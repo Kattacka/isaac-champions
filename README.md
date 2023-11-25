@@ -11,7 +11,8 @@ Removed Yum heart
 0.5x tear rate  
 +1 Extra heart container (filled with rotten heart)  
 Starts with pocket yuck heart + gulped fish tail, apple of sodom, and crow's heart.  
-+1 Bomb  
++1 Bomb
+Full Health pill replaced with Infested
 
 ### Cain+:
 Treasure rooms won't spawn for the run.  

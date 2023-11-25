@@ -27,7 +27,7 @@ Special thanks to Eucalyptus for playtesting and code support, and to Ferpe for 
 [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2560433301]Treasure Room Start[/url] (Crashes the game, but just use [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2552169074]Adjacent Starting Treasure[/url] instead)
 
 </description>
-    <version>1.9</version>
+    <version>1.10</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Player Characters"/>
