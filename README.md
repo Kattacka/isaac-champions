@@ -44,7 +44,7 @@ Starts with tiny planet, birthright, and antigrav.
 ### Eden+:
 Removed random starting items.  
 0.6x tear rate, 0.75x damage.  
-Starts with pocket genesis, TMTrainer, libra, magic mush, and mini mush.  
+Starts with pocket genesis, TMTrainer, libra, and sausage x2.  
 
 ### Lost+:
 No Holy Mantle  
