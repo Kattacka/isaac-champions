@@ -1,6 +1,7 @@
 local apollyon = {}
 local CHAMPION_CROWN = Isaac.GetItemIdByName("Champion Crown")
 local CHARACTER = PlayerType.PLAYER_APOLLYON
+local DIV_VOID_ID = Isaac.GetItemIdByName('[DIVIDED VOID]Tech ID')+1
 
 function apollyon:onCache(player, cacheFlag)
     if player == nil then return end
@@ -13,15 +14,12 @@ function apollyon:onCache(player, cacheFlag)
         if save.ItemObtainedApollyon == true then return end
         save.ItemObtainedApollyon = true
     end
+
+    if player:GetActiveItem() ~= CollectibleType.COLLECTIBLE_VOID and player:GetActiveItem() ~= Isaac.GetItemIdByName('[DIVIDED VOID]Tech ID')+1 then
+        IsaacChampions.Utility:dropActiveItem(player)
+        player:AddCollectible(CollectibleType.COLLECTIBLE_VOID)
+    end
     
-    local trinkets = {
-        TrinketType.TRINKET_NO,
-    }
-    IsaacChampions:addTrinkets(player, trinkets)
-
-    -- player:RemoveCollectible(CollectibleType.COLLECTIBLE_VOID)
-    -- player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_VOID)
-
     --Make all items in room shop items so you can void only the desired items, then turn them back
     local entities = Isaac.FindByType(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE)
     for _, entity in ipairs(entities) do
@@ -36,7 +34,6 @@ function apollyon:onCache(player, cacheFlag)
     item1:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
     item2:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
 
-    local DIV_VOID_ID = Isaac.GetItemIdByName('[DIVIDED VOID]Tech ID')+1
     if DIV_VOID_ID ~= 0 then 
         player:UseActiveItem(DIV_VOID_ID, 0, 0)
     else
@@ -50,9 +47,8 @@ function apollyon:onCache(player, cacheFlag)
             item.Price = 0
         end
     end
- 
 
-
+    player:SetActiveCharge(6)
 
 end
 IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, apollyon.onCache)
@@ -74,8 +70,7 @@ if EID then
         "#{{Collectible" .. CollectibleType.COLLECTIBLE_VOID .. "}} {{ColorPurple}}Voids Collectibles:" ..
         "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_SPINDOWN_DICE .. "}} {{ColorTransform}}Spindown Dice" ..
         "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_CROOKED_PENNY .. "}} {{ColorTransform}}Crooked Penny" ..
-        "#{{Collectible" .. CollectibleType.COLLECTIBLE_SMELTER .. "}} Smelts Trinkets:" ..
-        "#{{Blank}} {{Trinket" .. TrinketType.TRINKET_NO .. "}} {{ColorSilver}}No!"
+        "#{{Collectible" .. CollectibleType.COLLECTIBLE_VOID .. "}} Gives void a 50/50 to spindown an item or turn it into a penny"
         return descObj
     end
     

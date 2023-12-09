@@ -28,12 +28,16 @@ function jacob:onCache(player, cacheFlag)
     end
 
     player:UsePill(PillEffect.PILLEFFECT_SMALLER, PillColor.PILL_NULL, UseFlag.USE_NOHUD | UseFlag.USE_NOANNOUNCER | UseFlag.USE_NOANIM)
+    player:AddBrokenHearts(3)
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_DAMOCLES_PASSIVE) then
         player:AddCollectible(CollectibleType.COLLECTIBLE_DAMOCLES_PASSIVE)
     end
 
-    if not player:HasCollectible(CollectibleType.COLLECTIBLE_TRINITY_SHIELD) then
+    if player:GetPlayerType() == CHARACTER then
         player:AddCollectible(CollectibleType.COLLECTIBLE_TRINITY_SHIELD)
+    else if twinPlayer:GetPlayerType() == CHARACTER then
+        twinPlayer:AddCollectible(CollectibleType.COLLECTIBLE_TRINITY_SHIELD)
+    end
     end
 
     local trinkets = {
@@ -46,6 +50,7 @@ function jacob:onCache(player, cacheFlag)
     end
 
     twinPlayer:UsePill(PillEffect.PILLEFFECT_SMALLER, PillColor.PILL_NULL, UseFlag.USE_NOHUD | UseFlag.USE_NOANNOUNCER | UseFlag.USE_NOANIM)
+    twinPlayer:AddBrokenHearts(3)
     if not twinPlayer:HasCollectible(CollectibleType.COLLECTIBLE_DAMOCLES_PASSIVE) then
         twinPlayer:AddCollectible(CollectibleType.COLLECTIBLE_DAMOCLES_PASSIVE)
     end
@@ -92,7 +97,7 @@ function jacob:onHit(entity, amount, flags)
     if flags & fakeDamageFlags > 0 then return end
 
     save.gotHit = true
-
+    SFXManager():Play(SoundEffect.SOUND_KNIFE_PULL, 2, 0, false, 1, 0)
     player:BloodExplode()
     player:AddCostume(Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_ANEMIC))
 end
@@ -124,6 +129,7 @@ if EID then
     local function crownPlayerCallback(descObj)
         descObj.Description =
         "#{{Player".. CHARACTER .."}} {{Player".. CHARACTER2 .."}} {{ColorGray}}Jacob and Esau" ..
+        "#{{BrokenHeart}} Grants 3 Broken Hearts" ..
         "#\2 -25% Damage down" ..
         "#\1 Size down" ..
         "#{{Plus}} Adds Collectibles: " ..

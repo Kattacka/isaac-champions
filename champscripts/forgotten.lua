@@ -69,29 +69,29 @@ function forgotten:onPerfectUpdate(player)
 end
 IsaacChampions:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, forgotten.onPerfectUpdate)
 
--- local usedForgorRecall = false
+local usedForgorRecall = false
 
--- function forgotten:InputAction(entity, _, buttonAction)
---     -- local player = entity:ToPlayer()
---     -- if player == nil then return end
---     -- if not player:HasCollectible(CHAMPION_CROWN) then return end
---     -- local playerType = player:GetPlayerType()
+function forgotten:InputAction(entity, _, buttonAction)
+    if usedForgorRecall == false then return end
+    local player = entity:ToPlayer()
+    if player == nil then return end
+    local playerType = player:GetPlayerType()
     
---     -- if not (playerType == CHARACTER or playerType == CHARACTER2) then return end
---     if 
---     buttonAction == ButtonAction.ACTION_DROP then
---         print("fuck is this")
---         return 1.0
---     end
--- end
--- IsaacChampions:AddCallback(ModCallbacks.MC_INPUT_ACTION, forgotten.InputAction, InputHook.GET_ACTION_VALUE)
+    if not (playerType == CHARACTER or playerType == CHARACTER2) then return end
+    if buttonAction == ButtonAction.ACTION_DROP then
+        print("fuck is this")
+        usedForgorRecall = false
+        return 1.0
+    end
+end
+IsaacChampions:AddCallback(ModCallbacks.MC_INPUT_ACTION, forgotten.InputAction, InputHook.IS_ACTION_TRIGGERED)
 
--- function forgotten:onRecallUse(_, rng, player)
---     if player == nil then return end
---     local playerType = player:GetPlayerType()
---     if not (playerType == CHARACTER or playerType == CHARACTER2) then return end
+function forgotten:onRecallUse(_, rng, player)
+    if player == nil then return end
+    local playerType = player:GetPlayerType()
+    if not (playerType == CHARACTER or playerType == CHARACTER2) then return end
 
---     usedForgorRecall = true
---     player:UseActiveItem(CollectibleType.COLLECTIBLE_HOW_TO_JUMP)
--- end
--- IsaacChampions:AddCallback(ModCallbacks.MC_USE_ITEM, forgotten.onRecallUse, CollectibleType.COLLECTIBLE_RECALL)
+    usedForgorRecall = true
+    player:UseActiveItem(CollectibleType.COLLECTIBLE_HOW_TO_JUMP)
+end
+IsaacChampions:AddCallback(ModCallbacks.MC_USE_ITEM, forgotten.onRecallUse, CollectibleType.COLLECTIBLE_RECALL)

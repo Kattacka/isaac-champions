@@ -58,7 +58,9 @@ Removed box of friends and cambion conception.
 Starts with birthright, king baby, proptosis + gulped adoption papers and friendship circlet.  
 
 ### Apollyon+:
-Starts with voided spindown dice and crooked penny + gulped No!  
+Starts with voided spindown dice and crooked penny.
+Crooked Spindown Void works as such:
+Spinsdown the item -> Uses crooked penny -> Voids the original copy, leaving you with either 1 spundown pedestal and void stat ups, or a penny.
 
 ### Bethany+:
 Removed book of virtues.  
@@ -67,9 +69,10 @@ Starts with pocket prayer card, redemption, act of contrition + gulped devil's c
 +1 Bomb  
 
 ### Jacob and Esau+:
++3 Broken Hearts each
 Both start with activated damocles + gulped wooden cross.  
 Both start with one size down.  
-One starts with trinity shield.  
+Jacob starts with trinity shield.  
 
 ### Tainted Maggy+:
 Removed yum heart  
@@ -100,7 +103,8 @@ Starts with brown nugget, hivemind, and beelzebub transformation + cricket leg.
 
 ### Tainted Blue Baby+:
 Blindfolded.  
-Starts with pocket mom's bracelet, birthright, fate, ???'s best friend, + gulped brown cap and golden mom's pearl.  
+Starts with mom's bracelet, schoolbag, birthright, fate, fate's reward, + gulped brown cap.
+Using mom's bracelet when not picking up a rock will pull out a poop spell instead.
 
 ### Tainted Lazarus+:
 Item pedestals aren't affected by Flip.  

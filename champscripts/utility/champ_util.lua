@@ -48,6 +48,14 @@ function champ_util:addNegativeTearMultiplier(player, multiplier)
     player.MaxFireDelay = IsaacChampions.Utility:toMaxFireDelay(tearsPerSecond)
 end
 
+function champ_util:dropActiveItem(player)
+    local heldActive = player:GetActiveItem(0)
+    if not (heldActive == 0 or heldActive == nil) then
+        player:RemoveCollectible(heldActive)
+        Isaac.Spawn(5, 100, heldActive, Isaac.GetFreeNearPosition(player.Position, 20), Vector.Zero, player)
+    end
+end
+
 function champ_util:hasRevive(player)
 
     local reviveItems = {

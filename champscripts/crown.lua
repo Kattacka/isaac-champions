@@ -4,6 +4,7 @@ local CHAMPION_CROWN = Isaac.GetItemIdByName("Champion Crown")
 local offsetFromRight = 180
 
 function crown:PostPlayerInit(player, playerVariant)
+  if Isaac.GetChallenge() > 0 then return end
   if Game():GetNumPlayers() < 2 then return end
     IsaacChampions.Schedule(1, function ()
       if player.Parent ~= nil then return end
@@ -15,6 +16,7 @@ IsaacChampions:AddPriorityCallback(ModCallbacks.MC_POST_PLAYER_INIT, CallbackPri
 
 
 function crown:PostGameStarted(isContinued)
+  if Isaac.GetChallenge() > 0 then return end
   if isContinued == true then return end
   local player = Isaac.GetPlayer()
   crown:spawnCrown(player)
@@ -30,7 +32,8 @@ function crown:spawnCrown(player)
     playerType == PlayerType.PLAYER_THESOUL_B or
     playerType == PlayerType.PLAYER_LAZARUS2 or
     playerType == PlayerType.PLAYER_LAZARUS2_B or
-    playerType == PlayerType.PLAYER_JACOB2_B
+    playerType == PlayerType.PLAYER_JACOB2_B or
+    playerType == PlayerType.PLAYER_ISAAC_B
   then return end
   local tempEffects = player:GetEffects()
   if tempEffects:HasNullEffect(NullItemID.ID_ESAU_JR) then return end

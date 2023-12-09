@@ -18,26 +18,67 @@ function bluebaby_b:onCache(player, cacheFlag)
 
     local trinkets = {
         TrinketType.TRINKET_BROWN_CAP,
-        TrinketType.TRINKET_MOMS_PEARL + 32768,
+    --    TrinketType.TRINKET_MOMS_PEARL + 32768,
     }
 
     IsaacChampions:addTrinkets(player, trinkets)
+
+    IsaacChampions.Utility:dropActiveItem(player)
+
+    if not player:HasCollectible(CollectibleType.COLLECTIBLE_SCHOOLBAG) then
+        player:AddCollectible(CollectibleType.COLLECTIBLE_SCHOOLBAG)
+    end
 
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_FATE) then
         player:AddCollectible(CollectibleType.COLLECTIBLE_FATE)
     end
 
-    if not player:HasCollectible(CollectibleType.COLLECTIBLE_BLUE_BABYS_ONLY_FRIEND) then
-        player:AddCollectible(CollectibleType.COLLECTIBLE_BLUE_BABYS_ONLY_FRIEND)
+    if not player:HasCollectible(CollectibleType.COLLECTIBLE_FATES_REWARD) then
+        player:AddCollectible(CollectibleType.COLLECTIBLE_FATES_REWARD)
     end
 
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT) then
         player:AddCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)
     end
 
-    player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_MOMS_BRACELET)
+    if not player:HasCollectible(CollectibleType.COLLECTIBLE_PYROMANIAC) then
+        player:AddCollectible(CollectibleType.COLLECTIBLE_PYROMANIAC)
+    end
+
+    player:AddCollectible(CollectibleType.COLLECTIBLE_MOMS_BRACELET)
 end
 IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, bluebaby_b.onCache)
+
+local usedBracelet = false
+
+function bluebaby_b:InputAction(entity, inputHook, action)
+    if entity and entity.Type == EntityType.ENTITY_PLAYER then
+        local player = entity:ToPlayer()
+        
+        if not player:HasCollectible(CHAMPION_CROWN) then return end
+        local playerType = player:GetPlayerType()
+        if playerType ~= CHARACTER then return end
+        if usedBracelet == false then return end
+        if action == ButtonAction.ACTION_BOMB then
+            usedBracelet = false
+            if player:IsHoldingItem() then return end
+            return true
+        end
+    end
+end
+IsaacChampions:AddCallback(ModCallbacks.MC_INPUT_ACTION, bluebaby_b.InputAction, InputHook.IS_ACTION_TRIGGERED)
+
+function bluebaby_b:onBraceletUse(_, rng, player)
+    if player == nil then return end
+    local playerType = player:GetPlayerType()
+    if playerType ~= CHARACTER then return end
+        IsaacChampions.Schedule(9, function ()
+        if player:IsHoldingItem() == false then
+            usedBracelet = true
+        end
+    end,{})
+end
+IsaacChampions:AddCallback(ModCallbacks.MC_USE_ITEM, bluebaby_b.onBraceletUse, CollectibleType.COLLECTIBLE_MOMS_BRACELET)
 
 if EID then
     local function crownPlayerCondition(descObj)
@@ -54,16 +95,16 @@ if EID then
         descObj.Description =
         "#{{Player".. CHARACTER .."}} {{ColorGray}}The Soiled" ..
         "#{{Trinket" .. TrinketType.TRINKET_BLIND_RAGE .. "}} {{ColorSilver}}Applies Blindfold" ..
-        "#{{Minus}} Removes Collectibles:" ..
-        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_HOLD .. "}} Hold" ..
         "#{{Plus}} Adds Collectibles: " ..
-        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_MOMS_BRACELET .. "}} {{ColorSilver}}Pocket Mom's Bracelet" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_MOMS_BRACELET .. "}} {{ColorSilver}}Mom's Bracelet" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_SCHOOLBAG .. "}} {{ColorSilver}}Schoolbag" ..
         "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_BIRTHRIGHT .. "}} {{ColorSilver}}Birthright" ..
         "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_FATE .. "}} {{ColorSilver}}Fate" ..
-        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_BLUE_BABYS_ONLY_FRIEND .. "}} {{ColorSilver}}???'s Only Friend" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_FATES_REWARD .. "}} {{ColorSilver}}Fate's Reward" ..
+        "#{{Blank}} {{Collectible" .. CollectibleType.COLLECTIBLE_PYROMANIAC .. "}} {{ColorSilver}}Pyromaniac" ..
         "#{{Collectible" .. CollectibleType.COLLECTIBLE_SMELTER .. "}} Smelts Trinkets:" ..
         "#{{Blank}} {{Trinket" .. TrinketType.TRINKET_BROWN_CAP .. "}} {{ColorSilver}}Brown Cap" ..
-        "#{{Blank}} {{Trinket" .. TrinketType.TRINKET_MOMS_PEARL .. "}} {{ColorOrange}}Golden Mom's Pearl"
+        "#{{PoopPickup}} Mom's Bracelet can throw out poop spells"
         return descObj
     end
     EID:addDescriptionModifier("CrownBlueBabyB", crownPlayerCondition, crownPlayerCallback)

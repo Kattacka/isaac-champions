@@ -109,7 +109,7 @@ function IsaacChampions:PostRender()
         end
     end
     local iconPos = Vector(IsaacChampions.Utility:HUDOffset(48 + horizontalOffest, 10 + verticalOffset, 'topleft')) -- 47. 13
-    local textPos = Vector(IsaacChampions.Utility:HUDOffset(56 + horizontalOffest, 2 + verticalOffset, 'topleft'))  -- 55, 5
+    local textPos = Vector(IsaacChampions.Utility:HUDOffset(56 + horizontalOffest, 2 + verticalOffset, 'topleft')) + Game().ScreenShakeOffset  -- 55, 5
     lost.BrokenHeartIcon:Render(iconPos)
     lost.BrokenHeartText:DrawString("x" .. player:GetBrokenHearts(), textPos.X, textPos.Y, KColor(1 ,1 ,1 ,1), 0, true)
 end

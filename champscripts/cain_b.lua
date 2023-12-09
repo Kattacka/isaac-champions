@@ -29,6 +29,8 @@ function cain_b:onCache(player, cacheFlag)
     }
     IsaacChampions:addTrinkets(player, trinkets)
 
+    IsaacChampions.Utility:dropActiveItem(player)
+    
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_SCHOOLBAG) then
         player:AddCollectible(CollectibleType.COLLECTIBLE_SCHOOLBAG)
     end
@@ -36,7 +38,7 @@ function cain_b:onCache(player, cacheFlag)
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_NOTCHED_AXE) then
         player:AddCollectible(CollectibleType.COLLECTIBLE_NOTCHED_AXE)
     end
-    player:SetActiveCharge(100)
+    player:SetActiveCharge(64)
 
     if tempEffects:HasNullEffect(NullItemID.ID_ESAU_JR) then return end
     IsaacChampions:RemoveTreasureRooms()

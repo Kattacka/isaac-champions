@@ -31,6 +31,8 @@ function apollyon_b:onCache(player, cacheFlag)
         Isaac.Spawn(5, 350, heldTrinket, Isaac.GetFreeNearPosition(player.Position, 20), Vector.Zero, player)
     end
 
+    IsaacChampions.Utility:dropActiveItem(player)
+
     local collectibles = {
         CollectibleType.COLLECTIBLE_HIVE_MIND,
         CollectibleType.COLLECTIBLE_BEST_BUD,
