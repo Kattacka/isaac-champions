@@ -42,6 +42,12 @@ function cain_b:onCache(player, cacheFlag)
 
     if tempEffects:HasNullEffect(NullItemID.ID_ESAU_JR) then return end
     IsaacChampions:RemoveTreasureRooms()
+
+    local blacklist = {
+        CollectibleType.COLLECTIBLE_SCHOOLBAG,
+        CollectibleType.COLLECTIBLE_NOTCHED_AXE,
+    }
+    IsaacChampions.Utility:removeFromPools(blacklist)
 end
 IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, cain_b.onCache)
 

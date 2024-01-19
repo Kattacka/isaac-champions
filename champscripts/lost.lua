@@ -16,18 +16,23 @@ function lost:onCache(player, cacheFlag)
 
     player:RemoveCollectible(CollectibleType.COLLECTIBLE_ETERNAL_D6)
     
-    player:AddCollectible(CollectibleType.COLLECTIBLE_RUNE_BAG)
-    player:AddCollectible(CollectibleType.COLLECTIBLE_HEARTBREAK)
     player:AddCollectible(CollectibleType.COLLECTIBLE_CLEAR_RUNE, 4, false)
     player:AddCard(Card.RUNE_PERTHRO)
     player:AddCard(Card.RUNE_ALGIZ)
 
-    player:AddBrokenHearts(-2)
+    player:AddBrokenHearts(1)
 
     local tempEffects = player:GetEffects()
     if tempEffects:HasCollectibleEffect(CollectibleType.COLLECTIBLE_HOLY_MANTLE) then
         tempEffects:RemoveCollectibleEffect(CollectibleType.COLLECTIBLE_HOLY_MANTLE, 1)
     end
+
+    local blacklist = {
+        CollectibleType.COLLECTIBLE_CLEAR_RUNE,
+        CollectibleType.COLLECTIBLE_HEARTBREAK,
+        CollectibleType.COLLECTIBLE_RUNE_BAG,
+    }
+    IsaacChampions.Utility:removeFromPools(blacklist)
 end
 IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, lost.onCache)
 
@@ -114,6 +119,17 @@ function IsaacChampions:PostRender()
     lost.BrokenHeartText:DrawString("x" .. player:GetBrokenHearts(), textPos.X, textPos.Y, KColor(1 ,1 ,1 ,1), 0, true)
 end
 IsaacChampions:AddCallback(ModCallbacks.MC_POST_RENDER, IsaacChampions.PostRender)
+
+IsaacChampions:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, player)
+
+    if player:HasCollectible(CHAMPION_CROWN) and player:GetPlayerType() == CHARACTER then
+        IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_HEARTBREAK, 1, LOST)
+        IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_RUNE_BAG, 1, LOST)
+    else
+        IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_HEARTBREAK, 0, LOST)
+        IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_RUNE_BAG, 0, LOST)
+    end
+end)
 
 if EID then
     local function crownPlayerCondition(descObj)

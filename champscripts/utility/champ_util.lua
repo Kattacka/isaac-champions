@@ -118,4 +118,43 @@ function champ_util:anyPlayerHasNullEffect(effect)
     return false
 end
 
+local continue = false
+local function isContinue(ignoreGenesis)
+    local game = Game()
+	local totPlayers = #Isaac.FindByType(EntityType.ENTITY_PLAYER)
+	
+	if totPlayers == 0 then
+		if game:GetFrameCount() == 0 then
+			continue = false
+		elseif ignoreGenesis then
+			return true
+		else
+			local room = game:GetRoom()
+			local desc = game:GetLevel():GetCurrentRoomDesc()
+			
+			if desc.SafeGridIndex == GridRooms.ROOM_GENESIS_IDX then
+				if not room:IsFirstVisit() then
+					continue = true
+				else
+					continue = false
+				end
+			else
+				continue = true
+			end
+		end
+	end
+	
+	return continue
+end
+
+
+function champ_util:removeFromPools(blacklist)
+	--if isContinue() then return end
+	local itemPool = Game():GetItemPool()
+
+	for _, itemId in ipairs(blacklist) do
+		itemPool:RemoveCollectible(itemId)
+	end
+end
+
 return champ_util

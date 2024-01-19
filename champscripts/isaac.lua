@@ -25,6 +25,10 @@ function isaac:onCache(player, cacheFlag)
     
     player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_MOVING_BOX)
 
+    local blacklist = {
+        CollectibleType.COLLECTIBLE_MOVING_BOX,
+    }
+    IsaacChampions.Utility:removeFromPools(blacklist)
 end
 IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, isaac.onCache)
 

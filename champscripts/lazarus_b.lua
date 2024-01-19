@@ -13,9 +13,8 @@ function lazarus_b:onCache(player, cacheFlag)
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if not (player:GetPlayerType() == CHARACTER or player:GetPlayerType() == CHARACTER2) then return end
 
-
-        local save = IsaacChampions.SaveManager.GetRunSave(player)
-        if save then
+    local save = IsaacChampions.SaveManager.GetRunSave(player)
+    if save then
 
         if (save.TLazAInit == true or save.TLazBInit == true) then return end
 
@@ -67,7 +66,13 @@ function lazarus_b:onCache(player, cacheFlag)
         end
     end
 
-
+    local blacklist = {
+        CollectibleType.COLLECTIBLE_SOY_MILK,
+        CollectibleType.COLLECTIBLE_MORE_OPTIONS,
+        CollectibleType.COLLECTIBLE_VANISHING_TWIN,
+        CollectibleType.COLLECTIBLE_EVES_MASCARA,
+    }
+    IsaacChampions.Utility:removeFromPools(blacklist)
 
 
 end

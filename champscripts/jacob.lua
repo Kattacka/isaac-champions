@@ -80,6 +80,12 @@ function jacob:onCache(player, cacheFlag)
             end
         end
 	end
+
+    local blacklist = {
+        CollectibleType.COLLECTIBLE_DAMOCLES,
+        CollectibleType.COLLECTIBLE_TRINITY_SHIELD,
+    }
+    IsaacChampions.Utility:removeFromPools(blacklist)
     end
 
 end

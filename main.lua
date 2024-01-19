@@ -7,11 +7,7 @@ IsaacChampions.SaveManager.Init(IsaacChampions)
 IsaacChampions.HiddenItemManager:Init(IsaacChampions)
 
 local level = Game():GetLevel()
-local seeds = Game():GetSeeds()
-local stageSeed = seeds:GetStageSeed(level:GetStage())
 
-local rng = RNG()
-rng:SetSeed(stageSeed, 35)
 
 IsaacChampions.Utility = include("champscripts.utility.champ_util")
 include("champscripts.crown")
@@ -200,7 +196,7 @@ function IsaacChampions:resetBlindfold()
 end
 IsaacChampions:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, IsaacChampions.resetBlindfold)
 
-function IsaacChampions:onCllickeUse(_, rng, player)
+function IsaacChampions:onCllickeUse(_, _, player)
   if not player then return end
   if not player:HasCollectible(CHAMPION_CROWN) then return end
   player:TryRemoveNullCostume(NullItemID.ID_BLINDFOLD)

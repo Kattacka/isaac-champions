@@ -47,6 +47,13 @@ function judas:onCache(player, cacheFlag)
 
     player:AddWisp(CollectibleType.COLLECTIBLE_VENGEFUL_SPIRIT, player.Position)
 
+    local blacklist = {
+      CollectibleType.COLLECTIBLE_URN_OF_SOULS,
+      CollectibleType.COLLECTIBLE_MY_SHADOW,
+      CollectibleType.COLLECTIBLE_BIRTHRIGHT,
+  }
+  IsaacChampions.Utility:removeFromPools(blacklist)
+
 end
 
 IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, judas.onCache)

@@ -40,6 +40,13 @@ function maggy_b:onCache(player, cacheFlag)
     end
 
     player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_SUPLEX)
+
+    local blacklist = {
+        CollectibleType.COLLECTIBLE_SUPLEX,
+        CollectibleType.COLLECTIBLE_SOY_MILK,
+        CollectibleType.COLLECTIBLE_KNOCKOUT_DROPS,
+    }
+    IsaacChampions.Utility:removeFromPools(blacklist)
 end
 IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, maggy_b.onCache)
 

@@ -20,6 +20,12 @@ function azazel:onCache(player, cacheFlag)
         end
     if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = (player.Damage * 0.5) + 0.03 end
 
+    local blacklist = {
+        CollectibleType.COLLECTIBLE_BIRTHRIGHT,
+        CollectibleType.COLLECTIBLE_ANTI_GRAVITY,
+        CollectibleType.COLLECTIBLE_TINY_PLANET,
+    }
+    IsaacChampions.Utility:removeFromPools(blacklist)
 end
 IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, azazel.onCache)
 

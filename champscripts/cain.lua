@@ -48,6 +48,13 @@ function cain:onCache(player, cacheFlag)
 
     if tempEffects:HasNullEffect(NullItemID.ID_ESAU_JR) then return end
     IsaacChampions:RemoveTreasureRooms()
+
+    local blacklist = {
+        CollectibleType.COLLECTIBLE_RED_KEY,
+        CollectibleType.COLLECTIBLE_FALSE_PHD,
+        CollectibleType.COLLECTIBLE_CRACKED_ORB,
+    }
+    IsaacChampions.Utility:removeFromPools(blacklist)
 end
 IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, cain.onCache)
 
@@ -57,8 +64,8 @@ IsaacChampions:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, play
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
 
-    IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_FALSE_PHD, 1)
-    IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_CRACKED_ORB, 1)
+    IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_FALSE_PHD, 1, CAIN)
+    IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_CRACKED_ORB, 1, CAIN)
 
 end)
 

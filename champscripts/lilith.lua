@@ -31,19 +31,29 @@ function lilith:onCache(player, cacheFlag)
         player:RemoveCollectible(CollectibleType.COLLECTIBLE_CAMBION_CONCEPTION)
     end
 
-    if not player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT) then
-        player:AddCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)
-    end
+    local blacklist = {
+        CollectibleType.COLLECTIBLE_KING_BABY,
+        CollectibleType.COLLECTIBLE_PROPTOSIS,
+        CollectibleType.COLLECTIBLE_BIRTHRIGHT,
+        CollectibleType.COLLECTIBLE_LUDOVICO_TECHNIQUE,
+    }
+    IsaacChampions.Utility:removeFromPools(blacklist)
 
-    if not player:HasCollectible(CollectibleType.COLLECTIBLE_PROPTOSIS) then
-        player:AddCollectible(CollectibleType.COLLECTIBLE_PROPTOSIS)
-    end
-
-    if not player:HasCollectible(CollectibleType.COLLECTIBLE_KING_BABY) then
-        player:AddCollectible(CollectibleType.COLLECTIBLE_KING_BABY)
-    end
 end
 IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, lilith.onCache)
+
+IsaacChampions:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, player)
+
+    if player:HasCollectible(CHAMPION_CROWN) and player:GetPlayerType() == CHARACTER then
+        IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_KING_BABY, 1, LILITH)
+        IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_PROPTOSIS, 1, LILITH)
+        IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_BIRTHRIGHT, 1, LILITH)
+    else
+        IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_KING_BABY, 0, LILITH)
+        IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_PROPTOSIS, 0, LILITH)
+        IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_BIRTHRIGHT, 0, LILITH)
+    end
+end)
 
 if EID then
     local function crownPlayerCondition(descObj)

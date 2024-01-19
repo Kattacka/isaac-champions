@@ -44,6 +44,13 @@ function apollyon_b:onCache(player, cacheFlag)
     player:RemoveCollectible(CollectibleType.COLLECTIBLE_BEST_BUD, true, nil, false)
     player:RemoveCollectible(CollectibleType.COLLECTIBLE_BEST_BUD, true, nil, false)
 
+    local blacklist = {
+        CollectibleType.COLLECTIBLE_HIVE_MIND,
+        CollectibleType.COLLECTIBLE_BEST_BUD,
+        CollectibleType.COLLECTIBLE_BROWN_NUGGET,
+    }
+    IsaacChampions.Utility:removeFromPools(blacklist)
+
 end
 IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, apollyon_b.onCache)
 

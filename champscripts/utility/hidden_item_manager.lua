@@ -1,5 +1,5 @@
 -- Hidden Item Manager, by Connor (aka Ghostbroster)
--- Version 2.0
+-- Version 2.2
 -- 
 -- Manages a system of hidden Lemegeton Item Wisps to simulate the effects of passive items without actually granting the player those items (so they can't be removed or rerolled!).
 -- Good for giving the effect of an item temporarily, making an item effect "innate" to a character, and all sorts of other stuff, probably.
@@ -27,42 +27,6 @@ local kPersistentWispMarker = 617413666
 local kEarlyCallbackPriority = -9999
 local kLateCallbackPriority = 9999
 
---------------------------------------------------
--- Initialization
-
-local Callbacks = {}
-
-local function AddCallback(callbackID, func, param, priority)
-	table.insert(Callbacks, {
-		Callback = callbackID,
-		Func = func,
-		Param = param,
-		Priority = priority or kEarlyCallbackPriority,
-	})
-end
-local function AddLateCallback(callbackID, func, param)
-	AddCallback(callbackID, func, param, kLateCallbackPriority)
-end
-
-local initialized = false
-function HiddenItemManager:Init(mod)
-	if not initialized then
-		HiddenItemManager.Mod = mod
-		
-		for _, tab in ipairs(Callbacks) do
-			IsaacChampions:AddPriorityCallback(tab.Callback, tab.Priority, tab.Func, tab.Param)
-		end
-		
-		HiddenItemManager.WispTag = "HiddenItemManager:" .. IsaacChampions.Name
-		
-		initialized = true
-	end
-	return HiddenItemManager
-end
-
---------------------------------------------------
--- Storage/Utility
-
 local function LOG_ERROR(str)
 	local prefix = ""
 	if HiddenItemManager.Mod then
@@ -81,6 +45,42 @@ local function LOG(str)
 	local fullStr = "[" .. prefix .. "HiddenItemManager]: " .. str
 	Isaac.DebugString(fullStr)
 end
+
+--------------------------------------------------
+-- Initialization
+
+local Callbacks = {}
+
+local function AddCallback(callbackID, func, param, priority)
+	table.insert(Callbacks, {
+		Callback = callbackID,
+		Func = func,
+		Param = param,
+		Priority = priority or kEarlyCallbackPriority,
+	})
+end
+local function AddLateCallback(callbackID, func, param)
+	AddCallback(callbackID, func, param, kLateCallbackPriority)
+end
+
+function HiddenItemManager:Init(mod)
+	HiddenItemManager.Mod = mod
+	HiddenItemManager.WispTag = "HiddenItemManager:" .. mod.Name
+	
+	if not mod.AddedHiddenItemManagerCallbacks then
+		for _, tab in ipairs(Callbacks) do
+			mod:AddPriorityCallback(tab.Callback, tab.Priority, tab.Func, tab.Param)
+		end
+		mod.AddedHiddenItemManagerCallbacks = true
+	else
+		LOG_ERROR("More than one instance initialized!")
+	end
+	
+	return HiddenItemManager
+end
+
+--------------------------------------------------
+-- Storage/Utility
 
 local kDefaultGroup = "HIDDEN_ITEM_MANAGER_DEFAULT"
 
@@ -317,6 +317,9 @@ end
 
 -- Spawns a hidden item wisp.
 local function SpawnWisp(player, itemID, duration, group, removeOnNewRoom, removeOnNewLevel)
+	if not HiddenItemManager.Mod then
+		LOG_ERROR("Not initialized! Did you forget to call `hiddenItemManager:Init(mod)`?")
+	end
 	group = GetGroup(group)
 	if not itemID or itemID < 1 then
 		LOG_ERROR("Attempted to add invalid CollectibleType `" .. (itemID or "NULL") .. "` to group: " .. group)
@@ -486,12 +489,14 @@ function HiddenItemManager:LoadData(saveData)
 	end
 	DATA = {}
 	HiddenItemManager.INITIALIZING = false
-	for _, ptr in pairs(WISP_PTRS) do
+	-- Check & re-initialize all existing wisps, just in case.
+	local oldPtrs = WISP_PTRS
+	WISP_PTRS = {}
+	for _, ptr in pairs(oldPtrs) do
 		if ptr and ptr.Ref then
 			HiddenItemManager:ItemWispUpdate(ptr.Ref:ToFamiliar())
 		end
 	end
-	WISP_PTRS = {}
 	HiddenItemManager:CheckWisps()
 end
 
@@ -511,8 +516,9 @@ function HiddenItemManager:ItemWispUpdate(wisp)
 		local player = wisp.Player
 		local playerKey = GetPlayerKey(player)
 		
-		if not IsManagedWisp(wisp) then
+		if not IsManagedWisp(wisp) or not WISP_PTRS[wispKey] then
 			-- This wisp isn't marked as one of our wisps, but we're supposed to have a wisp with this InitSeed.
+			-- OR: we don't have a pointer to this wisp cached, meaning we may have reloaded a save or something.
 			
 			-- Check if there's already an active wisp for this effect.
 			local existingWisp = GetWisp(wispData)
@@ -524,7 +530,8 @@ function HiddenItemManager:ItemWispUpdate(wisp)
 				return false
 			end
 			
-			-- Most likely, we've quit and continued a run. Re-initialize this wisp as a hidden one.
+			-- Most likely, we've quit and continued a run, reloaded a save, or luamodded, or something.
+			-- Re-initialize this wisp as a hidden one.
 			InsertData(playerKey, wispData.Group, wispData.Item, wispKey, wispData)
 			InitializeWisp(wisp)
 		end
@@ -638,7 +645,7 @@ function HiddenItemManager:PostUpdate()
 	end
 	
 	-- When wisps disappear unexpectedly, try to respawn them at least a few times.
-	-- We won't try forever, however, to avoid infinite fights with another IsaacChampions.
+	-- We won't try forever, however, to avoid infinite fights with another mod.
 	for oldKey, data in pairs(wispsToRespawn) do
 		local player = GetPlayer(data)
 		RemoveWisp(oldKey)

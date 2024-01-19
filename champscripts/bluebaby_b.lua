@@ -46,6 +46,17 @@ function bluebaby_b:onCache(player, cacheFlag)
     end
 
     player:AddCollectible(CollectibleType.COLLECTIBLE_MOMS_BRACELET)
+
+    local blacklist = {
+        CollectibleType.COLLECTIBLE_SCHOOLBAG,
+        CollectibleType.COLLECTIBLE_FATE,
+        CollectibleType.COLLECTIBLE_FATES_REWARD,
+        CollectibleType.COLLECTIBLE_BIRTHRIGHT,
+        CollectibleType.COLLECTIBLE_PYROMANIAC,
+        CollectibleType.COLLECTIBLE_MOMS_BRACELET,
+    }
+    IsaacChampions.Utility:removeFromPools(blacklist)
+
 end
 IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, bluebaby_b.onCache)
 

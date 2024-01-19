@@ -32,8 +32,16 @@ function jacob_b:onCache(player, cacheFlag)
 
     player:UseActiveItem(CollectibleType.COLLECTIBLE_ANIMA_SOLA, true)
 
+    local blacklist = {
+        CollectibleType.COLLECTIBLE_BATTERY,
+        CollectibleType.COLLECTIBLE_BIRTHRIGHT,
+        CollectibleType.COLLECTIBLE_LORD_OF_THE_PIT,
+    }
+    IsaacChampions.Utility:removeFromPools(blacklist)
+    
+    IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, jacob_b.onCache)
+
 end
-IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, jacob_b.onCache)
 
 
 function jacob_b:onNewFloor()

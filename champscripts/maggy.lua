@@ -56,6 +56,11 @@ function maggy:onCache(player, cacheFlag)
         pill:Remove()
     end
 
+    local blacklist = {
+        CollectibleType.COLLECTIBLE_YUCK_HEART,
+        CollectibleType.COLLECTIBLE_MULLIGAN,
+    }
+    IsaacChampions.Utility:removeFromPools(blacklist)
 end
 IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, maggy.onCache)
 

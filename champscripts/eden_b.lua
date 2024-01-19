@@ -47,6 +47,12 @@ function eden_b:onCache(player, cacheFlag)
 
     if tempEffects:HasNullEffect(NullItemID.ID_ESAU_JR) then return end
     IsaacChampions:RemoveTreasureRooms()
+
+    local blacklist = {
+        CollectibleType.COLLECTIBLE_BROKEN_MODEM,
+        CollectibleType.COLLECTIBLE_CHAOS,
+    }
+    IsaacChampions.Utility:removeFromPools(blacklist)
 end
 IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, eden_b.onCache)
 
@@ -56,8 +62,8 @@ IsaacChampions:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, play
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
 
-    IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_BROKEN_MODEM, 1)
-    IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_CHAOS, 1)
+    IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_BROKEN_MODEM, 1, EDEN_B)
+    IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_CHAOS, 1, EDEN_B)
 end)
 
 

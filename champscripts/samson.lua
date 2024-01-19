@@ -35,6 +35,13 @@ function samson:onCache(player, cacheFlag)
         player:AddCollectible(CollectibleType.COLLECTIBLE_BLOODY_GUST)
     end
     
+    local blacklist = {
+        CollectibleType.COLLECTIBLE_DULL_RAZOR,
+        CollectibleType.COLLECTIBLE_SHARD_OF_GLASS,
+        CollectibleType.COLLECTIBLE_CURSE_OF_THE_TOWER,
+        CollectibleType.COLLECTIBLE_BLOODY_GUST,
+    }
+    IsaacChampions.Utility:removeFromPools(blacklist)
 end
 IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, samson.onCache)
 

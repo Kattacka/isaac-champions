@@ -44,6 +44,13 @@ function eve:onCache(player, cacheFlag)
     if not player:HasCollectible(CollectibleType.COLLECTIBLE_BIRD_CAGE) then
         player:AddCollectible(CollectibleType.COLLECTIBLE_BIRD_CAGE)
     end
+
+    local blacklist = {
+        CollectibleType.COLLECTIBLE_RAZOR_BLADE,
+        CollectibleType.COLLECTIBLE_DARK_PRINCES_CROWN,
+        CollectibleType.COLLECTIBLE_BIRD_CAGE,
+    }
+    IsaacChampions.Utility:removeFromPools(blacklist)
 end
 IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, eve.onCache)
 

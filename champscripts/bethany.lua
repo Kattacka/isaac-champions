@@ -42,6 +42,13 @@ function bethany:onCache(player, cacheFlag)
 
     player:AddBombs(1)
 
+    local blacklist = {
+        CollectibleType.COLLECTIBLE_REDEMPTION,
+        CollectibleType.COLLECTIBLE_ACT_OF_CONTRITION,
+        CollectibleType.COLLECTIBLE_PRAYER_CARD,
+    }
+    IsaacChampions.Utility:removeFromPools(blacklist)
+
 end
 IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, bethany.onCache)
 

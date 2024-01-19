@@ -55,6 +55,17 @@ function samson_b:onCache(player, cacheFlag)
     end
 
     player:SetPocketActiveItem(CollectibleType.COLLECTIBLE_CONVERTER)
+
+    local blacklist = {
+        CollectibleType.COLLECTIBLE_GLYPH_OF_BALANCE,
+        CollectibleType.COLLECTIBLE_CHAMPION_BELT,
+        CollectibleType.COLLECTIBLE_BIRTHRIGHT,
+        CollectibleType.COLLECTIBLE_ASTRAL_PROJECTION,
+        CollectibleType.COLLECTIBLE_WAFER,
+        CollectibleType.COLLECTIBLE_GOAT_HEAD,
+        CollectibleType.COLLECTIBLE_CONVERTER,
+    }
+    IsaacChampions.Utility:removeFromPools(blacklist)
 end
 IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, samson_b.onCache)
 
