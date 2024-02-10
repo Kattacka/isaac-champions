@@ -38,10 +38,9 @@ function jacob_b:onCache(player, cacheFlag)
         CollectibleType.COLLECTIBLE_LORD_OF_THE_PIT,
     }
     IsaacChampions.Utility:removeFromPools(blacklist)
-    
-    IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, jacob_b.onCache)
-
 end
+
+IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, jacob_b.onCache)
 
 
 function jacob_b:onNewFloor()
