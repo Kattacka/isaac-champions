@@ -14,11 +14,20 @@ function maggy_b:onCache(player, cacheFlag)
     --if cacheFlag == CacheFlag.CACHE_DAMAGE then player.Damage = (player.Damage) * 0.8 end
     if cacheFlag == CacheFlag.CACHE_TEARFLAG then player.TearFlags = player.TearFlags | TearFlags.TEAR_PUNCH end
     if cacheFlag == CacheFlag.CACHE_FIREDELAY then
-        IsaacChampions.Utility:addNegativeTearMultiplier(player, 5.5)
+        if player:GetCollectibleNum(CollectibleType.COLLECTIBLE_SOY_MILK) <= 1 and not player:HasCollectible(CollectibleType.COLLECTIBLE_ALMOND_MILK) then
+            IsaacChampions.Utility:addNegativeTearMultiplier(player, 5.5)
+        else
+            player.Damage = (player.Damage) * 0.3
+        end
+        print("pingas")
+        --player.MaxFireDelay = IsaacChampions.Utility:toMaxFireDelay(tearsPerSecond)
+        --player:SetMaggySwingCooldown(100)
     end
 
     local config = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_SOY_MILK)
     player:RemoveCostume(config)
+
+
 
     local save = IsaacChampions.SaveManager.GetRunSave(player)
     if save then
@@ -50,10 +59,18 @@ function maggy_b:onCache(player, cacheFlag)
 end
 IsaacChampions:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, maggy_b.onCache)
 
+local didHugAttack = false
 IsaacChampions:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, player)
 
     if not player:HasCollectible(CHAMPION_CROWN) then return end
     if player:GetPlayerType() ~= CHARACTER then return end
+
+    print(player:GetMaggySwingCooldown())
+    if didHugAttack == true and player:GetMaggySwingCooldown() > 4 then
+        didHugAttack = false
+        player:SetMaggySwingCooldown(math.floor(2.5*(math.max(0, player.MaxFireDelay))))
+    end
+    if player:GetMaggySwingCooldown() < 4 then didHugAttack = true end
 
     IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_SOY_MILK, 1)
     IsaacChampions.HiddenItemManager:CheckStack(player, CollectibleType.COLLECTIBLE_KNOCKOUT_DROPS, 1)
